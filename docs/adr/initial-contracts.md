@@ -12,6 +12,6 @@
 
 ## 验收与放行
 
-作者提交 WorkerResult，附提交、范围和原始检查输出。协调者另行指派作者及其子代理之外的独立审查 run，按验收标准核对原始证据，出具绑定 base、head 与契约的 ReviewVerdict。集成者在最新基线上验证候选，读回实际合并提交、树与父提交并记录 IntegrationReceipt。协调者核对证据后更新任务状态；每项产品门槛另由授权主体签发 GateDecision。[协调策略](../../coordination/policies.json) · [机读记录](../../contracts/README.md)
+作者提交 WorkerResult，附提交、范围和原始检查输出。协调者另行指派作者及其子代理之外的独立审查 run，按验收标准核对原始证据，出具绑定 base、head 与契约的 ReviewVerdict。集成者在最新基线上验证候选，读回实际合并提交、树与父提交并记录 IntegrationReceipt。协调 Agent 汇集证据，由具有状态写权限的协调服务核对收据，在验收条件满足后将任务状态更新为 `accepted`；每项产品门槛另由授权主体签发 GateDecision。[协调策略](../../coordination/policies.json) · [机读记录](../../contracts/README.md)
 
 M1 先要求 APP-04 与至少一项 APP-05/06/07 路线研究获验收，并提供匹配的基线，才进入 APP-08 独立裁决。只有 APP-08 获验收、至少一条声明范围内的路线在真实 Mac 上验证完整刘海核心任务，且该路线没有未解决的系统完整性阻断，才能打开 `M1_PRODUCT_GATE_PASSED`，供 APP-15/16 使用。负面研究结论可以验收；门槛为 false 或 unknown 时继续阻塞依赖该门槛的任务。正式发布另需用户授权。[门槛表达式](../project-plan.md) · [判定规则](../gate-evaluation.md)
