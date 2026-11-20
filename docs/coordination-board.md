@@ -11,7 +11,7 @@
 |---|---|---|---|---|---|---|
 | OPS-01 | 建立项目章程、职责和变更契约 | W0 / W0 | 项目协调 / gpt6.2astra | — | — | planned |
 | OPS-02 | 登记执行器、模型路由和运行主机 | W0 / W0 | 架构与接口 / gpt6.2astra | OPS-01 | — | planned |
-| OPS-03 | 准备独立工作区与可复现构建环境 | W0 / W0 | 工具链、集成与发行 / gpt6.2sol | OPS-01 | — | planned |
+| OPS-03 | 准备独立工作区与可复现构建环境 | W0 / W0 | 工具链、集成与发行 / gpt6.2sol → gpt6luna | OPS-01 | — | planned |
 | OPS-04 | 建立任务数据与最小协调板 | W0 / W0 | 核心逻辑 / gpt6.2sol | OPS-01 | — | planned |
 | OPS-05 | 接入 Codex 的薄执行适配器 | W0 / W1 | 工具链、集成与发行 / gpt6.2sol | OPS-02, OPS-03, OPS-04 | — | planned |
 | OPS-06 | 接入 OpenCode 的薄执行适配器 | W0 / W2 | 工具链、集成与发行 / gpt6.2sol | OPS-02, OPS-03, OPS-04 | — | planned |
@@ -81,6 +81,7 @@
 | gpt6.2sol | 未解析 | 未解析 | unresolved |
 | gpt6.1terra | 未解析 | 未解析 | unresolved |
 | grok4.7 | 未解析 | 未解析 | unresolved |
+| gpt6luna | 未解析 | 未解析 | unresolved |
 
 实际登记主机数：0。ocra 候选确认状态：false。
 

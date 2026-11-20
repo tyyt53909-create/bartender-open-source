@@ -267,11 +267,12 @@
           }
         ]
       },
-      "task_spec_sha256": "7075f79e3db6060f7d301e338e1e125030ef45a34cba7471765ab601c21cfbe8",
+      "task_spec_sha256": "23895db905ecfbb372c9545f884e2d38fef33d74b5bdf8cf458e562ba0b31025",
       "phase": "W0",
       "wave": "W0",
       "model_candidates": [
-        "gpt6.2sol"
+        "gpt6.2sol",
+        "gpt6luna"
       ],
       "research_task_note": null
     },

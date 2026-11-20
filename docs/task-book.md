@@ -52,7 +52,7 @@ APP-24 综合 F01—F12。需求覆盖不证明功能已实现。
 |---|---|---|---|---|---|
 | OPS-01 | 建立项目章程、职责和变更契约 | W0 / W0 | 项目协调 / gpt6.2astra | — | — |
 | OPS-02 | 登记执行器、模型路由和运行主机 | W0 / W0 | 架构与接口 / gpt6.2astra | OPS-01 | — |
-| OPS-03 | 准备独立工作区与可复现构建环境 | W0 / W0 | 工具链、集成与发行 / gpt6.2sol | OPS-01 | — |
+| OPS-03 | 准备独立工作区与可复现构建环境 | W0 / W0 | 工具链、集成与发行 / gpt6.2sol → gpt6luna | OPS-01 | — |
 | OPS-04 | 建立任务数据与最小协调板 | W0 / W0 | 核心逻辑 / gpt6.2sol | OPS-01 | — |
 | OPS-05 | 接入 Codex 的薄执行适配器 | W0 / W1 | 工具链、集成与发行 / gpt6.2sol | OPS-02, OPS-03, OPS-04 | — |
 | OPS-06 | 接入 OpenCode 的薄执行适配器 | W0 / W2 | 工具链、集成与发行 / gpt6.2sol | OPS-02, OPS-03, OPS-04 | — |
@@ -161,7 +161,7 @@ APP-24 综合 F01—F12。需求覆盖不证明功能已实现。
 
 ### OPS-03｜准备独立工作区与可复现构建环境
 
-归属工作包 phase：W0；推荐波次 wave：W0；角色：工具链、集成与发行；模型候选顺序：gpt6.2sol；交付类型：workflow；状态：planned。
+归属工作包 phase：W0；推荐波次 wave：W0；角色：工具链、集成与发行；模型候选顺序：gpt6.2sol → gpt6luna；交付类型：workflow；状态：planned。
 
 实现资源：linux_cpu。验收资源表达式：`{"all_of": [{"resource_class": "linux_cpu"}]}`。
 
@@ -199,7 +199,7 @@ APP-24 综合 F01—F12。需求覆盖不证明功能已实现。
 
 审查规则：independent_run_required; author_child_is_not_sole_reviewer。
 
-任务规范 SHA-256：`7075f79e3db6060f7d301e338e1e125030ef45a34cba7471765ab601c21cfbe8`
+任务规范 SHA-256：`23895db905ecfbb372c9545f884e2d38fef33d74b5bdf8cf458e562ba0b31025`
 
 ### OPS-04｜建立任务数据与最小协调板
 
