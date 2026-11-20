@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.1",
+  "hosts": [],
+  "resource_classes": [
+    {
+      "id": "linux_cpu",
+      "required_capabilities": [
+        "git",
+        "isolated_workspace"
+      ],
+      "notes": "纯逻辑仅在匹配工具链/依赖可用时验证；也可在合格 Mac CLI 环境执行。"
+    },
+    {
+      "id": "macos_build",
+      "required_capabilities": [
+        "macos",
+        "xcode_pinned",
+        "isolated_derived_data"
+      ],
+      "notes": "不自动证明 GUI/AX 条件成立。"
+    },
+    {
+      "id": "macos_gui_exclusive",
+      "required_capabilities": [
+        "macos",
+        "console_session",
+        "tcc_observed",
+        "display_topology_recorded",
+        "exclusive_host_lease"
+      ],
+      "notes": "同机 GUI 与干扰性构建互斥，失联后需确认进程停止。"
+    }
+  ],
+  "orchestrator": {
+    "requested_label": "ocra",
+    "candidate": "Orca ADE",
+    "candidate_url": "https://orca.dev/",
+    "confirmed": false,
+    "installed_version": null,
+    "probe_result": null
+  }
+}

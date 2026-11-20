@@ -1,0 +1,11 @@
+{
+  "kind": "BOOTSTRAP_BASELINE",
+  "status": "template_not_executed",
+  "repo_url": null,
+  "initial_commit_sha": null,
+  "material_manifest_sha256": null,
+  "reviewer_identity": null,
+  "review_evidence_ref": null,
+  "repository_rules_verified": false,
+  "bootstrap_exception_closed": false
+}

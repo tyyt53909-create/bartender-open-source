@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.2",
+  "record_type": "GateDecision",
+  "decision_id": "synthetic-gate-decision",
+  "gate_id": "M0_BASELINE_VERIFIED",
+  "decision": "passed",
+  "issued_at": "2026-11-20T12:00:00Z",
+  "expires_at": "2026-11-21T12:00:00Z",
+  "scope": {
+    "scope_id": "synthetic-os26-route",
+    "manifest_ref": {
+      "path": "evidence/synthetic/scope-manifest.json",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  },
+  "context": {
+    "context_id": "synthetic-mac-baseline",
+    "manifest_ref": {
+      "path": "evidence/synthetic/context-manifest.json",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  },
+  "issuer": {
+    "principal_id": "synthetic-reviewer",
+    "role": "reviewer",
+    "run_id": "synthetic-reviewer-run",
+    "authority_ref": {
+      "path": "evidence/synthetic/authority.json",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  },
+  "evidence": [
+    {
+      "condition_name": "selected_mac_baseline_verified",
+      "outcome": "passed",
+      "environment_id": "synthetic-mac-baseline",
+      "artifact": {
+        "path": "evidence/synthetic/observation.json",
+        "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      }
+    }
+  ]
+}

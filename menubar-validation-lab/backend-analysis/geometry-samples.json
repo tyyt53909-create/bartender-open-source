@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "purpose": "Arithmetic examples of the pinned MenubarHide heuristic; not macOS runtime observations.",
+  "units": "logical screen points, not panel hardware pixels",
+  "source_commit": "a4476bfe81a9a84ac94f8dfb273c4eaad8f9e960",
+  "cases": [
+    {
+      "id": "single_unnotched_1512",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 1512
+        }
+      ],
+      "expected": {
+        "unit": 692,
+        "active_spacers": 2,
+        "required_spacers": 2,
+        "span": 2076,
+        "shortfall": 0,
+        "violations": []
+      }
+    },
+    {
+      "id": "single_notched_1512",
+      "kind": "upstream_comment_geometry",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        }
+      ],
+      "expected": {
+        "unit": 433,
+        "active_spacers": 1,
+        "required_spacers": 1,
+        "span": 866,
+        "shortfall": 0,
+        "violations": []
+      }
+    },
+    {
+      "id": "notched_plus_2560",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 2560,
+          "status_width": 2560
+        }
+      ],
+      "expected": {
+        "unit": 433,
+        "active_spacers": 5,
+        "required_spacers": 5,
+        "span": 2598,
+        "shortfall": 0,
+        "violations": []
+      }
+    },
+    {
+      "id": "notched_plus_3024",
+      "kind": "capacity_boundary",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3024,
+          "status_width": 3024
+        }
+      ],
+      "expected": {
+        "unit": 433,
+        "active_spacers": 6,
+        "required_spacers": 6,
+        "span": 3031,
+        "shortfall": 0,
+        "violations": []
+      }
+    },
+    {
+      "id": "notched_exact_capacity_3031",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3031,
+          "status_width": 3031
+        }
+      ],
+      "expected": {
+        "unit": 433,
+        "active_spacers": 6,
+        "required_spacers": 6,
+        "span": 3031,
+        "shortfall": 0,
+        "violations": []
+      }
+    },
+    {
+      "id": "notched_exceeds_capacity_3031_5",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3031.5,
+          "status_width": 3031.5
+        }
+      ],
+      "expected": {
+        "unit": 433,
+        "active_spacers": 6,
+        "required_spacers": 7,
+        "span": 3031,
+        "shortfall": 0.5,
+        "violations": [
+          "capacity_shortfall"
+        ]
+      }
+    },
+    {
+      "id": "notched_plus_3440",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3440,
+          "status_width": 3440
+        }
+      ],
+      "expected": {
+        "unit": 433,
+        "active_spacers": 6,
+        "required_spacers": 7,
+        "span": 3031,
+        "shortfall": 409,
+        "violations": [
+          "capacity_shortfall"
+        ]
+      }
+    },
+    {
+      "id": "notched_plus_3840",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3840,
+          "status_width": 3840
+        }
+      ],
+      "expected": {
+        "unit": 433,
+        "active_spacers": 6,
+        "required_spacers": 8,
+        "span": 3031,
+        "shortfall": 809,
+        "violations": [
+          "capacity_shortfall"
+        ]
+      }
+    },
+    {
+      "id": "notched_plus_5120",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 5120,
+          "status_width": 5120
+        }
+      ],
+      "expected": {
+        "unit": 433,
+        "active_spacers": 6,
+        "required_spacers": 11,
+        "span": 3031,
+        "shortfall": 2089,
+        "violations": [
+          "capacity_shortfall"
+        ]
+      }
+    },
+    {
+      "id": "narrow_unnotched_600_plus_2560",
+      "kind": "synthetic_topology",
+      "displays": [
+        {
+          "width": 600,
+          "status_width": 600
+        },
+        {
+          "width": 2560,
+          "status_width": 2560
+        }
+      ],
+      "expected": {
+        "unit": 236,
+        "active_spacers": 6,
+        "required_spacers": 10,
+        "span": 1652,
+        "shortfall": 908,
+        "violations": [
+          "capacity_shortfall"
+        ]
+      }
+    },
+    {
+      "id": "minimum_overrides_margin_450",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 450,
+          "status_width": 450
+        }
+      ],
+      "expected": {
+        "unit": 200,
+        "active_spacers": 2,
+        "required_spacers": 2,
+        "span": 600,
+        "shortfall": 0,
+        "violations": [
+          "safety_margin_not_preserved"
+        ]
+      }
+    },
+    {
+      "id": "minimum_reaches_cliff_390",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 390,
+          "status_width": 390
+        }
+      ],
+      "expected": {
+        "unit": 200,
+        "active_spacers": 1,
+        "required_spacers": 1,
+        "span": 400,
+        "shortfall": 0,
+        "violations": [
+          "unit_reaches_model_cliff",
+          "safety_margin_not_preserved"
+        ]
+      }
+    },
+    {
+      "id": "minimum_reaches_notched_cliff_250",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 800,
+          "status_width": 250
+        }
+      ],
+      "expected": {
+        "unit": 200,
+        "active_spacers": 1,
+        "required_spacers": 1,
+        "span": 400,
+        "shortfall": 0,
+        "violations": [
+          "unit_reaches_model_cliff",
+          "safety_margin_not_preserved"
+        ]
+      }
+    },
+    {
+      "id": "empty_topology",
+      "kind": "input_guard",
+      "displays": [],
+      "expected_error": "no_displays"
+    },
+    {
+      "id": "status_width_larger_than_screen",
+      "kind": "input_guard",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 1600
+        }
+      ],
+      "expected_error": "invalid_status_width"
+    },
+    {
+      "id": "nonpositive_width",
+      "kind": "input_guard",
+      "displays": [
+        {
+          "width": 0,
+          "status_width": 0
+        }
+      ],
+      "expected_error": "invalid_width"
+    }
+  ]
+}
+

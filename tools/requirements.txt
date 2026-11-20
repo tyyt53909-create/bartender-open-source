@@ -1,0 +1,2 @@
+# Version observed in this revision's validation environment.
+jsonschema==4.26.0

@@ -1,0 +1,81 @@
+{
+  "schema_version": "0.2",
+  "checked_on": "2026-11-20",
+  "environment": {
+    "os": "Linux",
+    "python": "3.12.14",
+    "jsonschema": "4.26.0"
+  },
+  "status": "passed",
+  "unit_tests": {
+    "run": 61,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "offline synthetic contracts/gates/planning regressions"
+  },
+  "commands": [
+    {
+      "command": "python3 tools/validate_plan.py",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "matched": true,
+      "stdout": "{\n  \"status\": \"portable_planning_package_valid\",\n  \"tasks\": 34,\n  \"errors\": [],\n  \"proves\": \"offline structure, local bytes, contracts, ownership and document consistency only\",\n  \"does_not_prove\": \"remote runners, Mac build/GUI, trustworthy live ledger, merge enforcement or release readiness\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tools/render_docs.py --check",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "matched": true,
+      "stdout": "{\"status\": \"documents_match\", \"documents\": [\"docs/agent-team-architecture.md\", \"docs/coordination-board.md\", \"docs/dependency-map.md\", \"docs/project-plan.md\", \"docs/task-book.md\"], \"different\": []}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tools/gate_eval.py --gate M0_BASELINE_VERIFIED",
+      "exit_code": 3,
+      "expected_exit_code": 3,
+      "matched": true,
+      "stdout": "{\n  \"status\": \"unknown\",\n  \"satisfied\": false,\n  \"blockers\": [\n    {\n      \"code\": \"TASK_STATE_MISSING\",\n      \"path\": \"gate:M0_BASELINE_VERIFIED/all_of/0\",\n      \"detail\": \"APP-02\"\n    },\n    {\n      \"code\": \"GATE_DECISION_MISSING\",\n      \"path\": \"gate:M0_BASELINE_VERIFIED/decision\",\n      \"detail\": \"\"\n    }\n  ],\n  \"evidence_refs\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tools/gate_eval.py --task APP-12",
+      "exit_code": 3,
+      "expected_exit_code": 3,
+      "matched": true,
+      "stdout": "{\n  \"status\": \"unknown\",\n  \"satisfied\": false,\n  \"blockers\": [\n    {\n      \"code\": \"TASK_STATE_MISSING\",\n      \"path\": \"task:APP-12/all_of/0\",\n      \"detail\": \"APP-01\"\n    },\n    {\n      \"code\": \"TASK_STATE_MISSING\",\n      \"path\": \"task:APP-12/all_of/1\",\n      \"detail\": \"APP-02\"\n    },\n    {\n      \"code\": \"TASK_STATE_MISSING\",\n      \"path\": \"gate:M0_BASELINE_VERIFIED/all_of/0\",\n      \"detail\": \"APP-02\"\n    },\n    {\n      \"code\": \"GATE_DECISION_MISSING\",\n      \"path\": \"gate:M0_BASELINE_VERIFIED/decision\",\n      \"detail\": \"\"\n    }\n  ],\n  \"evidence_refs\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tools/gate_eval.py --task APP-13",
+      "exit_code": 3,
+      "expected_exit_code": 3,
+      "matched": true,
+      "stdout": "{\n  \"status\": \"unknown\",\n  \"satisfied\": false,\n  \"blockers\": [\n    {\n      \"code\": \"TASK_STATE_MISSING\",\n      \"path\": \"task:APP-13/all_of/0\",\n      \"detail\": \"APP-01\"\n    },\n    {\n      \"code\": \"TASK_STATE_MISSING\",\n      \"path\": \"task:APP-13/all_of/1\",\n      \"detail\": \"APP-02\"\n    },\n    {\n      \"code\": \"TASK_STATE_MISSING\",\n      \"path\": \"gate:M0_BASELINE_VERIFIED/all_of/0\",\n      \"detail\": \"APP-02\"\n    },\n    {\n      \"code\": \"GATE_DECISION_MISSING\",\n      \"path\": \"gate:M0_BASELINE_VERIFIED/decision\",\n      \"detail\": \"\"\n    }\n  ],\n  \"evidence_refs\": []\n}\n",
+      "stderr": ""
+    }
+  ],
+  "dependency_graph": {
+    "tasks": 34,
+    "gates": 9,
+    "reference_edges": 102,
+    "errors": [],
+    "conservative_cycles": []
+  },
+  "engineering_status": {
+    "all_tasks_planned": true,
+    "remote_connected": false,
+    "actual_engineering_runs": 0,
+    "macos_build": "not_run",
+    "macos_gui": "not_run",
+    "runner_provider_invocation": "not_run",
+    "remote_merge_enforcement": "not_run",
+    "xcodegen_generation": "not_run"
+  },
+  "notes": [
+    "Unit tests do not prove actual observations, trusted input authentication, resource leasing, or deployment.",
+    "Historical Lab tests are preserved, not recounted as this revision test run.",
+    "Final archive digest/round-trip check is reported outside the archive to avoid self-reference."
+  ]
+}

@@ -1,0 +1,4 @@
+STDOUT
+{"arithmetic_expectations_match": true, "total_samples": 16, "model_satisfied_runtime_unverified": 5, "model_violations": 8, "invalid_inputs_rejected": 3, "macos_runtime_cases_executed": 0, "macos_runtime_status": "not_run"}
+
+STDERR

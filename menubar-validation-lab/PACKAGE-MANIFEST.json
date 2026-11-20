@@ -1,0 +1,273 @@
+{
+  "schema": "menuvalidation.package-manifest.v1",
+  "created_at_utc": "2026-11-20T05:33:24.970115+00:00",
+  "includes": "Source, instructions, pinned evidence and actual Linux check outputs; no built binaries or Mac results.",
+  "self_excluded": true,
+  "files": [
+    {
+      "path": "Controller/Info.plist",
+      "bytes": 654,
+      "sha256": "0dc4bb1da0f0e9e8f2c053396c041133e80d2e9b421e3c5ea0979324c757d912"
+    },
+    {
+      "path": "Controller/Sources/Diagnostics.swift",
+      "bytes": 7255,
+      "sha256": "f9803f93c60616515cc1dc3b73bf1dc22ba1151527c8755ea12a22347e190ee0"
+    },
+    {
+      "path": "Controller/Sources/Geometry.swift",
+      "bytes": 2905,
+      "sha256": "889726b0c4b27a0d8b60f67dfc1a3f6a24947d59002248e63ff42c7f2797aa19"
+    },
+    {
+      "path": "Controller/Sources/main.swift",
+      "bytes": 19072,
+      "sha256": "85d5290566756618d2e5d61ee85cd4244ed81ca562460caba9b5754dd63a0338"
+    },
+    {
+      "path": "Controller/experiment-defaults.json",
+      "bytes": 581,
+      "sha256": "73f2d3f7afe16bce7fa7d20dfc0f2d93dc60abef2fbe11d0c92f09520c2ec17a"
+    },
+    {
+      "path": "Fixture/Info.plist",
+      "bytes": 827,
+      "sha256": "a8b828e6b6a01b4a64eebac839c642388205fed74cedf5107e653d62925eaeb0"
+    },
+    {
+      "path": "Fixture/README.md",
+      "bytes": 8073,
+      "sha256": "373231ae9d686cd92eeaf903b697379dc2738f4155fe23cc3d794fd08aae3c2c"
+    },
+    {
+      "path": "Fixture/Sources/main.swift",
+      "bytes": 27170,
+      "sha256": "3b837ae177e47da729bb42a72cf8b9574401d471ac0239ba577fa2e1e302dbbd"
+    },
+    {
+      "path": "Fixture/build.sh",
+      "bytes": 957,
+      "sha256": "d8f6826cba52176cbc9f7e31b66e31217bb3aace53a01b93d41e3fc6392e34c9"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1200,
+      "sha256": "7887d13565935c1131d66f134fe6569a49bcbe7e53169d57330da60f68d62d71"
+    },
+    {
+      "path": "LOCAL_CODEX_TASK.md",
+      "bytes": 4188,
+      "sha256": "95595c04ff0e3eed533d28e5923f50837d69b6f3758326cd5bb85d4c1d9a1ffd"
+    },
+    {
+      "path": "Observer/main.swift",
+      "bytes": 545,
+      "sha256": "80fb199106cdc510c6972d6b4384f30517d2333e8cfbfdeccd4d2f9c04e80d10"
+    },
+    {
+      "path": "PrivateProbe/main.m",
+      "bytes": 2553,
+      "sha256": "b56addd4e2e92b29f574056c749097343aef4769c2cd8f6c9fd93dfc987a197a"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "bytes": 10145,
+      "sha256": "46900fb2ae2e6fd82ed2e8e60f8ec3ade0ae8c1f7b9bbbce855865caa51cbc33"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 2984,
+      "sha256": "5eb70788550f8faed9d22d7444b1d3f995e2a1a545a309079c093ad06ec0a60c"
+    },
+    {
+      "path": "backend-analysis/PRIMARY_FINDINGS.md",
+      "bytes": 14684,
+      "sha256": "b6251df674612dec9d472da38168383e30854a032c674d52b2c172a047408399"
+    },
+    {
+      "path": "backend-analysis/THIRD_PARTY.md",
+      "bytes": 2899,
+      "sha256": "aa5bf5af1d845e08d5c9d96cd24cfa9cd2cd56e837c8097bb280432343a57737"
+    },
+    {
+      "path": "backend-analysis/geometry-results.json",
+      "bytes": 11258,
+      "sha256": "bd47e385dbfbcfcec519784927673157e552572e42b2d88a3a5b7641685fe7ea"
+    },
+    {
+      "path": "backend-analysis/geometry-samples.json",
+      "bytes": 6784,
+      "sha256": "8a5ab3c6b51574cc9a138d9ee91efef78470433d166fe08ccd246a85751fe7f9"
+    },
+    {
+      "path": "backend-analysis/geometry_verify.py",
+      "bytes": 7119,
+      "sha256": "6265b22d990258e6e986f1be79441b822b58aead2c687698321d64b87b1a72bf"
+    },
+    {
+      "path": "backend-analysis/source-manifest.json",
+      "bytes": 2518,
+      "sha256": "4b9dc4e8320bffab0275c3cc1142f54a3a27c26f307fcff5af5f4311e2ec92d5"
+    },
+    {
+      "path": "backend-analysis/test_geometry.py",
+      "bytes": 3279,
+      "sha256": "66c7d32bf7633e250fc60ec5608f518fd00fadc56ee99c76918e0b0a506c0eff"
+    },
+    {
+      "path": "backend-analysis/upstream/CollapsedGeometry.swift",
+      "bytes": 3127,
+      "sha256": "edd612b3dded2ad177723a00cb4c40fc6097ccea1ed7b61a003e6dbe6be75fc6"
+    },
+    {
+      "path": "backend-analysis/upstream/HBNativeVisibilityShim.m",
+      "bytes": 4454,
+      "sha256": "79fe1bfe8c50b0f6333221ead443cf906278ede0943d6501aa6d36691eb8d4e2"
+    },
+    {
+      "path": "backend-analysis/upstream/Hidden-LICENSE",
+      "bytes": 1108,
+      "sha256": "a02552d13b5aec0b1cf678ee10664c36897f3e18f228e0cbe191058c19843e8f"
+    },
+    {
+      "path": "backend-analysis/upstream/MenubarHide-LICENSE",
+      "bytes": 1109,
+      "sha256": "f8955bdd4d79ebd4fd87239c7a75b739933d79af1f8a79790390d895c0ffb366"
+    },
+    {
+      "path": "backend-analysis/upstream/MenubarHide-README.md",
+      "bytes": 12257,
+      "sha256": "65ede3060b61ee92e46de893137a755d874d7c88ad8d4e5d9ebb35bf03e3800f"
+    },
+    {
+      "path": "backend-analysis/upstream/NativeVisibilityEngine.swift",
+      "bytes": 66913,
+      "sha256": "5ca399070276e131f632a43aede7fc5a0cd1e091296d3582947ffbc76bc709da"
+    },
+    {
+      "path": "protocol/RUNBOOK.zh-CN.md",
+      "bytes": 17028,
+      "sha256": "8865758e2c54148b1c89314484ad01565dcc5b5bffe4f4c2440268ad05faa612"
+    },
+    {
+      "path": "protocol/current-evaluation.json",
+      "bytes": 15265,
+      "sha256": "565c787c021ab421e540a1d19640d5601f1711f6501fadf7728d60847f9969fd"
+    },
+    {
+      "path": "protocol/results-template.json",
+      "bytes": 14714,
+      "sha256": "8a8710b231ab62f4fac153e402e49a12f996ceefe8ce737ab56ec00764836dbc"
+    },
+    {
+      "path": "protocol/test-cases.json",
+      "bytes": 40883,
+      "sha256": "c2df0e1ff5559f59e16451c29aef8f3924f6b5653befb057ef09bf75fce3a805"
+    },
+    {
+      "path": "results/controller-shell.log",
+      "bytes": 15,
+      "sha256": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72"
+    },
+    {
+      "path": "results/current-environment.json",
+      "bytes": 810,
+      "sha256": "97e7f8324d4180791514c940e5dc17c3497954f7a9c1e419cdf63400b3651682"
+    },
+    {
+      "path": "results/current-evaluation.json",
+      "bytes": 15296,
+      "sha256": "46b573f02cf6f6da6ecc76984d9ee6c7c2b081d4e14fed7eba909cd4107e5897"
+    },
+    {
+      "path": "results/current-preflight-evaluation.log",
+      "bytes": 15311,
+      "sha256": "9cbb4742e85fcc5a37219df3a76f2f8c85d3f1bcb1def3e92c1870bf585bf005"
+    },
+    {
+      "path": "results/current-preflight-run.json",
+      "bytes": 15074,
+      "sha256": "a8994cce1a437b07c8bf7ca83ff18f4b17929226ad94a39624209aac5bbf0d06"
+    },
+    {
+      "path": "results/evaluator-unit-tests.log",
+      "bytes": 3466,
+      "sha256": "e8a76a96ffec85f0f2d6d42eb36e08e4e4ea2fea1321cab7cfc3b16e4ec7d989"
+    },
+    {
+      "path": "results/fixture-shell.log",
+      "bytes": 15,
+      "sha256": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72"
+    },
+    {
+      "path": "results/geometry-results.json",
+      "bytes": 11258,
+      "sha256": "14ec2c7e4fcc6b1d969d5de1ad897d23ad8452d88d4c4d532a97637990802ee1"
+    },
+    {
+      "path": "results/geometry-samples.log",
+      "bytes": 240,
+      "sha256": "3f18d2dea15966d935792413715c9084cece18d8477cad04646d06299b626215"
+    },
+    {
+      "path": "results/geometry-unit-tests.log",
+      "bytes": 1462,
+      "sha256": "192cf921930caf94e2241a14e85cfa6404f099de442eafdf87cf6f3a4bab5ee0"
+    },
+    {
+      "path": "results/nonmac-build-guard.log",
+      "bytes": 101,
+      "sha256": "87259a10801f65c4447186382f886c0eed8fd59e03f2197d46a784df868f786f"
+    },
+    {
+      "path": "results/portable-shell.log",
+      "bytes": 15,
+      "sha256": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72"
+    },
+    {
+      "path": "results/portable-validation.json",
+      "bytes": 5768,
+      "sha256": "d1c288540a2eb4ac8f53543300c7bb5b40e600c1a67bb9b85a2e50e1d1612972"
+    },
+    {
+      "path": "results/source-revisions.json",
+      "bytes": 3123,
+      "sha256": "2953345e8a26bf2edada3477742b6697aa90065b9b29590711fe58993344190e"
+    },
+    {
+      "path": "scripts/build-macos.sh",
+      "bytes": 1737,
+      "sha256": "475afd78850ad32b28d4f84b914f4af88744e82f1a8b788cab82b099a8eb2f20"
+    },
+    {
+      "path": "scripts/run-portable-checks.sh",
+      "bytes": 325,
+      "sha256": "ff987623ebdb6bc6da190673a666bf1db001b56f3beff61fa61e57ba6a473d6f"
+    },
+    {
+      "path": "tests/test_evaluate_results.py",
+      "bytes": 15169,
+      "sha256": "6f9dbe695e6bee6d56fce2191f3fa1a49bd458b74324df0bdd5e78a1874af8a4"
+    },
+    {
+      "path": "tools/evaluate_results.py",
+      "bytes": 26614,
+      "sha256": "621a0c7c6247f62ceb3861e3cc1d33d299e18532c8765804e11244620224a76a"
+    },
+    {
+      "path": "tools/preflight.py",
+      "bytes": 2481,
+      "sha256": "568a93131d48b3efb4f27d92ac57730c66f9952321bf432d0f4fdf6ee1912c0c"
+    },
+    {
+      "path": "tools/verify_portable.py",
+      "bytes": 5565,
+      "sha256": "522acd89b903df6d72f51b1c4c73e76f655568c3408ba5f56425e53065443c9a"
+    },
+    {
+      "path": "第三轮_验证启动与实际结果.md",
+      "bytes": 12127,
+      "sha256": "969843e40435fa2297860e6717108de4f4b7b0fcbf2d967514c5a1ee1b5eecd7"
+    }
+  ]
+}

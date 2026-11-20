@@ -1,0 +1,25 @@
+{
+  "schema": "menuvalidation.preflight.v1",
+  "captured_at_utc": "2026-11-20T05:26:45.313868+00:00",
+  "platform": "Linux",
+  "architecture": "x86_64",
+  "python_version": "3.12.14",
+  "os_version": "6.18.57",
+  "os_build": null,
+  "tool_presence": {
+    "python3": true,
+    "swift": false,
+    "swiftc": false,
+    "clang": false,
+    "xcrun": false,
+    "xcodebuild": false
+  },
+  "macos_sdk_version": null,
+  "build_preflight": "blocked",
+  "macos_build_status": "not_run",
+  "macos_runtime_status": "not_run",
+  "macos_runtime_cases_executed": 0,
+  "private_assertion_activated": false,
+  "machine_identity_collected": false,
+  "note": "Prerequisite presence is not a successful compile or behavior test. No hostname, serial, user name, screen image, application inventory or TCC state was collected."
+}

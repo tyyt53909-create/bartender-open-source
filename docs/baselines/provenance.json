@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.2",
+  "purpose": "Portable historical inputs; original experimental conclusions preserved. Only private navigation links normalized.",
+  "files": [
+    {
+      "path": "product-design-v0.1.md",
+      "source_label": "调酒师开源版_初版产品与技术方案_v0.1.md",
+      "original_bytes": 56648,
+      "original_sha256": "449761781a842f671823185b07ee5e9673aa2bb7199000101f92d6b69909553a",
+      "archived_bytes": 56475,
+      "archived_sha256": "f78cb36d8b5afc36ad6bd45a7bead431105ae8274a317f2d104206e54edceb1e",
+      "transformation": {
+        "private_links_to_relative_paths": 2,
+        "research_results_changed": false
+      }
+    },
+    {
+      "path": "first-development-taskbook-v0.1.md",
+      "source_label": "调酒师开源版_首轮开发任务书_v0.1.md",
+      "original_bytes": 15440,
+      "original_sha256": "7c7240119acb49dd76e6b91ee0dbc77559f1fe4df20067b8ecd2a992fdd1e699",
+      "archived_bytes": 15175,
+      "archived_sha256": "1150b78c351a6eaf8bee59eb14afbc3c3c56bdf16a78e9ad2dd37efc8979daf3",
+      "transformation": {
+        "private_links_to_relative_paths": 3,
+        "research_results_changed": false
+      }
+    },
+    {
+      "path": "feature-technical-review-r2.md",
+      "source_label": "Bartender_6_7_Pro_功能与技术评审_第二轮.md",
+      "original_bytes": 47232,
+      "original_sha256": "8f0a68985b6f58af7adcf45945cee6aa3bf97ac9b292daf378988047688764bd",
+      "archived_bytes": 47232,
+      "archived_sha256": "8f0a68985b6f58af7adcf45945cee6aa3bf97ac9b292daf378988047688764bd",
+      "transformation": {
+        "private_links_to_relative_paths": 0,
+        "research_results_changed": false
+      }
+    }
+  ],
+  "lab_snapshot": {
+    "path": "../../menubar-validation-lab/",
+    "manifest": "../../menubar-validation-lab/PACKAGE-MANIFEST.json",
+    "sha256": "c685eae57ceb863e6170c7dcd3414975cf1f4f37e419a0aa4a842b874b33d18b",
+    "listed_files": 53,
+    "macos_results": "not_run"
+  }
+}

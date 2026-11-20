@@ -1,0 +1,28 @@
+{
+  "template_status": "template_not_executed",
+  "template_for": "WorkerResult",
+  "schema_ref": "../contracts/worker-result.schema.json",
+  "instruction": "Copy payload into a new evidence record; replace every null with observed data or an explicitly nullable value. Never submit this envelope or treat placeholders as evidence.",
+  "payload": {
+    "schema_version": "0.2",
+    "record_type": "WorkerResult",
+    "task_id": null,
+    "attempt_id": null,
+    "run_id": null,
+    "fencing_token": null,
+    "task_spec_sha256": null,
+    "contract_sha": null,
+    "claimed_outcome": null,
+    "summary": null,
+    "base_sha": null,
+    "head_sha": null,
+    "changed_paths": null,
+    "checks": null,
+    "artifacts": null,
+    "blockers": null,
+    "effective_model_id": null,
+    "native_session_id": null,
+    "run_manifest_ref": null,
+    "reported_at": null
+  }
+}

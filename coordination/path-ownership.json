@@ -1,0 +1,227 @@
+{
+  "schema_version": "0.2",
+  "scope_matching": "Exact file, or POSIX directory prefix ending in /. No automatic expansion from role defaults.",
+  "notes": [
+    "Ownership is not runtime permission. Source changes need the current task scope and review.",
+    "Generated outputs belong to their generator; edit source/template, then render.",
+    "Archived inputs are immutable in this starter snapshot. New experiments require explicit task scopes and new provenance; Git baseline preserves historical bytes."
+  ],
+  "required_existing_paths": {
+    "OPS-01": [
+      "AGENTS.md",
+      "coordination/roles.json",
+      "contracts/task.schema.json"
+    ],
+    "OPS-02": [
+      "coordination/models.json",
+      "coordination/hosts.json"
+    ],
+    "OPS-04": [
+      "coordination/tasks.json",
+      "docs/task-book.md",
+      "docs/coordination-board.md",
+      "tools/render_docs.py"
+    ],
+    "OPS-07": [
+      "coordination/policies.json"
+    ]
+  },
+  "entries": [
+    {
+      "path": "AGENTS.md",
+      "mode": "source",
+      "owner_task": "OPS-01"
+    },
+    {
+      "path": "README.md",
+      "mode": "source",
+      "owner_task": "OPS-01"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "source",
+      "owner_task": "OPS-01"
+    },
+    {
+      "path": "contracts/",
+      "mode": "source",
+      "owner_task": "OPS-01"
+    },
+    {
+      "path": "templates/",
+      "mode": "source",
+      "owner_task": "OPS-01"
+    },
+    {
+      "path": "roles/",
+      "mode": "source",
+      "owner_task": "OPS-01"
+    },
+    {
+      "path": "coordination/roles.json",
+      "mode": "source",
+      "owner_task": "OPS-01"
+    },
+    {
+      "path": "coordination/document-templates/",
+      "mode": "source",
+      "owner_task": "OPS-01"
+    },
+    {
+      "path": "coordination/models.json",
+      "mode": "source",
+      "owner_task": "OPS-02"
+    },
+    {
+      "path": "coordination/hosts.json",
+      "mode": "source",
+      "owner_task": "OPS-02"
+    },
+    {
+      "path": "docs/adr/build-layout.md",
+      "mode": "source",
+      "owner_task": "OPS-03"
+    },
+    {
+      "path": "coordination/tasks.json",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "coordination/path-ownership.json",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "coordination/README.md",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "tools/render_docs.py",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "tools/render_board.py",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "tools/render_task_book.py",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "tools/validate_plan.py",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "tools/gate_eval.py",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "tools/requirements.txt",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "tests/",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "docs/package-checks.md",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "docs/audit-v0.2.md",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "docs/project-plan.md",
+      "mode": "generated",
+      "owner_task": "OPS-04",
+      "generator": "tools/render_docs.py"
+    },
+    {
+      "path": "docs/task-book.md",
+      "mode": "generated",
+      "owner_task": "OPS-04",
+      "generator": "tools/render_docs.py"
+    },
+    {
+      "path": "docs/agent-team-architecture.md",
+      "mode": "generated",
+      "owner_task": "OPS-04",
+      "generator": "tools/render_docs.py"
+    },
+    {
+      "path": "docs/coordination-board.md",
+      "mode": "generated",
+      "owner_task": "OPS-04",
+      "generator": "tools/render_docs.py"
+    },
+    {
+      "path": "docs/dependency-map.md",
+      "mode": "generated",
+      "owner_task": "OPS-04",
+      "generator": "tools/render_docs.py"
+    },
+    {
+      "path": "docs/adapter-contract.md",
+      "mode": "source",
+      "owner_task": "OPS-05"
+    },
+    {
+      "path": "coordination/policies.json",
+      "mode": "source",
+      "owner_task": "OPS-07"
+    },
+    {
+      "path": "docs/gate-evaluation.md",
+      "mode": "source",
+      "owner_task": "OPS-07"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "source",
+      "owner_task": "OPS-08"
+    },
+    {
+      "path": "tools/package_starter.py",
+      "mode": "source",
+      "owner_task": "OPS-08"
+    },
+    {
+      "path": "MANIFEST.json",
+      "mode": "generated",
+      "owner_task": "OPS-08",
+      "generator": "tools/package_starter.py"
+    },
+    {
+      "path": "docs/baselines/",
+      "mode": "archived",
+      "owner_task": null
+    },
+    {
+      "path": "menubar-validation-lab/",
+      "mode": "archived",
+      "owner_task": null
+    },
+    {
+      "path": "docs/check-results.json",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    },
+    {
+      "path": "docs/validation/",
+      "mode": "source",
+      "owner_task": "OPS-04"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "retrieved_source_text",
+  "retrieved_date": "2026-11-20",
+  "hash_scope": "Packaged UTF-8 text bytes, not Git object IDs or a claim of runtime testing",
+  "sources": [
+    {
+      "path": "upstream/CollapsedGeometry.swift",
+      "source_url": "https://raw.githubusercontent.com/junior-rj/menubar-hide/a4476bfe81a9a84ac94f8dfb273c4eaad8f9e960/MenubarHide/CollapsedGeometry.swift",
+      "source_commit": "a4476bfe81a9a84ac94f8dfb273c4eaad8f9e960",
+      "sha256": "edd612b3dded2ad177723a00cb4c40fc6097ccea1ed7b61a003e6dbe6be75fc6",
+      "bytes": 3127
+    },
+    {
+      "path": "upstream/MenubarHide-README.md",
+      "source_url": "https://raw.githubusercontent.com/junior-rj/menubar-hide/a4476bfe81a9a84ac94f8dfb273c4eaad8f9e960/README.md",
+      "source_commit": "a4476bfe81a9a84ac94f8dfb273c4eaad8f9e960",
+      "sha256": "65ede3060b61ee92e46de893137a755d874d7c88ad8d4e5d9ebb35bf03e3800f",
+      "bytes": 12257
+    },
+    {
+      "path": "upstream/MenubarHide-LICENSE",
+      "source_url": "https://raw.githubusercontent.com/junior-rj/menubar-hide/a4476bfe81a9a84ac94f8dfb273c4eaad8f9e960/LICENSE",
+      "source_commit": "a4476bfe81a9a84ac94f8dfb273c4eaad8f9e960",
+      "sha256": "f8955bdd4d79ebd4fd87239c7a75b739933d79af1f8a79790390d895c0ffb366",
+      "bytes": 1109
+    },
+    {
+      "path": "upstream/HBNativeVisibilityShim.m",
+      "source_url": "https://raw.githubusercontent.com/consolelabs/hidden/ee3af2475431540ddfa211b9e1e64b08a156f8f0/hidden/Features/StatusBar/Engine/Native/HBNativeVisibilityShim.m",
+      "source_commit": "ee3af2475431540ddfa211b9e1e64b08a156f8f0",
+      "sha256": "79fe1bfe8c50b0f6333221ead443cf906278ede0943d6501aa6d36691eb8d4e2",
+      "bytes": 4454
+    },
+    {
+      "path": "upstream/NativeVisibilityEngine.swift",
+      "source_url": "https://raw.githubusercontent.com/consolelabs/hidden/ee3af2475431540ddfa211b9e1e64b08a156f8f0/hidden/Features/StatusBar/Engine/NativeVisibilityEngine.swift",
+      "source_commit": "ee3af2475431540ddfa211b9e1e64b08a156f8f0",
+      "sha256": "5ca399070276e131f632a43aede7fc5a0cd1e091296d3582947ffbc76bc709da",
+      "bytes": 66913
+    },
+    {
+      "path": "upstream/Hidden-LICENSE",
+      "source_url": "https://raw.githubusercontent.com/consolelabs/hidden/ee3af2475431540ddfa211b9e1e64b08a156f8f0/LICENSE",
+      "source_commit": "ee3af2475431540ddfa211b9e1e64b08a156f8f0",
+      "sha256": "a02552d13b5aec0b1cf678ee10664c36897f3e18f228e0cbe191058c19843e8f",
+      "bytes": 1108
+    }
+  ]
+}

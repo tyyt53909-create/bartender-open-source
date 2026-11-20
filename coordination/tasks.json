@@ -1,0 +1,3343 @@
+{
+  "schema_version": "0.2",
+  "created_on": "2026-11-20",
+  "status": "planning_snapshot_not_connected",
+  "notes": [
+    "scope_paths 是建议仓库布局，不表示文件或远端已经创建",
+    "depends_on 仅在依赖任务 accepted 后满足；execution_gates 另外检查",
+    "blocked_reasons 描述当前设计的接入前置，任务仍 planned，实际派单时重新检查",
+    "模型别名均为用户指定候选，actual_model_id 为 null，不能按名称假定执行器可调用",
+    "OPS 控制面优先薄协调；可用的一个执行器足以开始，不要求两套适配器同时完成",
+    "工程共享清单和工作流更改统一由集成者序列处理；每任务授权前检查 scope overlap，不把 glob 当作沙盒",
+    "gate_definitions 带结构，包内有离线参考求值器；尚未部署在线调度。未知不等于通过。",
+    "任务规范存 Git；真实运行账本由单协调者持有；本 JSON 是规划快照。",
+    "bootstrap 手动执行不等待自身适配器完成，但仍登记任务、工作区、检查与人工收据。",
+    "phase 表示归属工作包，wave 表示推荐启动波次；波次是滚动计划，不是同波所有任务可同时 ready。",
+    "validation_resource_expression 是验收资源的权威语义，validation_compute_classes 是与之校验一致的资源摘要；all_of/any_of 不由列表推测。"
+  ],
+  "state_model": {
+    "normal": [
+      "planned",
+      "ready",
+      "running",
+      "submitted",
+      "validating",
+      "merge_queued",
+      "integrated",
+      "accepted"
+    ],
+    "side": [
+      "changes_requested",
+      "blocked",
+      "cancelled"
+    ],
+    "failed_is_attempt_result": true
+  },
+  "limits": {
+    "implementation_runs_max": 3,
+    "model_sessions_initial_max": 4,
+    "reserve_review_capacity": true,
+    "macos_gui_per_host_max": 1,
+    "subagent_depth_initial_max": 1,
+    "subagents_per_task_initial_max": 2,
+    "subagent_budget_inherits_parent": true
+  },
+  "tasks": [
+    {
+      "id": "OPS-01",
+      "title": "建立项目章程、职责和变更契约",
+      "role": "lead",
+      "model_alias": "gpt6.2astra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [],
+      "execution_gates": [],
+      "scope_paths": [
+        "AGENTS.md",
+        "README.md",
+        "LICENSE",
+        "coordination/roles.json",
+        "roles/",
+        "contracts/",
+        "templates/",
+        "coordination/document-templates/",
+        "docs/adr/initial-contracts.md",
+        "docs/baselines/"
+      ],
+      "acceptance_criteria": [
+        "继承产品 F01-F12 和 M0-M5，不擅自扩大首版范围",
+        "定义单任务负责人、写入范围、验收者、M1 总门槛和发布授权边界",
+        "所有代理读取相同版本的任务契约"
+      ],
+      "evidence_required": [
+        "版本化章程",
+        "角色矩阵",
+        "契约 hash"
+      ],
+      "feature_ids": [],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "目标远端仓库尚未指定；本轮仅生成设计包"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "workflow",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "7271422dfc7d083e6abcc180fdd8e49d92d9c2b30af77b4431404e275aa9243d",
+      "phase": "W0",
+      "wave": "W0",
+      "model_candidates": [
+        "gpt6.2astra"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "OPS-02",
+      "title": "登记执行器、模型路由和运行主机",
+      "role": "architect",
+      "model_alias": "gpt6.2astra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "OPS-01"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "coordination/models.json",
+        "coordination/hosts.json",
+        "tools/agent-control/probes/"
+      ],
+      "acceptance_criteria": [
+        "模型别名与 provider/实际 model ID 分开，未核验不得标为可调度",
+        "记录 Codex/OpenCode 实际版本、授权方式、输入输出能力及主机标签",
+        "ocra 保留为未确认入口，不硬编码推测 API",
+        "路由失败明确阻塞或按预先批准的替代策略重排，不静默换模型"
+      ],
+      "evidence_required": [
+        "脱敏能力探测结果",
+        "model-route manifest",
+        "host capability manifest"
+      ],
+      "feature_ids": [],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "远端地址、真实模型 ID 与授权方式待环境接入时核验"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "workflow",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "df688c05b7c0e83e9d60499466f13b92a6b707f5e0f927934e94e7e73aee21a9",
+      "phase": "W0",
+      "wave": "W0",
+      "model_candidates": [
+        "gpt6.2astra"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "OPS-03",
+      "title": "准备独立工作区与可复现构建环境",
+      "role": "integrator",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "OPS-01"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "tools/agent-control/workspaces/",
+        "coordination/environments/",
+        "docs/adr/build-layout.md",
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/",
+        "tools/build/"
+      ],
+      "acceptance_criteria": [
+        "每个实现任务使用独立 branch 和 checkout/worktree，禁止共享可写目录",
+        "同机 worktree 与跨机器 clone 分开定义；工作树不被当作安全隔离",
+        "共享构建缓存与 DerivedData 不造成并发写入；保留 source SHA",
+        "采用根 Package.swift 映射当前 Packages/... 与 Tests/...；不引用越出嵌套包根的测试目录。",
+        "确立 XcodeGen 精确版本固定规则、project.yml 生成入口与隔离策略；本卡检查规则/脚本，实际 Mac 生成和构建由 APP-13 验收。生成工程不手改、不作为源文件权威。",
+        "新增文件在已定义 target 下自动发现；新增 target、依赖或构建选项仍经共享 manifest 所有者串行集成。"
+      ],
+      "evidence_required": [
+        "工作区创建/清理演练",
+        "修改隔离检查",
+        "环境与路径清单"
+      ],
+      "feature_ids": [],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "实际仓库与远端执行主机待登记"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [
+        "本卡验收工作区隔离与构建生成规则，不声称 XcodeGen/Xcode 已在 Mac 实跑；真实工程生成、固定版本和编译验收归 APP-13，Linux CLI 接入不因该 Mac 检查等待。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "workflow",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "7075f79e3db6060f7d301e338e1e125030ef45a34cba7471765ab601c21cfbe8",
+      "phase": "W0",
+      "wave": "W0",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "OPS-04",
+      "title": "建立任务数据与最小协调板",
+      "role": "core",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "OPS-01"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "coordination/tasks.json",
+        "coordination/path-ownership.json",
+        "coordination/README.md",
+        "coordination/events/",
+        "coordination/board/",
+        "tools/render_docs.py",
+        "tools/render_board.py",
+        "tools/render_task_book.py",
+        "tools/validate_plan.py",
+        "tools/gate_eval.py",
+        "tools/requirements.txt",
+        "tests/",
+        "docs/project-plan.md",
+        "docs/task-book.md",
+        "docs/agent-team-architecture.md",
+        "docs/coordination-board.md",
+        "docs/dependency-map.md",
+        "docs/package-checks.md",
+        "docs/audit-v0.2.md",
+        "docs/check-results.json",
+        "docs/validation/"
+      ],
+      "acceptance_criteria": [
+        "先用版本化任务 JSON、追加事件和生成的 Markdown/HTML 看板；不建通用平台",
+        "单协调者提交状态变更，worker 只能上报结果",
+        "看板显示依赖、阻塞、执行器/模型/主机、SHA、证据和下一步",
+        "任务 accepted 与产品 gate 通过分开显示",
+        "任务书、协调板、波次/需求/门槛视图由同一任务目录生成；--check 能拒绝人工改生成文档造成的漂移。"
+      ],
+      "evidence_required": [
+        "任务 schema",
+        "示例任务状态迁移",
+        "从任务数据重建的看板"
+      ],
+      "feature_ids": [],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "workflow",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "5d28a024597b7d0160bace503df44ae97ba4af725cb6fbdc0dc6aad4a20217f7",
+      "phase": "W0",
+      "wave": "W0",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "OPS-05",
+      "title": "接入 Codex 的薄执行适配器",
+      "role": "integrator",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "OPS-02",
+        "OPS-03",
+        "OPS-04"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "tools/agent-control/adapters/codex/",
+        "docs/adapter-contract.md"
+      ],
+      "acceptance_criteria": [
+        "按固定 CLI 版本启动任务并记录结构化输出、退出码和会话标识",
+        "从 TaskSpec 生成输入，不把旧聊天摘要当成唯一任务来源",
+        "支持取消请求、结果未知和进程确认退出；不把命令返回当验收通过"
+      ],
+      "evidence_required": [
+        "无外部副作用的 smoke run",
+        "脱敏运行 manifest",
+        "取消与异常退出记录"
+      ],
+      "feature_ids": [],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "需具备可调用 Codex 环境与已验证路由"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "workflow",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "9e78c9a5381e6588a4bae7e04847b5dcbd220e7abdc620b156cd81d5e9bc6ba9",
+      "phase": "W0",
+      "wave": "W1",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "OPS-06",
+      "title": "接入 OpenCode 的薄执行适配器",
+      "role": "integrator",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "OPS-02",
+        "OPS-03",
+        "OPS-04"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "tools/agent-control/adapters/opencode/"
+      ],
+      "acceptance_criteria": [
+        "按实际版本验证 CLI/server/agent 配置，不混用不同版本字段",
+        "与 Codex 输出同一 WorkerResult 契约",
+        "模型列表与提供商实际能力核验通过；不可用时不阻塞已可用 Codex 首条开发线"
+      ],
+      "evidence_required": [
+        "实际版本与模型探测",
+        "smoke run",
+        "停止/恢复语义记录"
+      ],
+      "feature_ids": [],
+      "priority": "P1",
+      "status": "planned",
+      "blocked_reasons": [
+        "当前未确认 OpenCode 安装、版本与模型可用性"
+      ],
+      "optional_for_first_lane": true,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "workflow",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "110d5d17bb87c532293aecd7d50f2d1f7fbb5573a39c8a5d890384063e6bf048",
+      "phase": "W0",
+      "wave": "W2",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "docs/adapter-contract.md"
+      ]
+    },
+    {
+      "id": "OPS-07",
+      "title": "实现有限调度、资源租约和预算",
+      "role": "core",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "OPS-03",
+        "OPS-04"
+      ],
+      "execution_gates": [
+        "at_least_one_runner_ready"
+      ],
+      "scope_paths": [
+        "tools/agent-control/coordination/",
+        "coordination/policies.json",
+        "docs/gate-evaluation.md"
+      ],
+      "acceptance_criteria": [
+        "第一阶段单协调者与有限脚本即可，手工分配也必须记录同一契约",
+        "依赖仅在 accepted 后释放；写范围冲突和 Mac GUI 主机锁会阻止派单",
+        "运行代次/租约 fencing 拒绝迟到提交；取消后确认实际进程退出才释放 GUI 主机",
+        "子代理计入父任务与全局并发/预算，不自动获得新写范围或合并权限",
+        "实现 true/false/unknown 门槛语义并与离线 gate_eval 合同样例一致；只有通过 automation_runtime_ready 后才启用自动派工。"
+      ],
+      "evidence_required": [
+        "一次并行任务演练",
+        "过期 lease/迟到结果演练",
+        "预算与取消状态记录"
+      ],
+      "feature_ids": [],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "workflow",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "a0aaffd4eb51aed62213a178bfe670db255aef2a8cf6d892890ec03630e2dff8",
+      "phase": "W0",
+      "wave": "W2",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "OPS-08",
+      "title": "建立独立审查、CI 与单一合并通道",
+      "role": "integrator",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "OPS-01",
+        "OPS-03",
+        "OPS-04"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        ".github/workflows/",
+        ".github/CODEOWNERS",
+        "tools/agent-control/integration/",
+        "docs/merge-policy.md",
+        "tools/package_starter.py",
+        "MANIFEST.json",
+        ".gitignore"
+      ],
+      "acceptance_criteria": [
+        "作者与审查者不同 run；review 绑定 base/head/contract SHA",
+        "最新基线上的候选通过所需 CI 后才合并，改动或 rebase 使旧批准失效",
+        "worker 无 main 写权限，合并执行器执行已授权门槛",
+        "本地演练不冒充实际远端保护规则已配置",
+        "使用结构化 ReviewVerdict / RunManifest / IntegrationReceipt，校验来源和当前版本；不解析 Markdown 自由文本来推进状态。"
+      ],
+      "evidence_required": [
+        "候选合并演练",
+        "CI/审查证据绑定",
+        "失败阻止合并记录"
+      ],
+      "feature_ids": [],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "实际远端仓库与保护规则尚未配置"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "workflow",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "f2525c4de998af809c9bf433a94ea519af05946392da27faf2a8806d30c0a846",
+      "phase": "W0",
+      "wave": "W0",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-01",
+      "title": "固定产品端口、数据模型与模块契约",
+      "role": "architect",
+      "model_alias": "gpt6.2astra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "OPS-01"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "Packages/MenuBarCore/Contracts/",
+        "docs/adr/product-contracts.md"
+      ],
+      "acceptance_criteria": [
+        "定义 InventoryProvider/VisibilityBackend/AccessBackend，计划器无系统副作用",
+        "定义四层状态、身份、观察来源、能力粒度、ticket 和 epoch 语义",
+        "明确各模块所有权与兼容演进规则",
+        "共享工程文件由集成者串行落地；其他任务只提交所需变更说明，不直接竞争编辑"
+      ],
+      "evidence_required": [
+        "端口契约",
+        "数据模型",
+        "针对歧义/版本失效的必要样例"
+      ],
+      "feature_ids": [
+        "F01",
+        "F04",
+        "F06",
+        "F07",
+        "F08",
+        "F09"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu",
+        "macos_build"
+      ],
+      "required_environment_notes": [
+        "纯 Swift 检查仅在匹配工具链与依赖可用时在 Linux 执行；需要平台依赖则安排 macos_build。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ],
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "any_of": [
+          {
+            "resource_class": "linux_cpu",
+            "requires": "verified_swift_toolchain_and_portable_module"
+          },
+          {
+            "resource_class": "macos_build",
+            "requires": "verified_xcode_toolchain"
+          }
+        ],
+        "platform_dependent_checks_require": "macos_build"
+      },
+      "task_spec_sha256": "7b4e1344c10e705517739b476f3aa8e4aaa600a5923b3ee4919ee557a3ab1d8f",
+      "phase": "M0",
+      "wave": "W0",
+      "model_candidates": [
+        "gpt6.2astra"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-02",
+      "title": "真实 Mac 构建与无管理器基线",
+      "role": "validation",
+      "model_alias": "gpt6.1terra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "OPS-02",
+        "OPS-03"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "menubar-validation-lab/environment/",
+        "menubar-validation-lab/results/baseline/",
+        "menubar-validation-lab/build-fixes/"
+      ],
+      "acceptance_criteria": [
+        "在真实 Mac 编译已有 Lab 并记录实际工具链、OS build、硬件与 source hash",
+        "先验证同 App 三项目、右键、Option、子菜单和动态计数无管理器基线",
+        "故障恢复入口与实验退出步骤先成立",
+        "M0 门槛由本卡验收的独立 reviewer/lead 签发 GateDecision；作者不能用 accepted 或自己的报告打开门槛。"
+      ],
+      "evidence_required": [
+        "完整构建日志",
+        "匹配环境的基线结果",
+        "原始事件与观察记录"
+      ],
+      "feature_ids": [
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F08",
+        "F10"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "真实 Mac、交互桌面会话与观察条件未登记"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "research",
+      "scope_change_policy": "若编译修复必须触及现有 Lab 源文件，先精确增补当前 attempt scope 并取得排他写入，不把 build-fixes 目录当作唯一可修代码路径。",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "research_evidence_policy": "在已具备实际主机与相符基线的观察中，动作前置不成立时提交 precondition_failed/skipped_with_reason 与实测依据，未发生动作的日志不适用；完整负面研究可以 accepted，但能力不能 verified。缺主机、权限或没有实际观察仍为 blocked/not_run。",
+      "task_spec_sha256": "fe6dfa3139f6d30a541d4cfe6f8f188573e43036c13cb6712aa04f8a451be182",
+      "phase": "M0",
+      "wave": "W1",
+      "model_candidates": [
+        "gpt6.1terra"
+      ],
+      "research_task_note": "本卡真实构建或无管理器基线失败可用完整日志提交研究验收；M0_BASELINE_VERIFIED 继续关闭。缺 Mac 或没有执行记录仍为 blocked/not_run。"
+    },
+    {
+      "id": "APP-03",
+      "title": "扩展验证夹具与条件化协议 v0.2",
+      "role": "validation",
+      "model_alias": "gpt6.1terra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "APP-01",
+        "APP-02"
+      ],
+      "execution_gates": [
+        "M0_BASELINE_VERIFIED"
+      ],
+      "scope_paths": [
+        "menubar-validation-lab/Fixture/",
+        "menubar-validation-lab/protocol/v0.2/",
+        "menubar-validation-lab/tools/evaluator-v0.2/"
+      ],
+      "acceptance_criteria": [
+        "保留 v0.1 历史结果，增加超宽、重复身份、动态标题与晚到动作场景",
+        "普遍完整性与声明能力条件分别表达；缺硬件保持 blocked/not_run",
+        "评估器验证记录，不伪装为重新执行 UI"
+      ],
+      "evidence_required": [
+        "新协议/hash",
+        "夹具构建与行为记录",
+        "条件适用评估用例"
+      ],
+      "feature_ids": [
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F08",
+        "F09",
+        "F10"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "实现／编译不包含 GUI 通过；涉及界面、输入或真实屏幕证据时单独申请整机 GUI 租约。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "6888442428a37bff3551e44fb3a4f83a61d071ced4921dc8ea0282371d351782",
+      "phase": "M0",
+      "wave": "W1",
+      "model_candidates": [
+        "gpt6.1terra"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-04",
+      "title": "项目发现与唯一身份的 Mac 探测",
+      "role": "platform",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "APP-01",
+        "APP-03"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "menubar-validation-lab/experiments/identity/"
+      ],
+      "acceptance_criteria": [
+        "分开记录生产者、宿主、运行期引用与呈现",
+        "同 App 三项目、重排、重启与重复标识情况下不选第一项",
+        "当前可达性与动态字段来源真实记录"
+      ],
+      "evidence_required": [
+        "AX/对象观察快照",
+        "身份变化复现",
+        "不确定性清单"
+      ],
+      "feature_ids": [
+        "F04",
+        "F08",
+        "F09"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "需要实际 Mac GUI 独占时段"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "research",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "research_evidence_policy": "在已具备实际主机与相符基线的观察中，动作前置不成立时提交 precondition_failed/skipped_with_reason 与实测依据，未发生动作的日志不适用；完整负面研究可以 accepted，但能力不能 verified。缺主机、权限或没有实际观察仍为 blocked/not_run。",
+      "task_spec_sha256": "3575d81c4987738edee438b393e305c9a4a23b1c474794432432172b5050b943",
+      "phase": "M1",
+      "wave": "W1",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-05",
+      "title": "E26-A 不可见项目的精确 AX 访问",
+      "role": "platform",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "APP-04"
+      ],
+      "execution_gates": [
+        "host_macos_26"
+      ],
+      "scope_paths": [
+        "menubar-validation-lab/experiments/e26-ax/"
+      ],
+      "acceptance_criteria": [
+        "在真实目标不可见条件下，对唯一且声明 action 的对象只发一次动作",
+        "独立观察正确原菜单、可用位置、子菜单与结束结果",
+        "超时不盲目重发，逐 Item-action 声明结果",
+        "同一候选完成适用的系统状态、输入与恢复完整性观察；失败保留，不从另一 OS 借成绩"
+      ],
+      "evidence_required": [
+        "macOS 26 匹配基线",
+        "原始 action 与 UI 观察",
+        "逐动作能力表",
+        "同条件下系统状态、输入与恢复的共同门槛记录"
+      ],
+      "feature_ids": [
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F08",
+        "F07",
+        "F10"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "仅适用实际 macOS 26；未具备条件时保持 blocked"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "research",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "research_evidence_policy": "在已具备实际主机与相符基线的观察中，动作前置不成立时提交 precondition_failed/skipped_with_reason 与实测依据，未发生动作的日志不适用；完整负面研究可以 accepted，但能力不能 verified。缺主机、权限或没有实际观察仍为 blocked/not_run。",
+      "task_spec_sha256": "1322ac76e7a8d8697e8f32f4356f78ac6b6031d207df5842c3e67fddb5ae93fc",
+      "phase": "M1",
+      "wave": "W1",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-06",
+      "title": "E26-B 临时可见槽位研究",
+      "role": "platform",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "APP-04"
+      ],
+      "execution_gates": [
+        "host_macos_26"
+      ],
+      "scope_paths": [
+        "menubar-validation-lab/experiments/e26-slot/"
+      ],
+      "acceptance_criteria": [
+        "源真实可命中、目标槽足够、输入空闲和身份可观察才尝试",
+        "独立研究构建默认关闭，不用负坐标猜测完全离屏目标",
+        "用户中途修改时放弃旧恢复，并记录输入与菜单副作用",
+        "同一候选完成适用的系统状态、输入与恢复完整性观察；失败保留，不从另一 OS 借成绩",
+        "可接受前置不成立的完整负面研究；实际移动步骤必须在全部前置通过后执行。"
+      ],
+      "evidence_required": [
+        "前置条件证明",
+        "移动/恢复原始记录",
+        "用户修改保留结果",
+        "同条件下系统状态、输入与恢复的共同门槛记录"
+      ],
+      "feature_ids": [
+        "F03",
+        "F05",
+        "F06",
+        "F07",
+        "F10"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "仅适用实际 macOS 26 且源可命中；不满足不能算失败后自动绕过"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [
+        "source_is_really_hittable",
+        "destination_capacity_confirmed",
+        "input_idle",
+        "identity_and_neighbors_revalidated"
+      ],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "research",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "research_evidence_policy": "在已具备实际主机与相符基线的观察中，动作前置不成立时提交 precondition_failed/skipped_with_reason 与实测依据，未发生动作的日志不适用；完整负面研究可以 accepted，但能力不能 verified。缺主机、权限或没有实际观察仍为 blocked/not_run。",
+      "task_spec_sha256": "64c08392531ce616fd7abf632931fa5a4e967eafcee0f8352f88e625b7894b88",
+      "phase": "M1",
+      "wave": "W1",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-07",
+      "title": "E27-A 原生 overflow 研究",
+      "role": "platform",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "APP-04"
+      ],
+      "execution_gates": [
+        "host_macos_27"
+      ],
+      "scope_paths": [
+        "menubar-validation-lab/experiments/e27-overflow/"
+      ],
+      "acceptance_criteria": [
+        "真实 macOS 27 的几何前置与容量成立后再进入候选",
+        "同 App 三项目逐一验证原菜单、右键、Option、子菜单和动态状态",
+        "观察时钟、通知中心、摄像头/麦克风及来源提示",
+        "同一候选完成适用的系统状态、输入与恢复完整性观察；失败保留，不从另一 OS 借成绩。"
+      ],
+      "evidence_required": [
+        "macOS 27 匹配基线",
+        "候选参数与原始结果",
+        "系统状态观察",
+        "同条件下系统状态、输入与恢复的共同门槛记录"
+      ],
+      "feature_ids": [
+        "F01",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F10"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "未登记 macOS 27 主机；不升级既有机器以填满矩阵"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "research",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "research_evidence_policy": "在已具备实际主机与相符基线的观察中，动作前置不成立时提交 precondition_failed/skipped_with_reason 与实测依据，未发生动作的日志不适用；完整负面研究可以 accepted，但能力不能 verified。缺主机、权限或没有实际观察仍为 blocked/not_run。",
+      "task_spec_sha256": "cf65bd34f9dc5289decb0667bfff95617bcd303c1670f241fa673fbaaa65733e",
+      "phase": "M1",
+      "wave": "W1",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-08",
+      "title": "审查 M1 证据并选定首条产品路线",
+      "role": "reviewer",
+      "model_alias": "grok4.7",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "APP-04"
+      ],
+      "execution_gates": [
+        "M1_ROUTE_EVIDENCE_READY"
+      ],
+      "scope_paths": [
+        "docs/decisions/m1-route/",
+        "menubar-validation-lab/capabilities/"
+      ],
+      "acceptance_criteria": [
+        "逐路线独立裁决；至少一条完整任务通过才打开产品 M1 gate，全部失败也可交付 accepted 的 No-Go 研究决定。",
+        "其他路线未测保持其真实状态，不为获得 gate 改成 passed",
+        "无合格路线时维持技术预览，给出下一项能消除不确定性的实验",
+        "输出结构化 ReviewVerdict 与 GateDecision，绑定 source/scope/context；首选 Grok 4.7，已配置回退为独立 Astra run，实际路由必须记录。"
+      ],
+      "evidence_required": [
+        "不可变证据引用与 hash",
+        "独立审查结论",
+        "声明支持的条件与动作集合"
+      ],
+      "feature_ids": [
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F10"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "decision",
+      "review_policy": "independent_from_all_subject_authors; trusted_authority_validation_required; no_recursive_review_of_review",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "40c0e2dd2b928ba31104b6ea39d4993a9060cb991adbd73f2fc56e3cf4cf2178",
+      "phase": "M1",
+      "wave": "W1",
+      "model_candidates": [
+        "grok4.7",
+        "gpt6.2astra"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-09",
+      "title": "实现身份解析、能力表与观察模型",
+      "role": "core",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "APP-01"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "Packages/MenuBarCore/Identity/",
+        "Packages/MenuBarCore/Capabilities/",
+        "Tests/Core/IdentityTests/"
+      ],
+      "acceptance_criteria": [
+        "唯一绑定、歧义、未知和未匹配配置保留都有明确输出",
+        "禁止以动态标题/PID/坐标作为跨重启身份",
+        "普通数值刷新不递增结构 epoch"
+      ],
+      "evidence_required": [
+        "纯模型必要测试",
+        "接口使用样例",
+        "错误配对反例"
+      ],
+      "feature_ids": [
+        "F04",
+        "F08",
+        "F09"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu",
+        "macos_build"
+      ],
+      "required_environment_notes": [
+        "纯 Swift 检查仅在匹配工具链与依赖可用时在 Linux 执行；需要平台依赖则安排 macos_build。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "any_of": [
+          {
+            "resource_class": "linux_cpu",
+            "requires": "verified_swift_toolchain_and_portable_module"
+          },
+          {
+            "resource_class": "macos_build",
+            "requires": "verified_xcode_toolchain"
+          }
+        ],
+        "platform_dependent_checks_require": "macos_build"
+      },
+      "task_spec_sha256": "b278fb33771bc517370bc3eeae6c1eec3fb716651d037c93516f8d1fde510000",
+      "phase": "M2",
+      "wave": "W1",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-10",
+      "title": "实现串行协调器与交互租约",
+      "role": "core",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "APP-01",
+        "APP-09"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "Packages/MenuBarCore/Coordination/",
+        "Tests/Core/CoordinationTests/"
+      ],
+      "acceptance_criteria": [
+        "单消费者执行副作用命令，await 后重验 ticket",
+        "租约覆盖实际显隐域，unknown 时不自动收起",
+        "取消/迟到回调/本操作预期变更不产生竞争或自我失效"
+      ],
+      "evidence_required": [
+        "并发状态机测试",
+        "事件序列与不变量",
+        "模拟超时后的结果"
+      ],
+      "feature_ids": [
+        "F06",
+        "F07"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu",
+        "macos_build"
+      ],
+      "required_environment_notes": [
+        "纯 Swift 检查仅在匹配工具链与依赖可用时在 Linux 执行；需要平台依赖则安排 macos_build。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "any_of": [
+          {
+            "resource_class": "linux_cpu",
+            "requires": "verified_swift_toolchain_and_portable_module"
+          },
+          {
+            "resource_class": "macos_build",
+            "requires": "verified_xcode_toolchain"
+          }
+        ],
+        "platform_dependent_checks_require": "macos_build"
+      },
+      "task_spec_sha256": "d06fa1e2e89a217aa31d00ddfa56f790e8f60bd2d98b86666edd23221a0bb87c",
+      "phase": "M2",
+      "wave": "W2",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-11",
+      "title": "实现本地配置、迁移与恢复记录",
+      "role": "core",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "APP-01"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "Packages/MenuBarPersistence/",
+        "Tests/Core/PersistenceTests/"
+      ],
+      "acceptance_criteria": [
+        "版本化 Codable JSON 原子替换并保留上一个有效版本",
+        "持久化用户意图，不保存活 AX 引用和旧坐标作为恢复指令",
+        "损坏/迁移失败/中断写入可恢复且保留用户数据"
+      ],
+      "evidence_required": [
+        "配置版本样例",
+        "写入故障与迁移测试",
+        "最小 journal 格式"
+      ],
+      "feature_ids": [
+        "F07",
+        "F11"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu",
+        "macos_build"
+      ],
+      "required_environment_notes": [
+        "纯 Swift 检查仅在匹配工具链与依赖可用时在 Linux 执行；需要平台依赖则安排 macos_build。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "any_of": [
+          {
+            "resource_class": "linux_cpu",
+            "requires": "verified_swift_toolchain_and_portable_module"
+          },
+          {
+            "resource_class": "macos_build",
+            "requires": "verified_xcode_toolchain"
+          }
+        ],
+        "platform_dependent_checks_require": "macos_build"
+      },
+      "task_spec_sha256": "be253f12d54e746fc152d385e861ec9d6ae77ec5e0384a009df3af85ada12720",
+      "phase": "M2",
+      "wave": "W1",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-12",
+      "title": "实现拓扑、坐标与受限几何规划",
+      "role": "platform",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "APP-01",
+        "APP-02"
+      ],
+      "execution_gates": [
+        "M0_BASELINE_VERIFIED"
+      ],
+      "scope_paths": [
+        "Packages/MenuBarPlatform/Topology/",
+        "Packages/MenuBarPlatform/Geometry/",
+        "Tests/TopologyTests/"
+      ],
+      "acceptance_criteria": [
+        "显式坐标空间、逻辑点/像素、display 与 topologyEpoch",
+        "负坐标、上下排列、混合缩放与容量反例不误判",
+        "纯计划器只返回计划，拒绝无效几何与不明确影响范围"
+      ],
+      "evidence_required": [
+        "转换与几何测试",
+        "真实屏幕输入样本",
+        "编译日志"
+      ],
+      "feature_ids": [
+        "F01",
+        "F03",
+        "F07"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "实现／编译不包含 GUI 通过；涉及界面、输入或真实屏幕证据时单独申请整机 GUI 租约。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "e41ae0a6ff2eefb0de30c3e0ea2f8f79fcb009c48878cb5cb7334dade67b6923",
+      "phase": "M2",
+      "wave": "W2",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-13",
+      "title": "实现 AppKit 外壳与稳定控制入口",
+      "role": "ui",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "APP-01",
+        "APP-02"
+      ],
+      "execution_gates": [
+        "M0_BASELINE_VERIFIED"
+      ],
+      "scope_paths": [
+        "Apps/MenuBarApp/AppShell/",
+        "Packages/MenuBarPlatform/Hotkeys/",
+        "Packages/MenuBarPlatform/LoginItem/"
+      ],
+      "acceptance_criteria": [
+        "常驻控制入口、窗口恢复入口和可配置快捷键可用",
+        "焦点、Esc、本工具面板生命周期有明确语义",
+        "用户选择登录启动，权限不足或快捷键冲突有反馈",
+        "未经 M1 放行不启用未知后端收纳",
+        "在实际 Mac 固定并记录 XcodeGen/Xcode/Swift/SDK 版本，从干净工作区生成 project.yml 对应工程并验证目标图、资源和构建；共享清单改动交 owner 串行处理。"
+      ],
+      "evidence_required": [
+        "本工具 UI 行为记录",
+        "快捷键/登录项实际状态",
+        "Mac 编译日志",
+        "精确生成器与工具链版本",
+        "干净工作区工程生成及 Mac 构建日志"
+      ],
+      "feature_ids": [
+        "F02",
+        "F09",
+        "F11",
+        "F12"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "实现／编译不包含 GUI 通过；涉及界面、输入或真实屏幕证据时单独申请整机 GUI 租约。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "d1b4f022ac2db93d5562638cd90e485fd69b067cf36ffccc73d2bebbee69a052",
+      "phase": "M2",
+      "wave": "W2",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-14",
+      "title": "实现基本目录、别名和过滤交互",
+      "role": "ui",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "APP-09",
+        "APP-13"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "Apps/MenuBarApp/UI/Directory/",
+        "Apps/MenuBarApp/UI/Settings/Organization/",
+        "Tests/DirectoryTests/"
+      ],
+      "acceptance_criteria": [
+        "名称/别名/App 名基本过滤，结果和选中身份稳定",
+        "打开原菜单、显示并定位、打开应用三种动作区分",
+        "歧义不可精确代理，状态未知不伪装实时",
+        "整理设置页表达常驻／普通收纳意图与真实控制粒度，手动整理后的当前布局、失败与未知状态均有明确反馈。"
+      ],
+      "evidence_required": [
+        "过滤与选择状态测试",
+        "目录交互记录",
+        "来源与新鲜度展示"
+      ],
+      "feature_ids": [
+        "F01",
+        "F04",
+        "F08",
+        "F12"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "实现／编译不包含 GUI 通过；涉及界面、输入或真实屏幕证据时单独申请整机 GUI 租约。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "ecbe5fcf651a35b01a2224e5a8cdfaef70f1f7d5d3ec6d6d8de01195808bb4b4",
+      "phase": "M2",
+      "wave": "W2",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-15",
+      "title": "接入选定路线的 Inventory 与 Access 适配器",
+      "role": "platform",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "APP-04",
+        "APP-08",
+        "APP-09"
+      ],
+      "execution_gates": [
+        "M1_PRODUCT_GATE_PASSED"
+      ],
+      "scope_paths": [
+        "Packages/MenuBarPlatform/Inventory/",
+        "Packages/MenuBarPlatform/Access/"
+      ],
+      "acceptance_criteria": [
+        "只接入 M1 已有证据的 Item-action，保留条件与版本边界",
+        "AX 有界读取、专用执行域与值快照，不阻塞主线程",
+        "Located/actionSubmitted/menuOpen/unknown 分开返回"
+      ],
+      "evidence_required": [
+        "适配契约测试",
+        "所选路线回归记录",
+        "超时/缺失对象处理"
+      ],
+      "feature_ids": [
+        "F03",
+        "F04",
+        "F05",
+        "F08",
+        "F09"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "实现／编译不包含 GUI 通过；涉及界面、输入或真实屏幕证据时单独申请整机 GUI 租约。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "cbe332ec059707b59c3d7cc27164c0e1885ee1432f376d7996c7e9972114cbb4",
+      "phase": "M2",
+      "wave": "W2",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-16",
+      "title": "接入显隐后端与两区业务计划",
+      "role": "platform",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "APP-08",
+        "APP-10",
+        "APP-12"
+      ],
+      "execution_gates": [
+        "M1_PRODUCT_GATE_PASSED"
+      ],
+      "scope_paths": [
+        "Packages/MenuBarPlatform/Visibility/",
+        "Packages/MenuBarCore/Layout/"
+      ],
+      "acceptance_criteria": [
+        "声明真实 Item/App/区间控制粒度与跨屏影响",
+        "提交前检查租约、几何和受保护目标，结果由新观察确认",
+        "新未知项目不产生隐藏意图且库存缺口有明确恢复路径"
+      ],
+      "evidence_required": [
+        "计划差异与范围预览",
+        "候选后端回归",
+        "新项目发现延迟记录"
+      ],
+      "feature_ids": [
+        "F01",
+        "F03",
+        "F06",
+        "F10"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "实现／编译不包含 GUI 通过；涉及界面、输入或真实屏幕证据时单独申请整机 GUI 租约。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "6fc10cb93df5ecf5d829e095ef82eeb138bbd63859c86b2102210641fc10ce3f",
+      "phase": "M2",
+      "wave": "W2",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-17",
+      "title": "合成第一条完整产品流程",
+      "role": "integrator",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "OPS-08",
+        "APP-10",
+        "APP-11",
+        "APP-13",
+        "APP-14",
+        "APP-15",
+        "APP-16"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "Apps/MenuBarApp/Composition/",
+        "Tests/Integration/",
+        "menubar-validation-lab/results/vertical-flow/"
+      ],
+      "acceptance_criteria": [
+        "真实完成整理→查找→正确原菜单→保持→手动收起",
+        "原生动作不被重复发送，目录结果与真实目标一致",
+        "记录整合 candidate SHA，局部 mock 测试不代替本任务"
+      ],
+      "evidence_required": [
+        "整合构建",
+        "端到端操作与日志",
+        "独立验收记录"
+      ],
+      "feature_ids": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07",
+        "F08"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "构建与 GUI 检查分段申请资源；编码和普通编译不占 GUI 租约。GUI 敏感测量期间，同机干扰性构建暂停；all_of 不表示整个任务全程同时持有两类租约。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "1b5f78a4b9609bb1304edec825ed18cccf048d01203df6e1c90062dc2cd358e0",
+      "phase": "M2",
+      "wave": "W2",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-18",
+      "title": "处理权限撤回与诚实降级",
+      "role": "platform",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "APP-17"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "Packages/MenuBarPlatform/Permissions/",
+        "Apps/MenuBarApp/UI/Settings/Permissions/",
+        "menubar-validation-lab/results/permissions/"
+      ],
+      "acceptance_criteria": [
+        "拒绝/撤回 AX 后不误点、不假成功，恢复入口仍可用",
+        "不含像素模块时不索取不存在功能的录屏权限",
+        "权限和对象变化使缓存/旧 ticket 失效，动态状态清楚标记未知"
+      ],
+      "evidence_required": [
+        "实际权限状态矩阵",
+        "撤回与恢复过程",
+        "UI/日志结果一致性"
+      ],
+      "feature_ids": [
+        "F08",
+        "F09",
+        "F11"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "构建与 GUI 检查分段申请资源；编码和普通编译不占 GUI 租约。GUI 敏感测量期间，同机干扰性构建暂停；all_of 不表示整个任务全程同时持有两类租约。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "a9551e5e9bfced3d9c2e1a18a1e6b6d0c7035909a272603915bd8494518b5b1a",
+      "phase": "M3",
+      "wave": "W3",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-19",
+      "title": "验证多屏、会话与最小恢复",
+      "role": "validation",
+      "model_alias": "gpt6.1terra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "APP-17",
+        "APP-18"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "menubar-validation-lab/results/topology-session/",
+        "Tests/RecoveryRegression/"
+      ],
+      "acceptance_criteria": [
+        "菜单未关时触发变化不执行普通冲突操作",
+        "屏幕变化废弃旧坐标，由新恢复意图决策；救援中断如实记录",
+        "before/applied/current 保留用户新布局，逆操作一步未知就停"
+      ],
+      "evidence_required": [
+        "插拔/混合缩放/上下排列记录",
+        "菜单保持与用户重排证据",
+        "故障复现及回归"
+      ],
+      "feature_ids": [
+        "F03",
+        "F05",
+        "F06",
+        "F07"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "所声明显示器与刘海条件必须真实具备"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "validation",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "884e3ccb8e496806f3cef5c583e734ce149f4a3511c321b306a993298c84d7fa",
+      "phase": "M3",
+      "wave": "W3",
+      "model_candidates": [
+        "gpt6.1terra"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-20",
+      "title": "验证系统时钟与隐私状态完整性",
+      "role": "validation",
+      "model_alias": "gpt6.1terra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "APP-17",
+        "APP-18"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "menubar-validation-lab/results/system-integrity/"
+      ],
+      "acceptance_criteria": [
+        "时钟、通知中心、控制入口、采集指示与来源提示在各阶段完整",
+        "覆盖采集新开始/持续/结束、展开/收起与异常退出",
+        "缺设备或观察条件保持 blocked，不能写默认通过"
+      ],
+      "evidence_required": [
+        "匹配无管理器基线",
+        "系统状态观察",
+        "候选差异与问题记录"
+      ],
+      "feature_ids": [
+        "F10"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "系统状态的实际观察条件与操作者会话需具备"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "validation",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "c80007c4da13ad342e38540fbdc20fc10cfd510c53785ce39ecd5db89ef618cd",
+      "phase": "M3",
+      "wave": "W3",
+      "model_candidates": [
+        "gpt6.1terra"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-21",
+      "title": "验证重启、睡眠、异常退出与配置稳定",
+      "role": "validation",
+      "model_alias": "gpt6.1terra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "APP-11",
+        "APP-17",
+        "APP-18"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "menubar-validation-lab/results/lifecycle/",
+        "Tests/PersistenceRegression/"
+      ],
+      "acceptance_criteria": [
+        "配置持久与真实分区/访问稳定分别通过",
+        "正常退出、强制终止、卡死与重新启动分开记录",
+        "未完成 journal 不按旧 PID/frame 回放，用户新设置保留"
+      ],
+      "evidence_required": [
+        "生命周期与故障记录",
+        "配置版本前后比较",
+        "恢复路径与适用条件"
+      ],
+      "feature_ids": [
+        "F07",
+        "F11"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "validation",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "2ca0e7782e3e6872eff48bd0edb329475bddc3da4c33499e6f22624c1e232339",
+      "phase": "M3",
+      "wave": "W3",
+      "model_candidates": [
+        "gpt6.1terra"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-22",
+      "title": "可访问性、语言与常驻资源验收",
+      "role": "validation",
+      "model_alias": "gpt6.1terra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "APP-13",
+        "APP-14",
+        "APP-17",
+        "APP-18",
+        "APP-25"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "menubar-validation-lab/results/usability-performance/",
+        "Tests/UsabilityAcceptance/",
+        "docs/findings/usability/"
+      ],
+      "acceptance_criteria": [
+        "本工具入口/目录/过滤/设置/恢复可用键盘与 VoiceOver",
+        "第三方交互不低于原基线，纯键盘端到端路径单独声明",
+        "资源测量记录条件，不用未测数字证明低占用；无持续无效扫描",
+        "覆盖 APP-18 权限设置页的键盘、VoiceOver 与声明语言；记录页面/场景覆盖矩阵。",
+        "本卡只修改验收用例、原始记录与缺陷说明；产品修复交 APP-25 或新建具备精确范围的 UI 修复卡。"
+      ],
+      "evidence_required": [
+        "键盘与 VoiceOver 任务记录",
+        "真实延迟/CPU/内存/唤醒样本",
+        "语言与系统显示模式检查"
+      ],
+      "feature_ids": [
+        "F02",
+        "F04",
+        "F08",
+        "F09",
+        "F12"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "validation",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "bb7b9a95eb41f4bc37597bd4930a6e15271ae4cd051e3e08a1c6e3aac5acb605",
+      "phase": "M4",
+      "wave": "W4",
+      "model_candidates": [
+        "gpt6.1terra"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-23",
+      "title": "制作可安装候选与更新链路",
+      "role": "integrator",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "OPS-08",
+        "APP-19",
+        "APP-20",
+        "APP-21",
+        "APP-22",
+        "APP-26"
+      ],
+      "execution_gates": [
+        "M3_PRODUCT_GATE_PASSED"
+      ],
+      "scope_paths": [
+        "Release/",
+        "THIRD_PARTY_NOTICES.md",
+        "docs/support/",
+        "tools/agent-control/release/"
+      ],
+      "acceptance_criteria": [
+        "真实产物完成签名、公证和下载后验证，更新包校验及配置保留成立",
+        "MIT/依赖通知、支持范围与已知限制随源码和包一致",
+        "发布凭据只用于受控发行作业，不进入实现代理；未授权公开发布不执行",
+        "APP-25 或后续修复改变相关发行候选时，生成新的 APP-26 attempt：重跑受影响 M3 验证，或附独立签署的未受影响证据复用依据，再签发当前 candidate/scope/context 绑定；W3 历史裁决不直接放行 W4 产物。"
+      ],
+      "evidence_required": [
+        "产物 hash 与签名/公证记录",
+        "升级回归",
+        "依赖许可证与支持矩阵"
+      ],
+      "feature_ids": [
+        "F07",
+        "F11",
+        "F12"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "发行签名身份与托管目标尚未配置"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "先完成可审查的本地打包、许可、更新与支持说明；签名／公证／公开发布各自核对已有授权，不用待批准阻断准备工作。"
+      ],
+      "action_preconditions": [
+        "signing_and_notarization_authorized_for_exact_candidate",
+        "public_release_requires_existing_scope_or_final_concrete_authorization"
+      ],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "release",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "503539e91e3db2e7e8d24cc834871cad8c4cabac984cd3eaad5a464d54be2045",
+      "phase": "M4",
+      "wave": "W4",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-24",
+      "title": "小范围试用与首版发布裁决",
+      "role": "lead",
+      "model_alias": "gpt6.2astra",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_gui_exclusive",
+      "depends_on": [
+        "APP-23"
+      ],
+      "execution_gates": [
+        "pilot_participation_authorized"
+      ],
+      "scope_paths": [
+        "docs/pilot/",
+        "docs/decisions/v1-release/"
+      ],
+      "acceptance_criteria": [
+        "以代表任务记录成功、阻塞、手动修理次数与恢复成本",
+        "独立汇总 F01-F12 的实际支持范围，不按任务卡完成率推导产品通过",
+        "明确发布/继续技术预览/回退到具体修复阶段的理由"
+      ],
+      "evidence_required": [
+        "经同意的试用任务记录",
+        "版本化验收矩阵",
+        "发布或延期决定"
+      ],
+      "feature_ids": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F09",
+        "F10",
+        "F11",
+        "F12"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [
+        "试用者、真实环境和公开发布动作需在进入该阶段时落实"
+      ],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "同一主机的 GUI 与干扰性构建排他；旧运行停止并恢复基线后才交接。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "decision",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "b9ef8d1447ceb695cd5cb05baba7cffe36a8e3a078db350be95ce3f2e2e463cb",
+      "phase": "M5",
+      "wave": "W5",
+      "model_candidates": [
+        "gpt6.2astra"
+      ],
+      "research_task_note": null
+    },
+    {
+      "id": "APP-25",
+      "title": "实现可访问性交互与本地化覆盖",
+      "role": "ui",
+      "model_alias": "gpt6.2sol",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "macos_build",
+      "depends_on": [
+        "APP-13",
+        "APP-14",
+        "APP-18"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "Apps/MenuBarApp/UI/Accessibility/",
+        "Apps/MenuBarApp/Resources/Localizations/",
+        "Apps/MenuBarApp/AppShell/",
+        "Apps/MenuBarApp/UI/Directory/",
+        "Apps/MenuBarApp/UI/Settings/Organization/",
+        "Apps/MenuBarApp/UI/Settings/Permissions/",
+        "Tests/AccessibilityTests/"
+      ],
+      "acceptance_criteria": [
+        "实现本工具入口、目录、过滤、整理与权限设置、恢复流程的键盘路径、焦点顺序和 VoiceOver 语义。",
+        "统一可见文案与无障碍标签的本地化资源，覆盖长文本、缺译回退和系统显示模式；声明已实现语言范围。",
+        "仅在 APP-13/14/18 已 accepted 的界面上串行修改；不借此改后端与第三方菜单行为。",
+        "提交编译与必要界面自检证据，独立最终验收由 APP-22 完成。",
+        "APP-25 或后续修复改变相关发行候选时，生成新的 APP-26 attempt：重跑受影响 M3 验证，或附独立签署的未受影响证据复用依据，再签发当前 candidate/scope/context 绑定；W3 历史裁决不直接放行 W4 产物。"
+      ],
+      "evidence_required": [
+        "界面与字符串变更清单",
+        "键盘/VoiceOver 自检记录",
+        "对应 Mac 构建结果"
+      ],
+      "feature_ids": [
+        "F02",
+        "F04",
+        "F09",
+        "F12"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "macos_build",
+        "macos_gui_exclusive"
+      ],
+      "required_environment_notes": [
+        "实现／编译不包含 GUI 通过；涉及界面、输入或真实屏幕证据时单独申请整机 GUI 租约。"
+      ],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "code",
+      "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "macos_build"
+          },
+          {
+            "resource_class": "macos_gui_exclusive"
+          }
+        ]
+      },
+      "task_spec_sha256": "ccec175fd61aeceae4ab96622ab801c50d487ed4658963070a78a415beaa10bf",
+      "phase": "M4",
+      "wave": "W4",
+      "model_candidates": [
+        "gpt6.2sol"
+      ],
+      "research_task_note": null,
+      "shared_file_change_requests": [
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ]
+    },
+    {
+      "id": "APP-26",
+      "title": "独立汇总裁决 M3 产品门槛",
+      "role": "reviewer",
+      "model_alias": "grok4.7",
+      "model_assignment_state": "unresolved",
+      "runner_candidates": [
+        "codex",
+        "opencode"
+      ],
+      "compute_class": "linux_cpu",
+      "depends_on": [
+        "APP-18",
+        "APP-19",
+        "APP-20",
+        "APP-21"
+      ],
+      "execution_gates": [],
+      "scope_paths": [
+        "docs/decisions/m3-product/"
+      ],
+      "acceptance_criteria": [
+        "核对 APP-18/19/20/21 的实际产物、支持范围、环境上下文与原始证据，不能拼接不兼容候选或跨 OS 成绩。",
+        "在同一声明范围与当前候选上逐项核对必测结果和 P0 阻断；签发符合 GateDecision 契约的通过、拒绝或未知裁决。",
+        "No-Go 也可作为完整的独立裁决 accepted；M3_PRODUCT_GATE_PASSED 仅在正面证据与权威校验全满足时打开。",
+        "APP-25 或后续修复改变相关发行候选时，生成新的 APP-26 attempt：重跑受影响 M3 验证，或附独立签署的未受影响证据复用依据，再签发当前 candidate/scope/context 绑定；W3 历史裁决不直接放行 W4 产物。"
+      ],
+      "evidence_required": [
+        "APP-18/19/20/21 证据索引及内容摘要",
+        "独立 ReviewVerdict",
+        "绑定候选、范围和上下文的 GateDecision"
+      ],
+      "feature_ids": [
+        "F03",
+        "F05",
+        "F06",
+        "F07",
+        "F09",
+        "F10",
+        "F11"
+      ],
+      "priority": "P0",
+      "status": "planned",
+      "blocked_reasons": [],
+      "optional_for_first_lane": false,
+      "assigned_run_id": null,
+      "actual_model_id": null,
+      "runner_version": null,
+      "host_id": null,
+      "base_sha": null,
+      "head_sha": null,
+      "candidate_sha": null,
+      "contract_sha": null,
+      "pr_url": null,
+      "validation_compute_classes": [
+        "linux_cpu"
+      ],
+      "required_environment_notes": [],
+      "action_preconditions": [],
+      "execution_mode": "unassigned",
+      "reviewer_run_id": null,
+      "merge_commit_sha": null,
+      "evidence_refs": [],
+      "delivery_kind": "decision",
+      "review_policy": "independent_from_all_subject_authors; trusted_authority_validation_required; no_recursive_review_of_review",
+      "validation_resource_expression": {
+        "all_of": [
+          {
+            "resource_class": "linux_cpu"
+          }
+        ]
+      },
+      "task_spec_sha256": "870bdf959e960dbfc016b7e39cdef566d8776ba99cb4f2106a8101a7a0a8db63",
+      "phase": "M3",
+      "wave": "W3",
+      "model_candidates": [
+        "grok4.7",
+        "gpt6.2astra"
+      ],
+      "research_task_note": null
+    }
+  ],
+  "repository": {
+    "url": null,
+    "default_branch": "main",
+    "actual_head_sha": null
+  },
+  "runtime": {
+    "connected": false,
+    "coordinator_id": null,
+    "active_runs": [],
+    "revision": 0
+  },
+  "gate_definitions": {
+    "at_least_one_runner_ready": {
+      "any_of": [
+        {
+          "all_of": [
+            {
+              "kind": "task_accepted",
+              "task_id": "OPS-05"
+            },
+            {
+              "kind": "evidence_condition",
+              "name": "codex_runner_verified",
+              "requires_bound_artifacts": true
+            }
+          ]
+        },
+        {
+          "all_of": [
+            {
+              "kind": "task_accepted",
+              "task_id": "OPS-06"
+            },
+            {
+              "kind": "evidence_condition",
+              "name": "opencode_runner_verified",
+              "requires_bound_artifacts": true
+            }
+          ]
+        }
+      ]
+    },
+    "M0_BASELINE_VERIFIED": {
+      "all_of": [
+        {
+          "kind": "task_accepted",
+          "task_id": "APP-02"
+        },
+        {
+          "kind": "evidence_condition",
+          "name": "selected_mac_baseline_verified",
+          "requires_bound_artifacts": true
+        }
+      ]
+    },
+    "M1_ROUTE_EVIDENCE_READY": {
+      "all_of": [
+        {
+          "kind": "task_accepted",
+          "task_id": "APP-04"
+        },
+        {
+          "any_of": [
+            {
+              "kind": "task_accepted",
+              "task_id": "APP-05"
+            },
+            {
+              "kind": "task_accepted",
+              "task_id": "APP-06"
+            },
+            {
+              "kind": "task_accepted",
+              "task_id": "APP-07"
+            }
+          ]
+        },
+        {
+          "kind": "evidence_condition",
+          "name": "complete_selected_route_research_with_matching_baseline",
+          "requires_bound_artifacts": true
+        }
+      ],
+      "negative_research_is_eligible": true
+    },
+    "M1_PRODUCT_GATE_PASSED": {
+      "all_of": [
+        {
+          "kind": "task_accepted",
+          "task_id": "APP-08"
+        },
+        {
+          "kind": "evidence_condition",
+          "name": "at_least_one_declared_route_verified_for_core_notch_task",
+          "requires_bound_artifacts": true
+        },
+        {
+          "kind": "evidence_condition",
+          "name": "no_unresolved_integrity_blocker_in_declared_route",
+          "requires_bound_artifacts": true
+        }
+      ]
+    },
+    "M3_PRODUCT_GATE_PASSED": {
+      "all_of": [
+        {
+          "kind": "task_accepted",
+          "task_id": "APP-26"
+        },
+        {
+          "kind": "task_accepted",
+          "task_id": "APP-18"
+        },
+        {
+          "kind": "task_accepted",
+          "task_id": "APP-19"
+        },
+        {
+          "kind": "task_accepted",
+          "task_id": "APP-20"
+        },
+        {
+          "kind": "task_accepted",
+          "task_id": "APP-21"
+        },
+        {
+          "kind": "evidence_condition",
+          "name": "all_mandatory_scope_outcomes_passed",
+          "requires_bound_artifacts": true
+        },
+        {
+          "kind": "evidence_condition",
+          "name": "no_open_p0_blocker",
+          "requires_bound_artifacts": true
+        }
+      ]
+    },
+    "host_macos_26": {
+      "kind": "host_attribute",
+      "attribute": "os_major",
+      "equals": 26
+    },
+    "host_macos_27": {
+      "kind": "host_attribute",
+      "attribute": "os_major",
+      "equals": 27
+    },
+    "pilot_participation_authorized": {
+      "kind": "authority_condition",
+      "name": "pilot_participation_authorized"
+    },
+    "automation_runtime_ready": {
+      "all_of": [
+        {
+          "kind": "task_accepted",
+          "task_id": "OPS-07"
+        },
+        {
+          "kind": "gate_ref",
+          "gate_id": "at_least_one_runner_ready"
+        },
+        {
+          "kind": "evidence_condition",
+          "name": "scheduler_fencing_verified",
+          "requires_bound_artifacts": true
+        }
+      ]
+    }
+  },
+  "gate_explanations": {
+    "at_least_one_runner_ready": "至少一条已验收且当前能力证据有效的 CLI 适配器；不能只看任务 accepted。",
+    "M1_ROUTE_EVIDENCE_READY": {
+      "all_of": [
+        "APP-04 accepted",
+        "at least one candidate has a matching baseline and complete raw evidence, including failures"
+      ],
+      "any_of": [
+        "APP-05 accepted with complete experimental report",
+        "APP-06 accepted with complete experimental report",
+        "APP-07 accepted with complete experimental report"
+      ],
+      "rules": [
+        "此 gate 只允许独立审查开始，不表示访问路线已合格；完整失败报告也可满足",
+        "单个实验任务 accepted 可以表示研究完整但结果失败；只有 capability verdict verified 才满足路线条件",
+        "同一 OS 可组合互补访问能力，组合路线必须独立跑完整任务而不能仅拼接各动作分数",
+        "未选择或无硬件路线保持 blocked/not_run/excluded，不增加通过数"
+      ]
+    },
+    "M1_PRODUCT_GATE_PASSED": {
+      "all_of": [
+        "APP-08 accepted",
+        "at least one declared target route verified for core notch/capacity task",
+        "no unresolved wrong-target/input/system-state/user-modification integrity failure in declared route"
+      ]
+    },
+    "M3_PRODUCT_GATE_PASSED": "APP-26 汇总同一候选/支持范围/环境上的 M3 证据，独立签发正面裁决；所有必测项通过且无 P0。",
+    "automation_runtime_ready": "仅决定是否启用自动调度；OPS-07 与至少一条实际执行器及租约/取消证据齐全。人工 bootstrap 不依赖它。"
+  },
+  "task_spec_fields": [
+    "id",
+    "title",
+    "role",
+    "model_alias",
+    "runner_candidates",
+    "compute_class",
+    "depends_on",
+    "execution_gates",
+    "scope_paths",
+    "acceptance_criteria",
+    "evidence_required",
+    "feature_ids",
+    "priority",
+    "optional_for_first_lane",
+    "delivery_kind",
+    "validation_compute_classes",
+    "validation_resource_expression",
+    "required_environment_notes",
+    "action_preconditions",
+    "review_policy",
+    "scope_change_policy",
+    "shared_file_change_requests",
+    "research_evidence_policy",
+    "phase",
+    "wave",
+    "model_candidates",
+    "research_task_note"
+  ],
+  "revision_note": "Gemini4Neon 交叉审查经源码复核后的修订；新增 APP-25 界面实现与 APP-26 M3 独立裁决。所有工程运行仍未派发。",
+  "gate_policies": {
+    "at_least_one_runner_ready": {
+      "decision_required": true,
+      "permitted_source_tasks": [
+        "OPS-05",
+        "OPS-06"
+      ],
+      "issuer_roles": [
+        "reviewer",
+        "lead"
+      ],
+      "require_independent_run": true,
+      "required_bindings": [
+        "source",
+        "scope",
+        "context"
+      ],
+      "decision_owner_tasks": [
+        "OPS-05",
+        "OPS-06"
+      ],
+      "condition_source_tasks": {
+        "codex_runner_verified": [
+          "OPS-05"
+        ],
+        "opencode_runner_verified": [
+          "OPS-06"
+        ]
+      }
+    },
+    "M0_BASELINE_VERIFIED": {
+      "decision_required": true,
+      "permitted_source_tasks": [
+        "APP-02"
+      ],
+      "issuer_roles": [
+        "reviewer",
+        "lead"
+      ],
+      "require_independent_run": true,
+      "required_bindings": [
+        "source",
+        "scope",
+        "context"
+      ],
+      "decision_owner_tasks": [
+        "APP-02"
+      ]
+    },
+    "M1_ROUTE_EVIDENCE_READY": {
+      "decision_required": true,
+      "permitted_source_tasks": [
+        "APP-05",
+        "APP-06",
+        "APP-07"
+      ],
+      "issuer_roles": [
+        "reviewer",
+        "lead"
+      ],
+      "require_independent_run": true,
+      "required_bindings": [
+        "source",
+        "scope",
+        "context"
+      ],
+      "decision_owner_tasks": [
+        "APP-05",
+        "APP-06",
+        "APP-07"
+      ]
+    },
+    "M1_PRODUCT_GATE_PASSED": {
+      "decision_required": true,
+      "permitted_source_tasks": [
+        "APP-08"
+      ],
+      "issuer_roles": [
+        "reviewer",
+        "lead"
+      ],
+      "require_independent_run": true,
+      "required_bindings": [
+        "source",
+        "scope",
+        "context"
+      ],
+      "decision_owner_tasks": [
+        "APP-08"
+      ]
+    },
+    "M3_PRODUCT_GATE_PASSED": {
+      "decision_required": true,
+      "permitted_source_tasks": [
+        "APP-26"
+      ],
+      "issuer_roles": [
+        "reviewer",
+        "lead"
+      ],
+      "require_independent_run": true,
+      "required_bindings": [
+        "source",
+        "scope",
+        "context"
+      ],
+      "decision_owner_tasks": [
+        "APP-26"
+      ],
+      "required_subject_tasks": [
+        "APP-18",
+        "APP-19",
+        "APP-20",
+        "APP-21"
+      ]
+    },
+    "host_macos_26": {
+      "decision_required": false,
+      "permitted_source_tasks": [],
+      "issuer_roles": [],
+      "require_independent_run": false,
+      "required_bindings": [],
+      "decision_owner_tasks": []
+    },
+    "host_macos_27": {
+      "decision_required": false,
+      "permitted_source_tasks": [],
+      "issuer_roles": [],
+      "require_independent_run": false,
+      "required_bindings": [],
+      "decision_owner_tasks": []
+    },
+    "pilot_participation_authorized": {
+      "decision_required": false,
+      "permitted_source_tasks": [],
+      "issuer_roles": [],
+      "require_independent_run": false,
+      "required_bindings": [],
+      "decision_owner_tasks": []
+    },
+    "automation_runtime_ready": {
+      "decision_required": true,
+      "permitted_source_tasks": [
+        "OPS-07"
+      ],
+      "issuer_roles": [
+        "reviewer",
+        "lead"
+      ],
+      "require_independent_run": true,
+      "required_bindings": [
+        "source",
+        "scope",
+        "context"
+      ],
+      "decision_owner_tasks": [
+        "OPS-07"
+      ]
+    }
+  },
+  "phase_definitions": {
+    "W0": "协作基础工作包；不等同推荐启动波次",
+    "M0": "产品与实验基线",
+    "M1": "访问路线研究与裁决",
+    "M2": "产品垂直流程",
+    "M3": "可靠性及独立裁决",
+    "M4": "体验与发行准备",
+    "M5": "试用与发行裁决"
+  },
+  "wave_definitions": {
+    "W0": "章程、工作区、共享构建布局与协调底座；波次内仍遵守依赖。",
+    "W1": "基线、身份和候选路线；首个执行器与可独立开发的纯模块。",
+    "W2": "垂直流程；第二执行器可选推进，调度服务在已有执行器上验收。",
+    "W3": "可靠性验收与 APP-26 汇总裁决。",
+    "W4": "APP-25 界面补齐 → APP-22 独立验收 → APP-23 候选产物。",
+    "W5": "真实试用后决定正式版或继续预览。"
+  },
+  "gate_consumers": {
+    "automation_runtime_ready": [
+      "policy:deployment.activation_gate"
+    ]
+  }
+}

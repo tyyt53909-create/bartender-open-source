@@ -1,0 +1,19 @@
+{
+  "kind": "documented_source_defaults_not_runtime_loaded_configuration",
+  "strategy": "guarded_candidate",
+  "geometry_collapse_os_majors": [
+    26,
+    27
+  ],
+  "macos_26_length_points": 10000,
+  "macos_27_max_spacers": 6,
+  "macos_27_minimum_margin_points": 64,
+  "delayed_trigger_seconds": 5,
+  "planned_retract_seconds": 10,
+  "private_assertion_enabled": false,
+  "menu_session_guard": "not_implemented",
+  "cross_app_activation_proxy": "not_implemented",
+  "item_search": "not_implemented",
+  "geometry_input_unit": "logical_points",
+  "source_is_authoritative": true
+}

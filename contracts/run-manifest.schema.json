@@ -1,0 +1,542 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:menubar-agent:v0.2:RunManifest",
+  "title": "RunManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_type",
+    "status",
+    "run_id",
+    "task_id",
+    "attempt_id",
+    "parent_attempt_id",
+    "parent_run_id",
+    "review_of_attempt_id",
+    "fencing_token",
+    "task_spec_sha256",
+    "contract_sha",
+    "host_id",
+    "resource_class",
+    "resource_leases",
+    "executor",
+    "model",
+    "workspace",
+    "write_scope",
+    "budget_profile_id",
+    "authority_profile_id",
+    "started_at",
+    "ended_at",
+    "runner_receipt_ref",
+    "stop_state",
+    "stop_receipt_ref"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.2"
+    },
+    "record_type": {
+      "const": "RunManifest"
+    },
+    "status": {
+      "enum": [
+        "running",
+        "completed",
+        "blocked",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^(OPS|APP)-[0-9]{2}(?:-[A-Z0-9]+)?$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "parent_attempt_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "parent_run_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "review_of_attempt_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "fencing_token": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "task_spec_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "contract_sha": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "host_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "resource_class": {
+      "enum": [
+        "linux_cpu",
+        "macos_build",
+        "macos_gui_exclusive"
+      ]
+    },
+    "resource_leases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "resource_class",
+          "host_id",
+          "lease_id",
+          "fencing_token"
+        ],
+        "properties": {
+          "resource_class": {
+            "enum": [
+              "linux_cpu",
+              "macos_build",
+              "macos_gui_exclusive"
+            ]
+          },
+          "host_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "lease_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+          },
+          "fencing_token": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "executor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "version",
+        "native_session_id"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "codex",
+            "opencode",
+            "native_subagent"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_session_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requested_alias",
+        "effective_provider",
+        "effective_model_id",
+        "reasoning",
+        "resolution_status",
+        "probe_receipt_ref"
+      ],
+      "properties": {
+        "requested_alias": {
+          "enum": [
+            "gpt6.2astra",
+            "gpt6.2sol",
+            "gpt6.1terra",
+            "grok4.7"
+          ]
+        },
+        "effective_provider": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "effective_model_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reasoning": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolution_status": {
+          "enum": [
+            "verified",
+            "unverified",
+            "unavailable"
+          ]
+        },
+        "probe_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resolution_status": {
+                "const": "verified"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "effective_provider": {
+                "type": "string",
+                "minLength": 1
+              },
+              "effective_model_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "probe_receipt_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "workspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repo_url",
+        "base_sha",
+        "branch",
+        "path",
+        "mode"
+      ],
+      "properties": {
+        "repo_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "base_sha": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        "branch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "worktree",
+            "clone",
+            "isolated_checkout"
+          ]
+        }
+      }
+    },
+    "write_scope": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "budget_profile_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "authority_profile_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,6})?Z$"
+    },
+    "ended_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,6})?Z$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "runner_receipt_ref": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "stop_state": {
+      "enum": [
+        "not_requested",
+        "requested",
+        "confirmed_stopped",
+        "unknown"
+      ]
+    },
+    "stop_receipt_ref": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "running"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "ended_at": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "completed",
+              "blocked",
+              "failed",
+              "cancelled"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "ended_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,6})?Z$"
+          },
+          "runner_receipt_ref": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "stop_state": {
+            "const": "confirmed_stopped"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "stop_receipt_ref": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "description": "Observed runner record, not scheduling intent. A terminal attempt or lease expiration does not prove its process stopped. Resource release requires independent stop evidence and fencing checks."
+}

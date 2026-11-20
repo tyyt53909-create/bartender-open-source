@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.2",
+  "record_type": "WorkerResult",
+  "task_id": "APP-02",
+  "attempt_id": "synthetic-attempt",
+  "run_id": "synthetic-author-run",
+  "fencing_token": 1,
+  "task_spec_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "contract_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "claimed_outcome": "submitted",
+  "summary": "Synthetic schema fixture only; no Mac experiment has run.",
+  "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "head_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "changed_paths": [
+    "evidence/synthetic/observation.json"
+  ],
+  "checks": [
+    {
+      "name": "synthetic-observation",
+      "status": "passed",
+      "environment_id": "synthetic-mac-baseline",
+      "evidence_ref": {
+        "path": "evidence/synthetic/observation.json",
+        "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      },
+      "reason": null
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "evidence/synthetic/observation.json",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "blockers": [],
+  "effective_model_id": null,
+  "native_session_id": "synthetic-session",
+  "run_manifest_ref": {
+    "path": "evidence/synthetic/run-manifest.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "reported_at": "2026-11-20T12:00:00Z"
+}

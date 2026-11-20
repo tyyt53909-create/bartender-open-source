@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.2",
+  "record_type": "ReviewVerdict",
+  "review_id": "synthetic-review",
+  "task_id": "APP-02",
+  "author_attempt_id": "synthetic-attempt",
+  "author_run_id": "synthetic-author-run",
+  "reviewer_run_id": "synthetic-reviewer-run",
+  "reviewer_principal_id": "synthetic-reviewer",
+  "task_spec_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "contract_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "reviewed_base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "reviewed_head_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "verdict": "approved",
+  "summary": "Synthetic contract-shape example, not an actual review.",
+  "findings": [],
+  "coverage": {
+    "checked": [
+      "synthetic-example-only"
+    ],
+    "not_checked": [
+      "all real source and macOS behavior"
+    ]
+  },
+  "evidence_refs": [
+    {
+      "path": "evidence/synthetic/review-observation.json",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "worker_result_ref": {
+    "path": "evidence/synthetic/worker-result.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "reviewer_manifest_ref": {
+    "path": "evidence/synthetic/reviewer-manifest.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "effective_model_id": null,
+  "issued_at": "2026-11-20T12:00:00Z"
+}

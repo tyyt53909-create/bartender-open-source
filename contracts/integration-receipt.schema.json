@@ -1,0 +1,425 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:menubar-agent:v0.2:IntegrationReceipt",
+  "title": "IntegrationReceipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_type",
+    "receipt_id",
+    "task_id",
+    "author_attempt_id",
+    "author_run_id",
+    "reviewer_run_id",
+    "integration_run_id",
+    "fencing_token",
+    "task_spec_sha256",
+    "contract_sha",
+    "base_sha",
+    "head_sha",
+    "reviewed_base_sha",
+    "reviewed_head_sha",
+    "target_base_sha",
+    "candidate_sha",
+    "candidate_tree_oid",
+    "review_verdict_ref",
+    "validation_receipt_refs",
+    "integration_strategy",
+    "merge_request_id",
+    "status",
+    "merge_request_state",
+    "merge_commit_sha",
+    "merge_tree_oid",
+    "merge_parents",
+    "readback_evidence_ref",
+    "actual_merge_confirmed_at",
+    "issued_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.2"
+    },
+    "record_type": {
+      "const": "IntegrationReceipt"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^(OPS|APP)-[0-9]{2}(?:-[A-Z0-9]+)?$"
+    },
+    "author_attempt_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "author_run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "reviewer_run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "integration_run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "fencing_token": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "task_spec_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "contract_sha": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "base_sha": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "head_sha": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "reviewed_base_sha": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "reviewed_head_sha": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "target_base_sha": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "candidate_sha": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "candidate_tree_oid": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+    },
+    "review_verdict_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "validation_receipt_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "integration_strategy": {
+      "enum": [
+        "merge_commit",
+        "squash",
+        "rebase",
+        "fast_forward"
+      ]
+    },
+    "merge_request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "requested",
+        "queued",
+        "merged",
+        "rejected",
+        "conflicted",
+        "cancelled"
+      ]
+    },
+    "merge_request_state": {
+      "enum": [
+        "requested",
+        "queued",
+        "merged",
+        "rejected",
+        "conflicted",
+        "cancelled"
+      ]
+    },
+    "merge_commit_sha": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "merge_tree_oid": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "merge_parents": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "readback_evidence_ref": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "actual_merge_confirmed_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,6})?Z$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,6})?Z$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "requested"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "merge_request_state": {
+            "const": "requested"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "queued"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "merge_request_state": {
+            "const": "queued"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "merged"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "merge_request_state": {
+            "const": "merged"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "rejected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "merge_request_state": {
+            "const": "rejected"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "conflicted"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "merge_request_state": {
+            "const": "conflicted"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "cancelled"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "merge_request_state": {
+            "const": "cancelled"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "merged"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "merge_commit_sha": {
+            "type": "string",
+            "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+          },
+          "merge_tree_oid": {
+            "type": "string",
+            "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+          },
+          "merge_parents": {
+            "minItems": 1
+          },
+          "readback_evidence_ref": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "actual_merge_confirmed_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]{1,6})?Z$"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "merge_commit_sha": {
+            "type": "null"
+          },
+          "merge_tree_oid": {
+            "type": "null"
+          },
+          "merge_parents": {
+            "maxItems": 0
+          },
+          "readback_evidence_ref": {
+            "type": "null"
+          },
+          "actual_merge_confirmed_at": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ],
+  "description": "Integration observation, not task acceptance. Only merged receipts contain independently read-back commit/tree/parents. Coordinator must match actual tree and lineage to the validated candidate and detect changes to source, baseline, contract, or review."
+}

@@ -1,0 +1,52 @@
+{
+  "controller": {
+    "kind": "source_sha256",
+    "value": "baa5aa942c2c5b86bba7085c671ec376ecad293a4fb55e48ebc0a4d9ce55059f",
+    "hash_definition": "SHA-256 of sorted UTF-8 JSON mapping relative source paths to individual file SHA-256 values; ensure_ascii=False, separators comma/colon.",
+    "files": {
+      "Controller/Info.plist": "0dc4bb1da0f0e9e8f2c053396c041133e80d2e9b421e3c5ea0979324c757d912",
+      "Controller/Sources/Diagnostics.swift": "f9803f93c60616515cc1dc3b73bf1dc22ba1151527c8755ea12a22347e190ee0",
+      "Controller/Sources/Geometry.swift": "889726b0c4b27a0d8b60f67dfc1a3f6a24947d59002248e63ff42c7f2797aa19",
+      "Controller/Sources/main.swift": "85d5290566756618d2e5d61ee85cd4244ed81ca562460caba9b5754dd63a0338",
+      "scripts/build-macos.sh": "475afd78850ad32b28d4f84b914f4af88744e82f1a8b788cab82b099a8eb2f20"
+    }
+  },
+  "fixture": {
+    "kind": "source_sha256",
+    "value": "69d4133bc78876fc75a203b3fba03cfe35860186abc9d7daee27f906b119a8df",
+    "hash_definition": "SHA-256 of sorted UTF-8 JSON mapping relative source paths to individual file SHA-256 values; ensure_ascii=False, separators comma/colon.",
+    "files": {
+      "Fixture/Info.plist": "a8b828e6b6a01b4a64eebac839c642388205fed74cedf5107e653d62925eaeb0",
+      "Fixture/Sources/main.swift": "3b837ae177e47da729bb42a72cf8b9574401d471ac0239ba577fa2e1e302dbbd",
+      "Fixture/build.sh": "d8f6826cba52176cbc9f7e31b66e31217bb3aace53a01b93d41e3fc6392e34c9"
+    }
+  },
+  "observer": {
+    "kind": "source_sha256",
+    "value": "8d69dac19da5cd3566e25a92f7ecb31324afde6e41a8823c370af20edf79fa6e",
+    "hash_definition": "SHA-256 of sorted UTF-8 JSON mapping relative source paths to individual file SHA-256 values; ensure_ascii=False, separators comma/colon.",
+    "files": {
+      "Controller/Sources/Diagnostics.swift": "f9803f93c60616515cc1dc3b73bf1dc22ba1151527c8755ea12a22347e190ee0",
+      "Observer/main.swift": "80fb199106cdc510c6972d6b4384f30517d2333e8cfbfdeccd4d2f9c04e80d10",
+      "scripts/build-macos.sh": "475afd78850ad32b28d4f84b914f4af88744e82f1a8b788cab82b099a8eb2f20"
+    }
+  },
+  "private_probe": {
+    "kind": "source_sha256",
+    "value": "89153df1f906c66e94dc23058f205d385f34b2665c6c135cb1b25a4e99522a23",
+    "hash_definition": "SHA-256 of sorted UTF-8 JSON mapping relative source paths to individual file SHA-256 values; ensure_ascii=False, separators comma/colon.",
+    "files": {
+      "PrivateProbe/main.m": "b56addd4e2e92b29f574056c749097343aef4769c2cd8f6c9fd93dfc987a197a",
+      "scripts/build-macos.sh": "475afd78850ad32b28d4f84b914f4af88744e82f1a8b788cab82b099a8eb2f20"
+    }
+  },
+  "evaluator": {
+    "kind": "source_sha256",
+    "value": "0b31e0895ed6544a5bdbce0eaeec2ff82b98c32360af85dfe5eff853484c4555",
+    "hash_definition": "SHA-256 of sorted UTF-8 JSON mapping relative source paths to individual file SHA-256 values; ensure_ascii=False, separators comma/colon.",
+    "files": {
+      "protocol/test-cases.json": "c2df0e1ff5559f59e16451c29aef8f3924f6b5653befb057ef09bf75fce3a805",
+      "tools/evaluate_results.py": "621a0c7c6247f62ceb3861e3cc1d33d299e18532c8765804e11244620224a76a"
+    }
+  }
+}

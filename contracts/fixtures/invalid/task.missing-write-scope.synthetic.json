@@ -1,0 +1,65 @@
+{
+  "id": "APP-99",
+  "title": "Synthetic TaskSpec fixture, not an actual assigned task",
+  "role": "lead",
+  "model_alias": "gpt6.2astra",
+  "model_assignment_state": "unresolved",
+  "runner_candidates": [
+    "codex",
+    "opencode"
+  ],
+  "compute_class": "linux_cpu",
+  "depends_on": [],
+  "execution_gates": [],
+  "acceptance_criteria": [
+    "继承产品 F01-F12 和 M0-M5，不擅自扩大首版范围",
+    "定义单任务负责人、写入范围、验收者、M1 总门槛和发布授权边界",
+    "所有代理读取相同版本的任务契约"
+  ],
+  "evidence_required": [
+    "版本化章程",
+    "角色矩阵",
+    "契约 hash"
+  ],
+  "feature_ids": [],
+  "priority": "P0",
+  "status": "planned",
+  "blocked_reasons": [
+    "目标远端仓库尚未指定；本轮仅生成设计包"
+  ],
+  "optional_for_first_lane": false,
+  "assigned_run_id": null,
+  "actual_model_id": null,
+  "runner_version": null,
+  "host_id": null,
+  "base_sha": null,
+  "head_sha": null,
+  "candidate_sha": null,
+  "contract_sha": null,
+  "pr_url": null,
+  "validation_compute_classes": [
+    "linux_cpu"
+  ],
+  "required_environment_notes": [],
+  "action_preconditions": [],
+  "execution_mode": "unassigned",
+  "reviewer_run_id": null,
+  "merge_commit_sha": null,
+  "evidence_refs": [],
+  "delivery_kind": "workflow",
+  "review_policy": "independent_run_required; author_child_is_not_sole_reviewer",
+  "validation_resource_expression": {
+    "all_of": [
+      {
+        "resource_class": "linux_cpu"
+      }
+    ]
+  },
+  "task_spec_sha256": "052a6144dd9adf3c321c800afba9cfc18990e771003c2ce01bdf793dbbc1af9c",
+  "phase": "W0",
+  "wave": "W0",
+  "model_candidates": [
+    "gpt6.2astra"
+  ],
+  "research_task_note": "Synthetic schema example only; this ID is not registered in the task catalog."
+}

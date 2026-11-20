@@ -1,0 +1,170 @@
+{
+  "schema": "menuvalidation.portable-checks.v1",
+  "started_at_utc": "2026-11-20T05:31:48.340895+00:00",
+  "finished_at_utc": "2026-11-20T05:31:48.797844+00:00",
+  "platform": "Linux",
+  "architecture": "x86_64",
+  "python_version": "3.12.14",
+  "portable_checks_passed": true,
+  "unit_tests_executed": 35,
+  "macos_compilation": "not_run",
+  "macos_runtime_cases_executed": 0,
+  "private_assertion_activated": false,
+  "meaning": "This runner never compiles Swift/Objective-C or executes AppKit UI. All test success is limited to the named portable checks.",
+  "checks": [
+    {
+      "name": "geometry-unit-tests",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "backend-analysis",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "started_at_utc": "2026-11-20T05:31:48.340905+00:00",
+      "finished_at_utc": "2026-11-20T05:31:48.462671+00:00",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "log": "results/geometry-unit-tests.log",
+      "log_sha256": "192cf921930caf94e2241a14e85cfa6404f099de442eafdf87cf6f3a4bab5ee0",
+      "unit_tests_executed": 11
+    },
+    {
+      "name": "evaluator-unit-tests",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "started_at_utc": "2026-11-20T05:31:48.462822+00:00",
+      "finished_at_utc": "2026-11-20T05:31:48.636596+00:00",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "log": "results/evaluator-unit-tests.log",
+      "log_sha256": "e8a76a96ffec85f0f2d6d42eb36e08e4e4ea2fea1321cab7cfc3b16e4ec7d989",
+      "unit_tests_executed": 24
+    },
+    {
+      "name": "geometry-samples",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "backend-analysis/geometry_verify.py",
+        "--output",
+        "results/geometry-results.json"
+      ],
+      "started_at_utc": "2026-11-20T05:31:48.636717+00:00",
+      "finished_at_utc": "2026-11-20T05:31:48.726882+00:00",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "log": "results/geometry-samples.log",
+      "log_sha256": "3f18d2dea15966d935792413715c9084cece18d8477cad04646d06299b626215"
+    },
+    {
+      "name": "fixture-shell",
+      "command": [
+        "bash",
+        "-n",
+        "Fixture/build.sh"
+      ],
+      "started_at_utc": "2026-11-20T05:31:48.727010+00:00",
+      "finished_at_utc": "2026-11-20T05:31:48.729867+00:00",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "log": "results/fixture-shell.log",
+      "log_sha256": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72"
+    },
+    {
+      "name": "controller-shell",
+      "command": [
+        "bash",
+        "-n",
+        "scripts/build-macos.sh"
+      ],
+      "started_at_utc": "2026-11-20T05:31:48.729961+00:00",
+      "finished_at_utc": "2026-11-20T05:31:48.733562+00:00",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "log": "results/controller-shell.log",
+      "log_sha256": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72"
+    },
+    {
+      "name": "portable-shell",
+      "command": [
+        "bash",
+        "-n",
+        "scripts/run-portable-checks.sh"
+      ],
+      "started_at_utc": "2026-11-20T05:31:48.733641+00:00",
+      "finished_at_utc": "2026-11-20T05:31:48.736452+00:00",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "log": "results/portable-shell.log",
+      "log_sha256": "3cadabec897fd961a14ae0f164fbcc2d872da835fd7c259079ac6fab44594c72"
+    },
+    {
+      "name": "structure_and_pinned_source_hashes",
+      "passed": true,
+      "files_checked": [
+        "Fixture/Info.plist",
+        "Controller/Info.plist",
+        "protocol/current-evaluation.json",
+        "protocol/results-template.json",
+        "protocol/test-cases.json",
+        "backend-analysis/upstream/CollapsedGeometry.swift",
+        "backend-analysis/upstream/MenubarHide-README.md",
+        "backend-analysis/upstream/MenubarHide-LICENSE",
+        "backend-analysis/upstream/HBNativeVisibilityShim.m",
+        "backend-analysis/upstream/NativeVisibilityEngine.swift",
+        "backend-analysis/upstream/Hidden-LICENSE"
+      ],
+      "claim_scope": "File parsing and packaged source hashes only; no platform execution."
+    },
+    {
+      "name": "nonmac-build-guard",
+      "command": [
+        "bash",
+        "scripts/build-macos.sh"
+      ],
+      "started_at_utc": "2026-11-20T05:31:48.739890+00:00",
+      "finished_at_utc": "2026-11-20T05:31:48.751207+00:00",
+      "exit_code": 78,
+      "expected_exit_code": 78,
+      "passed": true,
+      "log": "results/nonmac-build-guard.log",
+      "log_sha256": "87259a10801f65c4447186382f886c0eed8fd59e03f2197d46a784df868f786f"
+    },
+    {
+      "name": "current-preflight-evaluation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tools/evaluate_results.py",
+        "results/current-preflight-run.json",
+        "--output",
+        "results/current-evaluation.json"
+      ],
+      "started_at_utc": "2026-11-20T05:31:48.751303+00:00",
+      "finished_at_utc": "2026-11-20T05:31:48.797737+00:00",
+      "exit_code": 2,
+      "expected_exit_code": 2,
+      "passed": true,
+      "log": "results/current-preflight-evaluation.log",
+      "log_sha256": "9cbb4742e85fcc5a37219df3a76f2f8c85d3f1bcb1def3e92c1870bf585bf005"
+    }
+  ]
+}

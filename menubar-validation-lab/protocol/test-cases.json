@@ -1,0 +1,1072 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "menubar-acceptance-v0.1",
+  "authored_date": "2026-11-20",
+  "purpose": "同条件基线与候选后端对照；这份协议不包含任何 Mac 实机通过结论。",
+  "fixture_contract": {
+    "bundle_id": "org.menuvalidation.Fixture",
+    "item_ids": [
+      "org.menuvalidation.fixture.alpha",
+      "org.menuvalidation.fixture.beta",
+      "org.menuvalidation.fixture.gamma"
+    ],
+    "jsonl_schema_version": 1,
+    "raw_event_is_not_ui_acceptance": true,
+    "unknown_activation_is_not_modifier_success": true
+  },
+  "current_private_backend_policy": "本轮仅只读符号/类探测，不激活私有 assertion；probe 不能满足任何显隐或交互案例。",
+  "candidate_identity_policy": "guarded_native_overflow 是带容量/阈值拒绝保护的独立候选，不等同于未修改的上游提交。strategy_id、source revision 和配置 hash 必须固定。",
+  "evidence_kinds": {
+    "machine_observation": "原始日志、环境快照等观察，不自动证明 UI 任务成功。",
+    "machine_verified": "固定版本验证器核对某个明确断言；仍不替代本协议的完整 UI 人工验收。",
+    "operator_attested": "操作者明确观察并记录实际界面、目标、交互及副作用，须保存原始记录。"
+  },
+  "status_policy": {
+    "passed": "当前 Mac 条件及证据满足预期；不是纸面可行性。",
+    "failed": "已尝试且不符合预期；记录具体结果。",
+    "not_run": "尚未执行。",
+    "blocked": "缺少设备、授权、样本或依赖，无法执行。",
+    "unsupported": "明确不支持，可排除出声明范围，不等于缺陷也不等于通过。",
+    "unknown": "结果不确定，不能计算为通过。",
+    "not_applicable": "只用于协议明确排除的 run_role；缺硬件不属于不适用。"
+  },
+  "cases": [
+    {
+      "id": "MB-01",
+      "title": "同应用多个项目的精确身份",
+      "capability": "item_identity",
+      "user_task": "找到并操作所选项目，而不是同应用里的第一项。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "分别选择 alpha、beta、gamma；使用候选公开声称支持的搜索或原生溢出路径。",
+        "记录界面结果、activation.itemID 与菜单标题；重排一次后重复。"
+      ],
+      "observable_expected": [
+        "选择 alpha/beta/gamma 分别对应正确项目。",
+        "名字、动态标题或左右位置变化不会串项；没有能力时明确不支持，不假装成功。"
+      ],
+      "required_coverage": [
+        {
+          "id": "three_items",
+          "description": "三项逐一定位",
+          "requirements": {}
+        },
+        {
+          "id": "after_manual_reorder",
+          "description": "用户重排后三项再次定位",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_activation_target"
+      ]
+    },
+    {
+      "id": "MB-02",
+      "title": "动态数值与数据新鲜度",
+      "capability": "dynamic_status",
+      "user_task": "隐藏后仍能判断 beta 的当前数值及是否过期。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "保持 beta 计数器运行，观察可见原项和候选表示至少两个变化周期。",
+        "在计数继续更新时隐藏和展开；暂停计数并再次观察。"
+      ],
+      "observable_expected": [
+        "像素或等价语义能呈现真实计数。",
+        "旧快照、无状态模式、暂停状态不会被伪装成实时值。"
+      ],
+      "required_coverage": [
+        {
+          "id": "capture_off",
+          "description": "不捕捉像素的模式",
+          "requirements": {
+            "permission_profile": "ax_on_capture_off"
+          }
+        },
+        {
+          "id": "capture_on",
+          "description": "像素捕捉模式（仅声明该能力时）",
+          "requirements": {
+            "permission_profile": "ax_on_capture_on"
+          }
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_counter_sequence"
+      ]
+    },
+    {
+      "id": "MB-03",
+      "title": "左键原菜单及后续动作",
+      "capability": "activation_left",
+      "user_task": "从收纳后的入口打开原菜单并执行一个动作。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "对每个项目执行左键入口操作。",
+        "选择 Primary Action，核对原菜单与 actionSelected 日志。"
+      ],
+      "observable_expected": [
+        "实际打开正确项目原菜单，菜单可继续使用。",
+        "操作只执行一次；没有误开应用主窗口或相邻项目。"
+      ],
+      "required_coverage": [
+        {
+          "id": "alpha",
+          "description": "alpha",
+          "requirements": {}
+        },
+        {
+          "id": "beta",
+          "description": "beta",
+          "requirements": {}
+        },
+        {
+          "id": "gamma",
+          "description": "gamma",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_activation_target",
+        "fixture_action_count"
+      ]
+    },
+    {
+      "id": "MB-04",
+      "title": "右键语义",
+      "capability": "activation_right",
+      "user_task": "保留原项目右键行为。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。",
+        "先在无管理器基线确认当前系统确实提供 right 事件。"
+      ],
+      "steps": [
+        "在基线右键项目，记录菜单与 variant。",
+        "在候选访问路径右键同一项目，执行 Primary Action。"
+      ],
+      "observable_expected": [
+        "候选保留基线的右键语义。",
+        "variant=unknown 不能当作右键成功；AXPress 不能替代右键证据。"
+      ],
+      "required_coverage": [
+        {
+          "id": "alpha_right",
+          "description": "alpha 右键",
+          "requirements": {}
+        },
+        {
+          "id": "beta_right",
+          "description": "beta 右键",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_activation_variant"
+      ]
+    },
+    {
+      "id": "MB-05",
+      "title": "Option 与组合修饰键语义",
+      "capability": "activation_option",
+      "user_task": "保留 Option 点击及组合输入的含义。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "按住 Option 左键项目并执行 Primary Action。",
+        "另测 Option 右键，释放按键后操作无修饰键项目。"
+      ],
+      "observable_expected": [
+        "variant 与基线一致，修饰键不会泄漏到后续操作。",
+        "unknown 不计为成功；不自动向其他应用继续发送按键。"
+      ],
+      "required_coverage": [
+        {
+          "id": "option_left",
+          "description": "Option 左键",
+          "requirements": {}
+        },
+        {
+          "id": "option_right",
+          "description": "Option 右键",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_activation_variant"
+      ]
+    },
+    {
+      "id": "MB-06",
+      "title": "长时间菜单保持",
+      "capability": "menu_lifecycle",
+      "user_task": "打开菜单后思考或阅读时菜单不自行消失。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "打开菜单，停留超过候选自动收起期限；若候选有测试计时器，明确记录其到期时刻。",
+        "在菜单仍开着时等待 beta 两次更新，然后选择动作。"
+      ],
+      "observable_expected": [
+        "正常自动收起不得提前结束原菜单会话。",
+        "紧急恢复计时器若打断菜单，应如实失败或限定实验行为，不能归为通过。"
+      ],
+      "required_coverage": [
+        {
+          "id": "long_open",
+          "description": "超过普通自动收起期限",
+          "requirements": {}
+        },
+        {
+          "id": "dynamic_while_open",
+          "description": "菜单打开时其他 Item 继续变化",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_menu_lifecycle"
+      ]
+    },
+    {
+      "id": "MB-07",
+      "title": "子菜单与滚轮",
+      "capability": "extended_interaction",
+      "user_task": "继续操作子菜单，及应用本来支持的滚轮行为。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "展开 Submenu 并停留，再执行子菜单动作。",
+        "对原项目滚动，先确定基线是否产生 scrollObserved，再比较候选。"
+      ],
+      "observable_expected": [
+        "子菜单不被布局刷新打断。",
+        "滚轮仅在基线和目标确实支持时判定；无法建立基线标 blocked/unsupported，不编成功。"
+      ],
+      "required_coverage": [
+        {
+          "id": "submenu",
+          "description": "原菜单子菜单",
+          "requirements": {}
+        },
+        {
+          "id": "scroll",
+          "description": "原项目滚轮支持",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_menu_lifecycle",
+        "fixture_scroll_delivery"
+      ]
+    },
+    {
+      "id": "MB-08",
+      "title": "普通隐藏与始终隐藏的区分",
+      "capability": "visibility_sections",
+      "user_task": "普通展开不泄露始终隐藏区，同时仍可主动找回。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "将 alpha 设常驻、beta 设普通隐藏、gamma 设始终隐藏。",
+        "普通展开后观察三个项目，再用显式访问始终隐藏的入口。"
+      ],
+      "observable_expected": [
+        "两种隐藏含义符合声明；所有项目都有明确的主动访问路径。",
+        "同 bundle 无法独立分区时清楚标限制，不能把 App 级操作说成 Item 级。"
+      ],
+      "required_coverage": [
+        {
+          "id": "three_sections",
+          "description": "三个区域的显隐语义",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-09",
+      "title": "正常退出操作后的恢复",
+      "capability": "temporary_restore",
+      "user_task": "临时访问结束后恢复本工具的修改。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "记录布局与系统原先关闭的项目，打开隐藏项完成动作，再关闭菜单。",
+        "手动展开全部或停用后端，比较操作前后布局和可达性。"
+      ],
+      "observable_expected": [
+        "只恢复本次临时改动，不开启用户原先关闭的系统项目。",
+        "空间不足时仍保留可访问的溢出路径，不要求所有项目同时在第一行。"
+      ],
+      "required_coverage": [
+        {
+          "id": "menu_end",
+          "description": "菜单结束恢复",
+          "requirements": {}
+        },
+        {
+          "id": "disable_backend",
+          "description": "停用后端撤销限制",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-10",
+      "title": "菜单内触发规则冲突",
+      "capability": "rule_arbitration",
+      "user_task": "用户操作菜单时，规则不会抢布局或关掉目标。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。",
+        "候选确有可触发的规则入口；仅有按钮或定时器不能宣称完整规则引擎。"
+      ],
+      "steps": [
+        "打开 alpha 菜单并进入子菜单。",
+        "触发会改变显示预设的规则；完成菜单操作后观察最终布局。"
+      ],
+      "observable_expected": [
+        "交互期间布局变更延后或以可解释方式合并。",
+        "旧规则回调不会覆盖用户随后明确选择的预设。"
+      ],
+      "required_coverage": [
+        {
+          "id": "rule_during_menu",
+          "description": "菜单未关时触发规则",
+          "requirements": {}
+        },
+        {
+          "id": "manual_preset_wins",
+          "description": "随后用户选择预设",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-11",
+      "title": "用户修改优先于恢复",
+      "capability": "layout_restore",
+      "user_task": "用户刚做的重排不会被过期自动恢复覆盖。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "打开隐藏项产生临时显示，随后用户明确展开并手动重排另一项。",
+        "结束旧交互并等待恢复任务，比较顺序。"
+      ],
+      "observable_expected": [
+        "旧代次不把用户新的排序或显隐覆盖回去。",
+        "恢复不强制终止其他应用。"
+      ],
+      "required_coverage": [
+        {
+          "id": "manual_reorder",
+          "description": "临时交互期间用户重排",
+          "requirements": {}
+        },
+        {
+          "id": "manual_reveal",
+          "description": "临时交互期间用户主动展开",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-12",
+      "title": "应用重启与身份重新匹配",
+      "capability": "layout_restore",
+      "user_task": "应用重启后恢复同一逻辑项目，且不串项。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "保存 alpha/beta/gamma 的意图，正常退出并重新启动 Fixture。",
+        "确认新的 fixtureRunID/PID 后，逐项重复访问。"
+      ],
+      "observable_expected": [
+        "旧 PID 或窗口 ID 不作为永久身份。",
+        "未匹配到的项目报告未知，不能误操作另一项。"
+      ],
+      "required_coverage": [
+        {
+          "id": "fixture_relaunch",
+          "description": "Fixture 正常重启",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_activation_target"
+      ]
+    },
+    {
+      "id": "MB-13",
+      "title": "管理器退出与故障恢复",
+      "capability": "failure_recovery",
+      "user_task": "管理器退出或异常后能恢复访问。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。",
+        "保存其他工作；只结束本实验管理器，不能结束无关应用。"
+      ],
+      "steps": [
+        "在收起状态正常退出管理器并检查可达性。",
+        "另起独立试验，强制结束本实验管理器；记录系统状态、重启后恢复和所有需手动动作。"
+      ],
+      "observable_expected": [
+        "未留下无法恢复的限制或永久不可达项。",
+        "正常清理回调成功不被用作崩溃恢复的替代证据。"
+      ],
+      "required_coverage": [
+        {
+          "id": "normal_exit",
+          "description": "正常退出",
+          "requirements": {}
+        },
+        {
+          "id": "forced_exit",
+          "description": "仅强制结束实验管理器",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-14",
+      "title": "辅助功能拒绝与撤回",
+      "capability": "permission_degradation",
+      "user_task": "拒绝 AX 后仍能理解限制和恢复使用。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "在一次独立权限条件下拒绝 AX；尝试声明支持的基础入口。",
+        "另一次先授权、打开流程后撤回；观察错误和恢复。"
+      ],
+      "observable_expected": [
+        "不静默调用错误目标，不返回虚假的成功。",
+        "不依赖 AX 的能力仍按声明可用；有明确恢复路径。"
+      ],
+      "required_coverage": [
+        {
+          "id": "denied",
+          "description": "从未授权 AX",
+          "requirements": {
+            "permission_profile": "ax_off_capture_off"
+          }
+        },
+        {
+          "id": "revoked",
+          "description": "授权后撤回 AX",
+          "requirements": {
+            "permission_profile": "ax_revoked_capture_off"
+          }
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-15",
+      "title": "录屏拒绝与图像失效",
+      "capability": "permission_degradation",
+      "user_task": "拒绝捕捉后知道缺少了什么状态信息。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "关闭录屏授权并重启所需进程，观察 App 图标或 AX 模式。",
+        "若声明支持捕捉，另测授权撤回和捕捉失败后的旧快照。"
+      ],
+      "observable_expected": [
+        "无像素时不伪装实时镜像。",
+        "过期快照有标记或不再显示；拒绝录屏不封锁无关能力。"
+      ],
+      "required_coverage": [
+        {
+          "id": "capture_denied",
+          "description": "拒绝捕捉",
+          "requirements": {
+            "permission_profile": "ax_on_capture_off"
+          }
+        },
+        {
+          "id": "capture_revoked",
+          "description": "捕捉授权被撤回",
+          "requirements": {
+            "permission_profile": "ax_on_capture_revoked"
+          }
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-16",
+      "title": "刘海与外接屏幕拓扑",
+      "capability": "multidisplay",
+      "user_task": "不同屏幕组合仍能找到项目，且不串屏。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "为每种拓扑采集独立屏幕快照；隐藏、展开、访问三项。",
+        "在菜单关闭时拔插外屏，等待稳定；再逐项访问并记录顺序。"
+      ],
+      "observable_expected": [
+        "目标在正确屏幕上可访问；坐标、缩放和纵向排列不会造成误点。",
+        "容量不够时明确拒绝或退化，不假称已隐藏完整区间。"
+      ],
+      "required_coverage": [
+        {
+          "id": "notch_and_wide",
+          "description": "刘海内屏与宽外屏",
+          "requirements": {
+            "min_displays": 2,
+            "has_notch": true
+          }
+        },
+        {
+          "id": "mixed_scale",
+          "description": "不同缩放双屏",
+          "requirements": {
+            "min_displays": 2,
+            "mixed_scale": true
+          }
+        },
+        {
+          "id": "vertical",
+          "description": "上下排列屏幕",
+          "requirements": {
+            "min_displays": 2,
+            "vertical_arrangement": true
+          }
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_frame_geometry"
+      ]
+    },
+    {
+      "id": "MB-17",
+      "title": "Spaces 与全屏菜单栏",
+      "capability": "spaces_fullscreen",
+      "user_task": "切换空间或全屏后仍可操作。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "在普通 Space 展开并访问项目；切换另一个 Space 后重复。",
+        "在支持的全屏应用中显示菜单栏并访问，再退出全屏。"
+      ],
+      "observable_expected": [
+        "不留孤立覆盖层，不抢前台焦点，不使项目变永久不可达。",
+        "不声明后台捕捉或位置数据天然跨所有 Space 有效。"
+      ],
+      "required_coverage": [
+        {
+          "id": "spaces",
+          "description": "切换 Space",
+          "requirements": {}
+        },
+        {
+          "id": "fullscreen",
+          "description": "全屏与退出全屏",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-18",
+      "title": "睡眠唤醒与迟到事件",
+      "capability": "wake_recovery",
+      "user_task": "唤醒后旧回调不会误操作或恢复过期布局。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "关闭菜单后令设备睡眠，再唤醒并等待菜单栏稳定。",
+        "观察并访问三个项目；记录是否发生意外点击、重排或旧提醒重播。"
+      ],
+      "observable_expected": [
+        "不会自动发送旧动作；布局和状态可恢复或明确降级。",
+        "不以旧快照与旧 PID 作为当前成功证据。"
+      ],
+      "required_coverage": [
+        {
+          "id": "wake",
+          "description": "一次睡眠/唤醒",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-19",
+      "title": "时钟与通知中心",
+      "capability": "system_integrity",
+      "user_task": "收起期间仍正常打开和关闭通知中心。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "在基线分别点击时钟左侧和中间，记录指针及通知中心行为。",
+        "候选收起时按同样位置重复；再测系统配置的通知中心快捷键。"
+      ],
+      "observable_expected": [
+        "通知中心可保持打开并正常关闭，不双切换。",
+        "不会产生意外指针移动或抢焦点。"
+      ],
+      "required_coverage": [
+        {
+          "id": "clock_left",
+          "description": "点击时钟左侧",
+          "requirements": {}
+        },
+        {
+          "id": "clock_center",
+          "description": "点击时钟中间",
+          "requirements": {}
+        },
+        {
+          "id": "keyboard",
+          "description": "系统通知中心快捷键",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-20",
+      "title": "摄像头和麦克风状态",
+      "capability": "system_integrity",
+      "user_task": "管理器不误遮蔽系统提供的使用者状态。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。",
+        "由操作者在明确选择的应用中手动启用采集；本包不自动录音录像。",
+        "观察所需系统指示即可，不保存声音或画面内容。"
+      ],
+      "steps": [
+        "先记录系统无管理器状态，包括角点、使用者名称提示和可访问的状态面板。",
+        "启用候选收起，再分别开始麦克风、摄像头和已有采集时收起；在活动持续期间再次收起。"
+      ],
+      "observable_expected": [
+        "系统原本提供的隐私状态和使用者信息没有被本工具误遮蔽。",
+        "只在开始时展开一次不自动算修复；需验证随后再次收起。"
+      ],
+      "required_coverage": [
+        {
+          "id": "microphone",
+          "description": "仅麦克风",
+          "requirements": {}
+        },
+        {
+          "id": "camera",
+          "description": "摄像头（按应用实际能力记录麦克风是否也开启）",
+          "requirements": {}
+        },
+        {
+          "id": "collapse_during_capture",
+          "description": "已有采集与再次收起",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-21",
+      "title": "新出现及无法识别的项目",
+      "capability": "inventory",
+      "user_task": "新项目、无标签项也不会永久丢失。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。",
+        "使用已授权测试的应用；不得自动扫描或记录无关窗口内容。"
+      ],
+      "steps": [
+        "在候选收起后启动 Fixture 或另一个测试项目。",
+        "加入无 AX 标签或拒绝 AX 的受控样本；检查默认呈现和恢复。"
+      ],
+      "observable_expected": [
+        "未知项目不会被错误认作已知目标。",
+        "即使原位容纳不下，仍有清楚可达路径和未知状态提示。"
+      ],
+      "required_coverage": [
+        {
+          "id": "late_launch",
+          "description": "收起后迟到的项目",
+          "requirements": {}
+        },
+        {
+          "id": "unknown_ax",
+          "description": "无可用 AX 语义的受控样本",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-22",
+      "title": "超时与防止重复激活",
+      "capability": "activation_proxy",
+      "user_task": "等待较久时不重复点击导致菜单再次关闭。",
+      "applies_to": [
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。",
+        "需要具有可控延迟的目标或可注入超时的代理；当前 Fixture 不制造 AX 超时。"
+      ],
+      "steps": [
+        "建立一次已观测的慢响应/超时条件，发起一个打开动作。",
+        "在原菜单可能已经打开时观察协调器是否重试；记录目标实际接收次数。"
+      ],
+      "observable_expected": [
+        "超时视作结果未知，先观察，不能默认未发生。",
+        "不产生二次切换或误点；缺少延迟靶标时保留 blocked。"
+      ],
+      "required_coverage": [
+        {
+          "id": "delayed_response",
+          "description": "受控延迟或 AX 返回超时",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_action_count"
+      ]
+    },
+    {
+      "id": "MB-23",
+      "title": "指针、焦点及拖拽保护",
+      "capability": "input_integrity",
+      "user_task": "菜单栏管理不会打断正在做的输入。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": true,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。"
+      ],
+      "steps": [
+        "在无管理器基线记录指针路径与前台应用。",
+        "候选展开/收起时继续移动鼠标；另测按键、拖拽进行中的自动触发。"
+      ],
+      "observable_expected": [
+        "无错误目标；当前拖拽或按键状态不被劫持。",
+        "用户已移动指针后不会被恢复到旧坐标；不抢前台焦点。"
+      ],
+      "required_coverage": [
+        {
+          "id": "pointer_moving",
+          "description": "操作期间继续移动指针",
+          "requirements": {}
+        },
+        {
+          "id": "key_held",
+          "description": "按住修饰键时触发",
+          "requirements": {}
+        },
+        {
+          "id": "drag_in_progress",
+          "description": "拖拽进行时触发",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": []
+    },
+    {
+      "id": "MB-24",
+      "title": "应用位置和同名样本边界",
+      "capability": "item_identity",
+      "user_task": "应用从不同位置运行或重名时不误匹配。",
+      "applies_to": [
+        "baseline",
+        "candidate"
+      ],
+      "mandatory_for_candidate": false,
+      "release_blocker": true,
+      "failure_policy": "错误目标、输入中断或状态损害阻断发布；不支持能力可以排除，但不得计入完整覆盖。",
+      "preconditions": [
+        "Fixture 的日志已开始；三项 alpha / beta / gamma 在无管理器基线中可辨认。",
+        "记录 OS build、屏幕几何、配置、授权和参与应用版本；未使用其他菜单栏管理器。",
+        "仅复制本实验 Fixture；同时运行两份需要不同 bundle/run 标识或清楚记录系统拒绝启动行为。"
+      ],
+      "steps": [
+        "分别从 Applications 与构建目录启动实验 Fixture，记录身份和可达性。",
+        "有条件时用受控同名样本验证显示名相同不导致误激活。"
+      ],
+      "observable_expected": [
+        "按真实身份匹配，路径或名称变化不使恢复入口消失。",
+        "当前后端不支持该位置或同名样本时明确限制，不能静默隐藏。"
+      ],
+      "required_coverage": [
+        {
+          "id": "applications",
+          "description": "Applications 中的实验 App",
+          "requirements": {}
+        },
+        {
+          "id": "build_directory",
+          "description": "构建目录中的实验 App",
+          "requirements": {}
+        },
+        {
+          "id": "same_display_name",
+          "description": "受控同名样本",
+          "requirements": {}
+        }
+      ],
+      "acceptance_evidence": [
+        "operator_attested"
+      ],
+      "machine_assertions": [
+        "fixture_activation_target"
+      ]
+    }
+  ]
+}

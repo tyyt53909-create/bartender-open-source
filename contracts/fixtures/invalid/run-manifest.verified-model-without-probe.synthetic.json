@@ -1,0 +1,60 @@
+{
+  "schema_version": "0.2",
+  "record_type": "RunManifest",
+  "status": "completed",
+  "run_id": "synthetic-author-run",
+  "task_id": "APP-02",
+  "attempt_id": "synthetic-attempt",
+  "parent_attempt_id": null,
+  "parent_run_id": null,
+  "review_of_attempt_id": null,
+  "fencing_token": 1,
+  "task_spec_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "contract_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "host_id": "synthetic-mac",
+  "resource_class": "macos_build",
+  "resource_leases": [
+    {
+      "resource_class": "macos_build",
+      "host_id": "synthetic-mac",
+      "lease_id": "synthetic-lease",
+      "fencing_token": 1
+    }
+  ],
+  "executor": {
+    "kind": "codex",
+    "version": "synthetic-not-a-real-version",
+    "native_session_id": "synthetic-session"
+  },
+  "model": {
+    "requested_alias": "gpt6.2astra",
+    "effective_provider": null,
+    "effective_model_id": null,
+    "reasoning": null,
+    "resolution_status": "verified",
+    "probe_receipt_ref": null
+  },
+  "workspace": {
+    "repo_url": "https://example.invalid/synthetic.git",
+    "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "branch": "synthetic/APP-02",
+    "path": "/synthetic/workspace",
+    "mode": "isolated_checkout"
+  },
+  "write_scope": [
+    "evidence/synthetic/"
+  ],
+  "budget_profile_id": "synthetic-budget",
+  "authority_profile_id": "synthetic-worker-authority",
+  "started_at": "2026-11-20T11:59:00Z",
+  "ended_at": "2026-11-20T12:00:00Z",
+  "runner_receipt_ref": {
+    "path": "evidence/synthetic/runner.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "stop_state": "confirmed_stopped",
+  "stop_receipt_ref": {
+    "path": "evidence/synthetic/stop.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  }
+}

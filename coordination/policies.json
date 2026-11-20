@@ -1,0 +1,107 @@
+{
+  "schema_version": "0.2",
+  "deployment": {
+    "enabled": false,
+    "mode": "design_only",
+    "repo_url": null,
+    "target_branch": "main",
+    "authority_profile_id": null,
+    "coordinator_host_id": null,
+    "activation_gate": "automation_runtime_ready"
+  },
+  "implementation_strategy": {
+    "bootstrap": "manual_coordinator_with_same_contracts",
+    "automation": "thin_typescript_service",
+    "state_store": "local_sqlite_single_writer",
+    "board": "read_only_projection",
+    "first_adapter": "codex_exec",
+    "second_adapter": "opencode",
+    "orchestrator_adapter": "unconfirmed_ocra",
+    "offline_tooling": "Python 3: plan compilation, schema validation, document rendering, pure gate conformance checks; never owns live state",
+    "runtime_tooling": "TypeScript + pinned Node.js LTS + SQLite on coordinator local disk; future implementation in OPS-04/07, same JSON contracts and conformance corpus"
+  },
+  "limits": {
+    "global_model_sessions": 4,
+    "implementation_runs": 3,
+    "review_capacity_reserved": true,
+    "gui_runs_per_host": 1,
+    "subagent_depth": 1,
+    "subagents_per_task": 2,
+    "parent_budget_includes_children": true,
+    "parent_budget_includes_retries": true
+  },
+  "budgets": {
+    "currency": null,
+    "project_cost_limit": null,
+    "task_token_limit": null,
+    "run_deadline_minutes": null,
+    "activation_requires_limits_or_explicit_subscription_quota_policy": true
+  },
+  "lease": {
+    "heartbeat_seconds_proposed": 15,
+    "ttl_seconds_proposed": 60,
+    "parameters_status": "uncalibrated_starting_values",
+    "expired_lease_revokes_submission": true,
+    "expired_lease_proves_process_stopped": false,
+    "reuse_gui_requires_exit_and_baseline": true
+  },
+  "git": {
+    "workspace_owner": "project_coordinator",
+    "one_branch_per_attempt": true,
+    "local_mode": "trusted_worktree",
+    "remote_mode": "independent_clone",
+    "worktree_is_security_boundary": false,
+    "short_lived_task_branches": true,
+    "branch_template": "task/{task_id_lower}/{attempt_id}",
+    "default_merge_policy": "single_integrator_protected_main",
+    "native_merge_queue": "probe_repository_support",
+    "force_push_main": false,
+    "integration_lease_held_until_terminal_outcome": true,
+    "required_latest_base_checks_must_be_enabled": true,
+    "integration_identity_may_bypass_rules": false,
+    "bootstrap_root_commit_exception": "one_explicit_recorded_event_then_closed"
+  },
+  "reviews": {
+    "author_and_reviewer_must_be_different_runs": true,
+    "author_child_is_not_independent_reviewer": true,
+    "bind_base_head_contract": true,
+    "new_head_invalidates_review": true,
+    "candidate_validation_required": true,
+    "readback_actual_merge_required": true,
+    "machine_readable_verdict_required": true
+  },
+  "state": {
+    "worker_can_mark_accepted": false,
+    "dependencies_require_accepted": true,
+    "task_accepted_implies_product_gate": false,
+    "one_coordinator_writer": true,
+    "events_are_not_only_truth": true,
+    "gate_unknown_blocks_dispatch": true
+  },
+  "subagents": {
+    "readonly_helpers_default": true,
+    "write_child_requires_task": true,
+    "no_privilege_expansion": true,
+    "budget_counts_globally": true,
+    "write_child_requires_dedicated_workspace": true,
+    "child_spawn_requires_reserved_session_slot": true,
+    "all_parents_waiting_with_no_child_capacity_forbidden": true,
+    "workspace_mode_follows_host_policy": true
+  },
+  "artifact_policy": {
+    "raw_evidence_outside_worker_writable_scope_when_managed": true,
+    "hash_is_not_execution_proof": true,
+    "log_secrets": false,
+    "release_credentials_in_worker": false
+  },
+  "build_layout": {
+    "package_manifest": "Package.swift",
+    "layout": "root_package_explicit_target_paths",
+    "xcodegen_spec": "Apps/MenuBarApp/project.yml",
+    "xcodegen_version": null,
+    "version_status": "rules_in_OPS-03; actual_pin_and_mac_generation_validation_in_APP-13",
+    "generated_project_is_authoritative": false,
+    "shared_owner": "integrator",
+    "build_and_gui_leases": "stage_scoped_not_whole_task"
+  }
+}

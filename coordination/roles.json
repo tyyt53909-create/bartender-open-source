@@ -1,0 +1,119 @@
+{
+  "schema_version": "0.2",
+  "note": "Default scopes describe ownership; each run receives a narrower, explicit task scope. They are not OS sandbox rules.",
+  "roles": [
+    {
+      "id": "lead",
+      "name": "项目协调",
+      "model_alias": "gpt6.2astra",
+      "default_write_scope": [
+        "coordination/document-templates/",
+        "docs/decisions/"
+      ],
+      "may_merge": false,
+      "independent_review_required": true,
+      "responsibility": "范围、优先级、阻塞收敛与分工建议",
+      "output": "任务契约与决策记录"
+    },
+    {
+      "id": "architect",
+      "name": "架构与接口",
+      "model_alias": "gpt6.2astra",
+      "default_write_scope": [
+        "docs/adr/",
+        "Packages/MenuBarCore/Contracts/"
+      ],
+      "may_merge": false,
+      "independent_review_required": true,
+      "responsibility": "产品端口、数据模型、跨模块契约",
+      "output": "ADR、接口与影响分析"
+    },
+    {
+      "id": "core",
+      "name": "核心逻辑",
+      "model_alias": "gpt6.2sol",
+      "default_write_scope": [
+        "Packages/MenuBarCore/",
+        "Packages/MenuBarPersistence/",
+        "Tests/Core/"
+      ],
+      "may_merge": false,
+      "independent_review_required": true,
+      "responsibility": "身份、状态机、协调与持久化纯逻辑",
+      "output": "模块提交与针对性检查"
+    },
+    {
+      "id": "platform",
+      "name": "macOS 平台",
+      "model_alias": "gpt6.2sol",
+      "default_write_scope": [
+        "Packages/MenuBarPlatform/",
+        "menubar-validation-lab/experiments/"
+      ],
+      "may_merge": false,
+      "independent_review_required": true,
+      "responsibility": "AppKit、AX、几何与系统能力适配",
+      "output": "平台代码与实际能力证据"
+    },
+    {
+      "id": "ui",
+      "name": "原生界面",
+      "model_alias": "gpt6.2sol",
+      "default_write_scope": [
+        "Apps/MenuBarApp/"
+      ],
+      "may_merge": false,
+      "independent_review_required": true,
+      "responsibility": "目录、设置、焦点、无障碍与本地化实现",
+      "output": "原生界面与交互结果"
+    },
+    {
+      "id": "validation",
+      "name": "实验与验收",
+      "model_alias": "gpt6.1terra",
+      "default_write_scope": [
+        "Tests/",
+        "menubar-validation-lab/results/"
+      ],
+      "may_merge": false,
+      "independent_review_required": true,
+      "responsibility": "真实 Mac 基线、行为复现与独立验收",
+      "output": "原始记录、缺陷与验收结论"
+    },
+    {
+      "id": "reviewer",
+      "name": "独立审查",
+      "model_alias": "grok4.7",
+      "fallback_aliases": [
+        "gpt6.2astra"
+      ],
+      "default_write_scope": [
+        "docs/reviews/"
+      ],
+      "may_merge": false,
+      "independent_review_required": false,
+      "responsibility": "独立反例审查与证据裁决",
+      "output": "ReviewVerdict 与 GateDecision"
+    },
+    {
+      "id": "integrator",
+      "name": "工具链、集成与发行",
+      "model_alias": "gpt6.2sol",
+      "default_write_scope": [
+        ".github/",
+        "Release/",
+        "Apps/MenuBarApp/Composition/",
+        "tools/agent-control/",
+        "Package.swift",
+        "Package.resolved",
+        "Apps/MenuBarApp/project.yml",
+        "Config/"
+      ],
+      "may_merge": false,
+      "merge_via": "trusted_integration_service_after_gates",
+      "independent_review_required": true,
+      "responsibility": "工作区、CLI 适配器、工程清单、CI、候选与发行准备",
+      "output": "可复现环境及 IntegrationReceipt"
+    }
+  ]
+}

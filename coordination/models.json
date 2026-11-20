@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1",
+  "checked_on": "2026-11-20",
+  "route_policy": "Resolve on the execution host; no silent fallback; catalog visibility is not invocation proof.",
+  "models": [
+    {
+      "alias": "gpt6.2astra",
+      "label": "GPT-6.2 Astra",
+      "documented_candidate_model_id": "gpt-6.2-astra",
+      "preferred_runner": "codex",
+      "effective_provider": null,
+      "effective_model_id": null,
+      "availability": "unresolved",
+      "recommended_roles": [
+        "lead",
+        "architect",
+        "reviewer"
+      ],
+      "source": "https://learn.chatgpt.com/docs/models.md"
+    },
+    {
+      "alias": "gpt6.2sol",
+      "label": "GPT-6.2 Sol",
+      "documented_candidate_model_id": "gpt-6.2-sol",
+      "preferred_runner": "codex",
+      "effective_provider": null,
+      "effective_model_id": null,
+      "availability": "unresolved",
+      "recommended_roles": [
+        "core",
+        "platform",
+        "ui",
+        "integrator"
+      ],
+      "source": "https://learn.chatgpt.com/docs/models.md"
+    },
+    {
+      "alias": "gpt6.1terra",
+      "label": "GPT-6.1 Terra",
+      "documented_candidate_model_id": "gpt-6.1-terra",
+      "preferred_runner": "codex",
+      "effective_provider": null,
+      "effective_model_id": null,
+      "availability": "unresolved",
+      "recommended_roles": [
+        "validation"
+      ],
+      "source": "https://learn.chatgpt.com/docs/models.md"
+    },
+    {
+      "alias": "grok4.7",
+      "label": "Grok 4.7",
+      "documented_candidate_model_id": "grok-4.7",
+      "preferred_runner": "opencode",
+      "effective_provider": null,
+      "effective_model_id": null,
+      "availability": "unresolved",
+      "recommended_roles": [
+        "reviewer"
+      ],
+      "source": "https://docs.x.ai/developers/models/grok-4.7"
+    }
+  ]
+}

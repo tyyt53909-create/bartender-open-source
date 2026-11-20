@@ -1,0 +1,29 @@
+{
+  "template_status": "template_not_executed",
+  "template_for": "ReviewVerdict",
+  "schema_ref": "../contracts/review-verdict.schema.json",
+  "instruction": "Copy payload into a new evidence record; replace every null with observed data or an explicitly nullable value. Never submit this envelope or treat placeholders as evidence.",
+  "payload": {
+    "schema_version": "0.2",
+    "record_type": "ReviewVerdict",
+    "review_id": null,
+    "task_id": null,
+    "author_attempt_id": null,
+    "author_run_id": null,
+    "reviewer_run_id": null,
+    "reviewer_principal_id": null,
+    "task_spec_sha256": null,
+    "contract_sha": null,
+    "reviewed_base_sha": null,
+    "reviewed_head_sha": null,
+    "verdict": null,
+    "summary": null,
+    "findings": null,
+    "coverage": null,
+    "evidence_refs": null,
+    "worker_result_ref": null,
+    "reviewer_manifest_ref": null,
+    "effective_model_id": null,
+    "issued_at": null
+  }
+}

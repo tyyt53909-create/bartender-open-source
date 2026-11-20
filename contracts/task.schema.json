@@ -1,0 +1,517 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:menubar-agent:v0.2:TaskSpec",
+  "title": "TaskSpec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "phase",
+    "wave",
+    "role",
+    "model_alias",
+    "model_candidates",
+    "model_assignment_state",
+    "runner_candidates",
+    "compute_class",
+    "depends_on",
+    "execution_gates",
+    "scope_paths",
+    "acceptance_criteria",
+    "evidence_required",
+    "feature_ids",
+    "priority",
+    "status",
+    "blocked_reasons",
+    "optional_for_first_lane",
+    "assigned_run_id",
+    "actual_model_id",
+    "runner_version",
+    "host_id",
+    "base_sha",
+    "head_sha",
+    "candidate_sha",
+    "contract_sha",
+    "pr_url",
+    "validation_compute_classes",
+    "validation_resource_expression",
+    "required_environment_notes",
+    "action_preconditions",
+    "execution_mode",
+    "reviewer_run_id",
+    "merge_commit_sha",
+    "evidence_refs",
+    "delivery_kind",
+    "review_policy",
+    "task_spec_sha256",
+    "research_task_note"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(OPS|APP)-[0-9]{2}(?:-[A-Z0-9]+)?$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "phase": {
+      "type": "string",
+      "pattern": "^(W0|M[0-5])$"
+    },
+    "wave": {
+      "type": "string",
+      "pattern": "^W[0-5]$"
+    },
+    "role": {
+      "enum": [
+        "lead",
+        "architect",
+        "core",
+        "platform",
+        "ui",
+        "validation",
+        "reviewer",
+        "integrator"
+      ]
+    },
+    "model_alias": {
+      "enum": [
+        "gpt6.2astra",
+        "gpt6.2sol",
+        "gpt6.1terra",
+        "grok4.7"
+      ]
+    },
+    "model_candidates": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "gpt6.2astra",
+          "gpt6.2sol",
+          "gpt6.1terra",
+          "grok4.7"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "model_assignment_state": {
+      "enum": [
+        "unresolved",
+        "resolved_unverified",
+        "verified",
+        "unavailable"
+      ]
+    },
+    "runner_candidates": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "codex",
+          "opencode"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "compute_class": {
+      "enum": [
+        "linux_cpu",
+        "macos_build",
+        "macos_gui_exclusive"
+      ]
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(OPS|APP)-[0-9]{2}(?:-[A-Z0-9]+)?$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "execution_gates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "scope_paths": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "evidence_required": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "feature_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^F[0-9]{2}$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "priority": {
+      "enum": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    "status": {
+      "enum": [
+        "planned",
+        "ready",
+        "running",
+        "submitted",
+        "validating",
+        "changes_requested",
+        "merge_queued",
+        "integrated",
+        "accepted",
+        "blocked",
+        "cancelled"
+      ]
+    },
+    "blocked_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "optional_for_first_lane": {
+      "type": "boolean"
+    },
+    "assigned_run_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "actual_model_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "runner_version": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "host_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "base_sha": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "head_sha": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "candidate_sha": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contract_sha": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pr_url": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "validation_compute_classes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "linux_cpu",
+          "macos_build",
+          "macos_gui_exclusive"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "validation_resource_expression": {
+      "$ref": "#/$defs/resource_expression"
+    },
+    "required_environment_notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "action_preconditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "execution_mode": {
+      "enum": [
+        "unassigned",
+        "worktree",
+        "clone",
+        "isolated_checkout"
+      ]
+    },
+    "reviewer_run_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "merge_commit_sha": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "minItems": 0
+    },
+    "delivery_kind": {
+      "enum": [
+        "workflow",
+        "code",
+        "research",
+        "decision",
+        "validation",
+        "release"
+      ]
+    },
+    "review_policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_spec_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "scope_change_policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shared_file_change_requests": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\\\x00\\r\\n:]+$"
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "research_evidence_policy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "research_task_note": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "description": "Versioned task card. Immutable TaskSpec is the task_spec_fields projection; runtime projection remains on the card for v0.2 compatibility. Null runtime values do not establish execution evidence.",
+  "$defs": {
+    "resource_expression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "resource_class"
+          ],
+          "properties": {
+            "resource_class": {
+              "enum": [
+                "linux_cpu",
+                "macos_build",
+                "macos_gui_exclusive"
+              ]
+            },
+            "requires": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "all_of"
+          ],
+          "properties": {
+            "all_of": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/resource_expression"
+              },
+              "minItems": 1
+            },
+            "platform_dependent_checks_require": {
+              "enum": [
+                "linux_cpu",
+                "macos_build",
+                "macos_gui_exclusive"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "any_of"
+          ],
+          "properties": {
+            "any_of": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/resource_expression"
+              },
+              "minItems": 1
+            },
+            "platform_dependent_checks_require": {
+              "enum": [
+                "linux_cpu",
+                "macos_build",
+                "macos_gui_exclusive"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

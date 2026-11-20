@@ -1,0 +1,8 @@
+# 这是责任示意，不是可用 GitHub CODEOWNERS。
+# 接入时将角色替换为真实 GitHub 用户或团队；不要复制虚构账号。
+# 产品接口 /Packages/MenuBarCore/Contracts/ -> architect + reviewer
+# 工程清单 /Apps/MenuBarApp/*.xcodeproj/ -> integrator + reviewer
+# CI /.github/workflows/ -> integrator + reviewer
+# 协作策略 /coordination/ -> lead + reviewer
+# 平台后端 /Packages/MenuBarPlatform/ -> platform + reviewer
+

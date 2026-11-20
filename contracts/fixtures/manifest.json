@@ -1,0 +1,105 @@
+{
+  "fixture_kind": "synthetic_shape_examples_not_execution_evidence",
+  "valid": [
+    {
+      "path": "valid/worker-result.synthetic.json",
+      "schema": "worker-result.schema.json"
+    },
+    {
+      "path": "valid/run-manifest.synthetic.json",
+      "schema": "run-manifest.schema.json"
+    },
+    {
+      "path": "valid/review-verdict.synthetic.json",
+      "schema": "review-verdict.schema.json"
+    },
+    {
+      "path": "valid/integration-receipt.synthetic.json",
+      "schema": "integration-receipt.schema.json"
+    },
+    {
+      "path": "valid/gate-decision.synthetic.json",
+      "schema": "gate-decision.schema.json"
+    },
+    {
+      "path": "valid/task.synthetic.json",
+      "schema": "task.schema.json"
+    },
+    {
+      "path": "valid/worker-result.negative-research.synthetic.json",
+      "schema": "worker-result.schema.json"
+    }
+  ],
+  "invalid": [
+    {
+      "path": "invalid/worker-result.self-accepted.synthetic.json",
+      "schema": "worker-result.schema.json",
+      "case": "self-accepted"
+    },
+    {
+      "path": "invalid/worker-result.unbound-observation.synthetic.json",
+      "schema": "worker-result.schema.json",
+      "case": "unbound-observation"
+    },
+    {
+      "path": "invalid/review-verdict.missing-head.synthetic.json",
+      "schema": "review-verdict.schema.json",
+      "case": "missing-head"
+    },
+    {
+      "path": "invalid/review-verdict.approved-without-evidence.synthetic.json",
+      "schema": "review-verdict.schema.json",
+      "case": "approved-without-evidence"
+    },
+    {
+      "path": "invalid/run-manifest.verified-model-without-probe.synthetic.json",
+      "schema": "run-manifest.schema.json",
+      "case": "verified-model-without-probe"
+    },
+    {
+      "path": "invalid/integration-receipt.merged-without-readback.synthetic.json",
+      "schema": "integration-receipt.schema.json",
+      "case": "merged-without-readback"
+    },
+    {
+      "path": "invalid/integration-receipt.queue-is-not-merge.synthetic.json",
+      "schema": "integration-receipt.schema.json",
+      "case": "queue-is-not-merge"
+    },
+    {
+      "path": "invalid/gate-decision.missing-source.synthetic.json",
+      "schema": "gate-decision.schema.json",
+      "case": "missing-source"
+    },
+    {
+      "path": "invalid/gate-decision.missing-authority.synthetic.json",
+      "schema": "gate-decision.schema.json",
+      "case": "missing-authority"
+    },
+    {
+      "path": "invalid/gate-decision.passed-with-unknown-evidence.synthetic.json",
+      "schema": "gate-decision.schema.json",
+      "case": "passed-with-unknown-evidence"
+    },
+    {
+      "path": "invalid/gate-decision.bad-content-digest.synthetic.json",
+      "schema": "gate-decision.schema.json",
+      "case": "bad-content-digest"
+    },
+    {
+      "path": "invalid/gate-decision.path-traversal.synthetic.json",
+      "schema": "gate-decision.schema.json",
+      "case": "path-traversal"
+    },
+    {
+      "path": "invalid/task.obsolete-milestone.synthetic.json",
+      "schema": "task.schema.json",
+      "case": "obsolete milestone field must not coexist with phase and wave"
+    },
+    {
+      "path": "invalid/task.missing-write-scope.synthetic.json",
+      "schema": "task.schema.json",
+      "case": "missing write scope"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "template_status": "template_not_executed",
+  "template_for": "GateDecision",
+  "schema_ref": "../contracts/gate-decision.schema.json",
+  "instruction": "Copy payload into a new evidence record; replace every null with observed data or an explicitly nullable value. Never submit this envelope or treat placeholders as evidence.",
+  "payload": {
+    "schema_version": "0.2",
+    "record_type": "GateDecision",
+    "decision_id": null,
+    "gate_id": null,
+    "decision": null,
+    "issued_at": null,
+    "expires_at": null,
+    "source": null,
+    "scope": null,
+    "context": null,
+    "issuer": null,
+    "evidence": null
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.2",
+  "record_type": "IntegrationReceipt",
+  "receipt_id": "synthetic-integration",
+  "task_id": "APP-02",
+  "author_attempt_id": "synthetic-attempt",
+  "author_run_id": "synthetic-author-run",
+  "reviewer_run_id": "synthetic-reviewer-run",
+  "integration_run_id": "synthetic-integrator-run",
+  "fencing_token": 1,
+  "task_spec_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "contract_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "head_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "reviewed_base_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "reviewed_head_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "target_base_sha": "cccccccccccccccccccccccccccccccccccccccc",
+  "candidate_sha": "dddddddddddddddddddddddddddddddddddddddd",
+  "candidate_tree_oid": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "review_verdict_ref": {
+    "path": "evidence/synthetic/review-verdict.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  },
+  "validation_receipt_refs": [
+    {
+      "path": "evidence/synthetic/validation.json",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "integration_strategy": "squash",
+  "merge_request_id": "synthetic-merge-request",
+  "status": "merged",
+  "merge_request_state": "merged",
+  "merge_commit_sha": "dddddddddddddddddddddddddddddddddddddddd",
+  "merge_tree_oid": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "merge_parents": [
+    "cccccccccccccccccccccccccccccccccccccccc"
+  ],
+  "readback_evidence_ref": null,
+  "actual_merge_confirmed_at": "2026-11-20T12:00:00Z",
+  "issued_at": "2026-11-20T12:00:00Z"
+}

@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "portable_arithmetic",
+  "claim_scope": "Pinned heuristic calculations and input guards only; no macOS behavior tested.",
+  "generated_at_utc": "2026-11-20T05:31:48.718745+00:00",
+  "environment": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.12.14"
+  },
+  "model_source_commit": "a4476bfe81a9a84ac94f8dfb273c4eaad8f9e960",
+  "all_arithmetic_expectations_match": true,
+  "summary": {
+    "total_samples": 16,
+    "model_satisfied_runtime_unverified": 5,
+    "model_violations": 8,
+    "invalid_inputs_rejected": 3,
+    "macos_runtime_cases_executed": 0
+  },
+  "results": [
+    {
+      "case_id": "single_unnotched_1512",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 1512
+        }
+      ],
+      "unit": 692,
+      "active_spacers": 2,
+      "required_spacers": 2,
+      "span": 2076,
+      "maximum_span": 4844,
+      "widest_status_width": 1512.0,
+      "minimum_model_cliff": 756.0,
+      "minimum_headroom": 64.0,
+      "shortfall": 0,
+      "violations": [],
+      "model_verdict": "model_satisfied_runtime_unverified",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "eligible_for_manual_runtime_experiment_only",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "single_notched_1512",
+      "kind": "upstream_comment_geometry",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        }
+      ],
+      "unit": 433,
+      "active_spacers": 1,
+      "required_spacers": 1,
+      "span": 866,
+      "maximum_span": 3031,
+      "widest_status_width": 663.5,
+      "minimum_model_cliff": 497.625,
+      "minimum_headroom": 64.625,
+      "shortfall": 0,
+      "violations": [],
+      "model_verdict": "model_satisfied_runtime_unverified",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "eligible_for_manual_runtime_experiment_only",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "notched_plus_2560",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 2560,
+          "status_width": 2560
+        }
+      ],
+      "unit": 433,
+      "active_spacers": 5,
+      "required_spacers": 5,
+      "span": 2598,
+      "maximum_span": 3031,
+      "widest_status_width": 2560.0,
+      "minimum_model_cliff": 497.625,
+      "minimum_headroom": 64.625,
+      "shortfall": 0,
+      "violations": [],
+      "model_verdict": "model_satisfied_runtime_unverified",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "eligible_for_manual_runtime_experiment_only",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "notched_plus_3024",
+      "kind": "capacity_boundary",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3024,
+          "status_width": 3024
+        }
+      ],
+      "unit": 433,
+      "active_spacers": 6,
+      "required_spacers": 6,
+      "span": 3031,
+      "maximum_span": 3031,
+      "widest_status_width": 3024.0,
+      "minimum_model_cliff": 497.625,
+      "minimum_headroom": 64.625,
+      "shortfall": 0,
+      "violations": [],
+      "model_verdict": "model_satisfied_runtime_unverified",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "eligible_for_manual_runtime_experiment_only",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "notched_exact_capacity_3031",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3031,
+          "status_width": 3031
+        }
+      ],
+      "unit": 433,
+      "active_spacers": 6,
+      "required_spacers": 6,
+      "span": 3031,
+      "maximum_span": 3031,
+      "widest_status_width": 3031.0,
+      "minimum_model_cliff": 497.625,
+      "minimum_headroom": 64.625,
+      "shortfall": 0.0,
+      "violations": [],
+      "model_verdict": "model_satisfied_runtime_unverified",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "eligible_for_manual_runtime_experiment_only",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "notched_exceeds_capacity_3031_5",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3031.5,
+          "status_width": 3031.5
+        }
+      ],
+      "unit": 433,
+      "active_spacers": 6,
+      "required_spacers": 7,
+      "span": 3031,
+      "maximum_span": 3031,
+      "widest_status_width": 3031.5,
+      "minimum_model_cliff": 497.625,
+      "minimum_headroom": 64.625,
+      "shortfall": 0.5,
+      "violations": [
+        "capacity_shortfall"
+      ],
+      "model_verdict": "model_violation",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "do_not_collapse",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "notched_plus_3440",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3440,
+          "status_width": 3440
+        }
+      ],
+      "unit": 433,
+      "active_spacers": 6,
+      "required_spacers": 7,
+      "span": 3031,
+      "maximum_span": 3031,
+      "widest_status_width": 3440.0,
+      "minimum_model_cliff": 497.625,
+      "minimum_headroom": 64.625,
+      "shortfall": 409.0,
+      "violations": [
+        "capacity_shortfall"
+      ],
+      "model_verdict": "model_violation",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "do_not_collapse",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "notched_plus_3840",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 3840,
+          "status_width": 3840
+        }
+      ],
+      "unit": 433,
+      "active_spacers": 6,
+      "required_spacers": 8,
+      "span": 3031,
+      "maximum_span": 3031,
+      "widest_status_width": 3840.0,
+      "minimum_model_cliff": 497.625,
+      "minimum_headroom": 64.625,
+      "shortfall": 809.0,
+      "violations": [
+        "capacity_shortfall"
+      ],
+      "model_verdict": "model_violation",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "do_not_collapse",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "notched_plus_5120",
+      "kind": "illustrative_topology",
+      "displays": [
+        {
+          "width": 1512,
+          "status_width": 663.5
+        },
+        {
+          "width": 5120,
+          "status_width": 5120
+        }
+      ],
+      "unit": 433,
+      "active_spacers": 6,
+      "required_spacers": 11,
+      "span": 3031,
+      "maximum_span": 3031,
+      "widest_status_width": 5120.0,
+      "minimum_model_cliff": 497.625,
+      "minimum_headroom": 64.625,
+      "shortfall": 2089.0,
+      "violations": [
+        "capacity_shortfall"
+      ],
+      "model_verdict": "model_violation",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "do_not_collapse",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "narrow_unnotched_600_plus_2560",
+      "kind": "synthetic_topology",
+      "displays": [
+        {
+          "width": 600,
+          "status_width": 600
+        },
+        {
+          "width": 2560,
+          "status_width": 2560
+        }
+      ],
+      "unit": 236,
+      "active_spacers": 6,
+      "required_spacers": 10,
+      "span": 1652,
+      "maximum_span": 1652,
+      "widest_status_width": 2560.0,
+      "minimum_model_cliff": 300.0,
+      "minimum_headroom": 64.0,
+      "shortfall": 908.0,
+      "violations": [
+        "capacity_shortfall"
+      ],
+      "model_verdict": "model_violation",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "do_not_collapse",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "minimum_overrides_margin_450",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 450,
+          "status_width": 450
+        }
+      ],
+      "unit": 200,
+      "active_spacers": 2,
+      "required_spacers": 2,
+      "span": 600,
+      "maximum_span": 1400,
+      "widest_status_width": 450.0,
+      "minimum_model_cliff": 225.0,
+      "minimum_headroom": 25.0,
+      "shortfall": 0,
+      "violations": [
+        "safety_margin_not_preserved"
+      ],
+      "model_verdict": "model_violation",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "do_not_collapse",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "minimum_reaches_cliff_390",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 390,
+          "status_width": 390
+        }
+      ],
+      "unit": 200,
+      "active_spacers": 1,
+      "required_spacers": 1,
+      "span": 400,
+      "maximum_span": 1400,
+      "widest_status_width": 390.0,
+      "minimum_model_cliff": 195.0,
+      "minimum_headroom": -5.0,
+      "shortfall": 0,
+      "violations": [
+        "unit_reaches_model_cliff",
+        "safety_margin_not_preserved"
+      ],
+      "model_verdict": "model_violation",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "do_not_collapse",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "minimum_reaches_notched_cliff_250",
+      "kind": "synthetic_boundary",
+      "displays": [
+        {
+          "width": 800,
+          "status_width": 250
+        }
+      ],
+      "unit": 200,
+      "active_spacers": 1,
+      "required_spacers": 1,
+      "span": 400,
+      "maximum_span": 1400,
+      "widest_status_width": 250.0,
+      "minimum_model_cliff": 187.5,
+      "minimum_headroom": -12.5,
+      "shortfall": 0,
+      "violations": [
+        "unit_reaches_model_cliff",
+        "safety_margin_not_preserved"
+      ],
+      "model_verdict": "model_violation",
+      "macos_runtime_status": "not_run",
+      "candidate_action": "do_not_collapse",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "empty_topology",
+      "kind": "input_guard",
+      "model_verdict": "invalid_input",
+      "error": "no_displays",
+      "candidate_action": "do_not_collapse",
+      "macos_runtime_status": "not_run",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "status_width_larger_than_screen",
+      "kind": "input_guard",
+      "model_verdict": "invalid_input",
+      "error": "invalid_status_width",
+      "candidate_action": "do_not_collapse",
+      "macos_runtime_status": "not_run",
+      "arithmetic_expectation_match": true
+    },
+    {
+      "case_id": "nonpositive_width",
+      "kind": "input_guard",
+      "model_verdict": "invalid_input",
+      "error": "invalid_width",
+      "candidate_action": "do_not_collapse",
+      "macos_runtime_status": "not_run",
+      "arithmetic_expectation_match": true
+    }
+  ],
+  "input_sha256": "8a5ab3c6b51574cc9a138d9ee91efef78470433d166fe08ccd246a85751fe7f9"
+}

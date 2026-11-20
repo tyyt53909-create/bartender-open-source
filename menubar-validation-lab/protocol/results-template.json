@@ -1,0 +1,569 @@
+{
+  "schema_version": "1.0",
+  "protocol_id": "menubar-acceptance-v0.1",
+  "protocol_sha256": "710cbee0e004a062173194953f2cb17d44c944356ebe81e41504b8b209b17f0f",
+  "run_id": "EDIT-ME-candidate-001",
+  "comparison_group_id": "EDIT-ME-condition-001",
+  "baseline_run_id": null,
+  "run_role": "candidate",
+  "run_kind": "environment_preflight",
+  "started_at_utc": null,
+  "finished_at_utc": null,
+  "backend": {
+    "id": "unselected",
+    "strategy_id": "unselected",
+    "revision": {
+      "kind": "source_sha256",
+      "value": null
+    },
+    "configuration_sha256": null,
+    "note": "必须记录原版上游、带保护修改版和私有只读探测的区别。"
+  },
+  "claimed_capabilities": [],
+  "environment": {
+    "platform": "Linux",
+    "machine_id": null,
+    "os_version": null,
+    "os_build": null,
+    "architecture": null,
+    "screen_topology": [],
+    "menu_bar_auto_hide": null,
+    "separate_spaces": null,
+    "permission_profile": null,
+    "app_inventory": [],
+    "fixture_bundle_id": "org.menuvalidation.Fixture",
+    "fixture_item_ids": [
+      "org.menuvalidation.fixture.alpha",
+      "org.menuvalidation.fixture.beta",
+      "org.menuvalidation.fixture.gamma"
+    ],
+    "fixture_revision": {
+      "kind": "source_sha256",
+      "value": null
+    },
+    "fixture_run_id": null,
+    "note": "本模板代表尚无 Mac runtime 的状态；没有调用任何摄像头、麦克风或私有显隐接口。"
+  },
+  "cases": [
+    {
+      "case_id": "MB-01",
+      "coverage": [
+        {
+          "variant_id": "three_items",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "after_manual_reorder",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-02",
+      "coverage": [
+        {
+          "variant_id": "capture_off",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "capture_on",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-03",
+      "coverage": [
+        {
+          "variant_id": "alpha",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "beta",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "gamma",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-04",
+      "coverage": [
+        {
+          "variant_id": "alpha_right",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "beta_right",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-05",
+      "coverage": [
+        {
+          "variant_id": "option_left",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "option_right",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-06",
+      "coverage": [
+        {
+          "variant_id": "long_open",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "dynamic_while_open",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-07",
+      "coverage": [
+        {
+          "variant_id": "submenu",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "scroll",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-08",
+      "coverage": [
+        {
+          "variant_id": "three_sections",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-09",
+      "coverage": [
+        {
+          "variant_id": "menu_end",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "disable_backend",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-10",
+      "coverage": [
+        {
+          "variant_id": "rule_during_menu",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "manual_preset_wins",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-11",
+      "coverage": [
+        {
+          "variant_id": "manual_reorder",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "manual_reveal",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-12",
+      "coverage": [
+        {
+          "variant_id": "fixture_relaunch",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-13",
+      "coverage": [
+        {
+          "variant_id": "normal_exit",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "forced_exit",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-14",
+      "coverage": [
+        {
+          "variant_id": "denied",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "revoked",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-15",
+      "coverage": [
+        {
+          "variant_id": "capture_denied",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "capture_revoked",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-16",
+      "coverage": [
+        {
+          "variant_id": "notch_and_wide",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "mixed_scale",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "vertical",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-17",
+      "coverage": [
+        {
+          "variant_id": "spaces",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "fullscreen",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-18",
+      "coverage": [
+        {
+          "variant_id": "wake",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-19",
+      "coverage": [
+        {
+          "variant_id": "clock_left",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "clock_center",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "keyboard",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-20",
+      "coverage": [
+        {
+          "variant_id": "microphone",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "camera",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "collapse_during_capture",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-21",
+      "coverage": [
+        {
+          "variant_id": "late_launch",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "unknown_ax",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-22",
+      "coverage": [
+        {
+          "variant_id": "delayed_response",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-23",
+      "coverage": [
+        {
+          "variant_id": "pointer_moving",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "key_held",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "drag_in_progress",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "case_id": "MB-24",
+      "coverage": [
+        {
+          "variant_id": "applications",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "build_directory",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        },
+        {
+          "variant_id": "same_display_name",
+          "status": "not_run",
+          "reason": "尚未在匹配的 Mac 条件执行。",
+          "observations": "",
+          "context": {},
+          "evidence": []
+        }
+      ]
+    }
+  ]
+}

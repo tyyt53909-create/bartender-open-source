@@ -1,0 +1,622 @@
+STDOUT
+{
+  "schema_version": "1.0",
+  "protocol_id": "menubar-acceptance-v0.1",
+  "run_id": "linux-preflight-eab451e8-e8ef-457a-8e8f-e596e6bb43cd",
+  "release_verdict": "blocked_by_environment",
+  "suite_verdict": "incomplete",
+  "comparison_verdict": "pending",
+  "meaning": "Structure/hash assessment of submitted evidence, not replay of verifiers or Mac UI execution. passed covers attested declared scope; it does not imply full Bartender parity or machine-only verification.",
+  "evidence_validation_level": "structure_and_artifact_hash_only",
+  "replayed_verifiers": 0,
+  "applicable_variants": 50,
+  "accepted_pass_variants": 0,
+  "required_pending_variants": 29,
+  "status_counts": {
+    "not_run": 50
+  },
+  "valid_evidence_counts": {},
+  "blocking_findings": [
+    {
+      "code": "environment_unavailable",
+      "message": "No macOS runtime evidence: UI/backend behaviour remains untested"
+    }
+  ],
+  "scope_exclusions": [
+    {
+      "case_id": "MB-01",
+      "variant_id": "three_items",
+      "status": "not_run",
+      "capability": "item_identity",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-01",
+      "variant_id": "after_manual_reorder",
+      "status": "not_run",
+      "capability": "item_identity",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-02",
+      "variant_id": "capture_off",
+      "status": "not_run",
+      "capability": "dynamic_status",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-02",
+      "variant_id": "capture_on",
+      "status": "not_run",
+      "capability": "dynamic_status",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-07",
+      "variant_id": "submenu",
+      "status": "not_run",
+      "capability": "extended_interaction",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-07",
+      "variant_id": "scroll",
+      "status": "not_run",
+      "capability": "extended_interaction",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-08",
+      "variant_id": "three_sections",
+      "status": "not_run",
+      "capability": "visibility_sections",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-10",
+      "variant_id": "rule_during_menu",
+      "status": "not_run",
+      "capability": "rule_arbitration",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-10",
+      "variant_id": "manual_preset_wins",
+      "status": "not_run",
+      "capability": "rule_arbitration",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-11",
+      "variant_id": "manual_reorder",
+      "status": "not_run",
+      "capability": "layout_restore",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-11",
+      "variant_id": "manual_reveal",
+      "status": "not_run",
+      "capability": "layout_restore",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-12",
+      "variant_id": "fixture_relaunch",
+      "status": "not_run",
+      "capability": "layout_restore",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-16",
+      "variant_id": "notch_and_wide",
+      "status": "not_run",
+      "capability": "multidisplay",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-16",
+      "variant_id": "mixed_scale",
+      "status": "not_run",
+      "capability": "multidisplay",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-16",
+      "variant_id": "vertical",
+      "status": "not_run",
+      "capability": "multidisplay",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-17",
+      "variant_id": "spaces",
+      "status": "not_run",
+      "capability": "spaces_fullscreen",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-17",
+      "variant_id": "fullscreen",
+      "status": "not_run",
+      "capability": "spaces_fullscreen",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-22",
+      "variant_id": "delayed_response",
+      "status": "not_run",
+      "capability": "activation_proxy",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-24",
+      "variant_id": "applications",
+      "status": "not_run",
+      "capability": "item_identity",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-24",
+      "variant_id": "build_directory",
+      "status": "not_run",
+      "capability": "item_identity",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    },
+    {
+      "case_id": "MB-24",
+      "variant_id": "same_display_name",
+      "status": "not_run",
+      "capability": "item_identity",
+      "reason": "尚未在匹配的 Mac 条件执行。"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "MB-01",
+      "capability": "item_identity",
+      "coverage": [
+        {
+          "variant_id": "three_items",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "after_manual_reorder",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-02",
+      "capability": "dynamic_status",
+      "coverage": [
+        {
+          "variant_id": "capture_off",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "capture_on",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-03",
+      "capability": "activation_left",
+      "coverage": [
+        {
+          "variant_id": "alpha",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "beta",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "gamma",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-04",
+      "capability": "activation_right",
+      "coverage": [
+        {
+          "variant_id": "alpha_right",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "beta_right",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-05",
+      "capability": "activation_option",
+      "coverage": [
+        {
+          "variant_id": "option_left",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "option_right",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-06",
+      "capability": "menu_lifecycle",
+      "coverage": [
+        {
+          "variant_id": "long_open",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "dynamic_while_open",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-07",
+      "capability": "extended_interaction",
+      "coverage": [
+        {
+          "variant_id": "submenu",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "scroll",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-08",
+      "capability": "visibility_sections",
+      "coverage": [
+        {
+          "variant_id": "three_sections",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-09",
+      "capability": "temporary_restore",
+      "coverage": [
+        {
+          "variant_id": "menu_end",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "disable_backend",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-10",
+      "capability": "rule_arbitration",
+      "coverage": [
+        {
+          "variant_id": "rule_during_menu",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "manual_preset_wins",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-11",
+      "capability": "layout_restore",
+      "coverage": [
+        {
+          "variant_id": "manual_reorder",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "manual_reveal",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-12",
+      "capability": "layout_restore",
+      "coverage": [
+        {
+          "variant_id": "fixture_relaunch",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-13",
+      "capability": "failure_recovery",
+      "coverage": [
+        {
+          "variant_id": "normal_exit",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "forced_exit",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-14",
+      "capability": "permission_degradation",
+      "coverage": [
+        {
+          "variant_id": "denied",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "revoked",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-15",
+      "capability": "permission_degradation",
+      "coverage": [
+        {
+          "variant_id": "capture_denied",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "capture_revoked",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-16",
+      "capability": "multidisplay",
+      "coverage": [
+        {
+          "variant_id": "notch_and_wide",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "mixed_scale",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "vertical",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-17",
+      "capability": "spaces_fullscreen",
+      "coverage": [
+        {
+          "variant_id": "spaces",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "fullscreen",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-18",
+      "capability": "wake_recovery",
+      "coverage": [
+        {
+          "variant_id": "wake",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-19",
+      "capability": "system_integrity",
+      "coverage": [
+        {
+          "variant_id": "clock_left",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "clock_center",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "keyboard",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-20",
+      "capability": "system_integrity",
+      "coverage": [
+        {
+          "variant_id": "microphone",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "camera",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "collapse_during_capture",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-21",
+      "capability": "inventory",
+      "coverage": [
+        {
+          "variant_id": "late_launch",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "unknown_ax",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-22",
+      "capability": "activation_proxy",
+      "coverage": [
+        {
+          "variant_id": "delayed_response",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    },
+    {
+      "case_id": "MB-23",
+      "capability": "input_integrity",
+      "coverage": [
+        {
+          "variant_id": "pointer_moving",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "key_held",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        },
+        {
+          "variant_id": "drag_in_progress",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": true
+        }
+      ]
+    },
+    {
+      "case_id": "MB-24",
+      "capability": "item_identity",
+      "coverage": [
+        {
+          "variant_id": "applications",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "build_directory",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        },
+        {
+          "variant_id": "same_display_name",
+          "status": "not_run",
+          "accepted_pass": false,
+          "in_scope": false
+        }
+      ]
+    }
+  ]
+}
+
+STDERR

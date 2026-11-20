@@ -1,0 +1,32 @@
+STDOUT
+
+STDERR
+test_candidate_strategy_identity_is_required (test_evaluate_results.EvaluatorTests.test_candidate_strategy_identity_is_required) ... ok
+test_context_cannot_remove_required_screen_conditions (test_evaluate_results.EvaluatorTests.test_context_cannot_remove_required_screen_conditions) ... ok
+test_context_patch_inherits_run_conditions (test_evaluate_results.EvaluatorTests.test_context_patch_inherits_run_conditions) ... ok
+test_empty_capability_scope_never_passes_mac_acceptance (test_evaluate_results.EvaluatorTests.test_empty_capability_scope_never_passes_mac_acceptance) ... ok
+test_excluded_nonpass_cannot_hide_structured_failure (test_evaluate_results.EvaluatorTests.test_excluded_nonpass_cannot_hide_structured_failure) ... ok
+test_failed_machine_assertion_cannot_be_relabelled_success (test_evaluate_results.EvaluatorTests.test_failed_machine_assertion_cannot_be_relabelled_success) ... ok
+test_failure_is_release_blocking (test_evaluate_results.EvaluatorTests.test_failure_is_release_blocking) ... ok
+test_full_attested_scope_with_matching_baseline_passes_only_scope (test_evaluate_results.EvaluatorTests.test_full_attested_scope_with_matching_baseline_passes_only_scope) ... ok
+test_linux_pass_claim_is_invalid (test_evaluate_results.EvaluatorTests.test_linux_pass_claim_is_invalid) ... ok
+test_linux_preflight_cannot_pass (test_evaluate_results.EvaluatorTests.test_linux_preflight_cannot_pass) ... ok
+test_matching_wrong_fixture_identity_still_fails_contract (test_evaluate_results.EvaluatorTests.test_matching_wrong_fixture_identity_still_fails_contract) ... ok
+test_missing_artifact_is_invalid (test_evaluate_results.EvaluatorTests.test_missing_artifact_is_invalid) ... ok
+test_missing_hardware_is_not_not_applicable (test_evaluate_results.EvaluatorTests.test_missing_hardware_is_not_not_applicable) ... ok
+test_nonfinite_screen_geometry_is_invalid (test_evaluate_results.EvaluatorTests.test_nonfinite_screen_geometry_is_invalid) ... ok
+test_out_of_scope_feature_remains_exclusion_not_full_suite_success (test_evaluate_results.EvaluatorTests.test_out_of_scope_feature_remains_exclusion_not_full_suite_success) ... ok
+test_passed_variant_needs_corresponding_baseline_even_outside_scope (test_evaluate_results.EvaluatorTests.test_passed_variant_needs_corresponding_baseline_even_outside_scope) ... ok
+test_protocol_change_requires_new_hash (test_evaluate_results.EvaluatorTests.test_protocol_change_requires_new_hash) ... ok
+test_raw_event_does_not_prove_ui_acceptance (test_evaluate_results.EvaluatorTests.test_raw_event_does_not_prove_ui_acceptance) ... ok
+test_scope_does_not_turn_unsupported_into_pass (test_evaluate_results.EvaluatorTests.test_scope_does_not_turn_unsupported_into_pass) ... ok
+test_tampered_artifact_is_invalid (test_evaluate_results.EvaluatorTests.test_tampered_artifact_is_invalid) ... ok
+test_unmatched_build_blocks_comparison (test_evaluate_results.EvaluatorTests.test_unmatched_build_blocks_comparison) ... ok
+test_unperformed_second_variant_is_incomplete (test_evaluate_results.EvaluatorTests.test_unperformed_second_variant_is_incomplete) ... ok
+test_variant_environment_must_match_baseline_variant (test_evaluate_results.EvaluatorTests.test_variant_environment_must_match_baseline_variant) ... ok
+test_wrong_run_evidence_is_invalid (test_evaluate_results.EvaluatorTests.test_wrong_run_evidence_is_invalid) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.035s
+
+OK
