@@ -68,6 +68,11 @@
       "owner_task": "OPS-01"
     },
     {
+      "path": "docs/adr/initial-contracts.md",
+      "mode": "source",
+      "owner_task": "OPS-01"
+    },
+    {
       "path": "coordination/models.json",
       "mode": "source",
       "owner_task": "OPS-02"
