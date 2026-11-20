@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ProducerIdentity: Sendable {
+public struct ProducerIdentity: Equatable, Sendable {
     public let bundleID: String?
     public let verifiedPath: String?
     public let signingIdentifier: String?
@@ -166,7 +166,7 @@ public struct ObservedState: Sendable {
 }
 
 public enum IdentityResolution: Sendable {
-    case unique(RuntimeBinding)
+    case unique(itemID: UUID, binding: RuntimeBinding)
     case ambiguous([RuntimeBinding])
     case unmatched
     case unknown
@@ -178,7 +178,8 @@ public struct ExactTarget: Sendable {
     public let binding: RuntimeBinding
 
     public init?(itemID: UUID, resolution: IdentityResolution, state: ObservedState) {
-        guard case let .unique(binding) = resolution,
+        guard case let .unique(resolvedID, binding) = resolution,
+              resolvedID == itemID,
               binding.inventoryEpoch == state.inventoryEpoch,
               state.inventory.freshness == .fresh,
               state.inventory.completeness == .complete,

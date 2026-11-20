@@ -2,15 +2,15 @@ import Foundation
 
 public enum VisibilityAction: Hashable, Sendable { case reveal, collect }
 public enum AccessAction: Hashable, Sendable { case locate, openMenu, secondaryClick, optionClick }
-public enum DisplayScope: Sendable { case single(String), shared([String]) }
-public enum VisibilityDomain: Sendable {
+public enum DisplayScope: Equatable, Sendable { case single(String), shared([String]) }
+public enum VisibilityDomain: Equatable, Sendable {
     case individualItem(UUID)
     case application(ProducerIdentity, members: [UUID])
     case contiguousRange(orderedMembers: [UUID])
     case ownItems([UUID])
 }
 
-public struct AffectedDomain: Sendable {
+public struct AffectedDomain: Equatable, Sendable {
     public let granularity: VisibilityDomain
     public let displays: DisplayScope
 
@@ -120,7 +120,7 @@ public enum PlanningRequest: Sendable {
 }
 
 public enum PlanStep: Sendable {
-    case visibility(domain: AffectedDomain, action: VisibilityAction, expected: Visibility)
+    case visibility(VisibilityStep)
     case access(target: ExactTarget, action: AccessAction, expected: AccessExpectation)
 }
 public enum AccessExpectation: Sendable { case located, nativeMenuOpen }
@@ -147,20 +147,78 @@ public struct EffectivePlan: Sendable {
 
 public struct LayoutFingerprint: Equatable, Sendable {
     public let orderedMembers: [UUID]
-    public let visibleMembers: [UUID]
+    public let visibilityByMember: [UUID: Visibility]
     public let precedingNeighbor: UUID?
     public let followingNeighbor: UUID?
 
     public init(
         orderedMembers: [UUID],
-        visibleMembers: [UUID],
+        visibilityByMember: [UUID: Visibility],
         precedingNeighbor: UUID?,
         followingNeighbor: UUID?
     ) {
         self.orderedMembers = orderedMembers
-        self.visibleMembers = visibleMembers
+        self.visibilityByMember = visibilityByMember
         self.precedingNeighbor = precedingNeighbor
         self.followingNeighbor = followingNeighbor
+    }
+}
+
+/// A single observation revision covers every display and member of the approved domain.
+public typealias DisplayLayouts = [String: LayoutFingerprint]
+
+public struct LayoutSample: Sendable {
+    public let domain: AffectedDomain
+    public let revision: UInt64
+    public let layouts: Observation<DisplayLayouts>
+
+    public init(domain: AffectedDomain, revision: UInt64, layouts: Observation<DisplayLayouts>) {
+        self.domain = domain
+        self.revision = revision
+        self.layouts = layouts
+    }
+
+    fileprivate var freshLayouts: DisplayLayouts? {
+        guard layouts.freshness == .fresh, layouts.completeness == .complete,
+              layouts.source != .unknown else { return nil }
+        return layouts.value
+    }
+}
+
+public struct VisibilityStep: Sendable {
+    public let action: VisibilityAction
+    public let before: LayoutSample
+    public let expected: DisplayLayouts
+
+    public init?(action: VisibilityAction, before: LayoutSample, expected: DisplayLayouts) {
+        let screens: [String]
+        switch before.domain.displays {
+        case .single(let id): screens = [id]
+        case .shared(let ids): screens = ids
+        }
+        let members: [UUID]
+        switch before.domain.granularity {
+        case .individualItem(let id): members = [id]
+        case .application(_, let ids), .contiguousRange(let ids), .ownItems(let ids): members = ids
+        }
+        let memberSet = Set(members)
+        guard !screens.isEmpty, Set(screens).count == screens.count,
+              !members.isEmpty, memberSet.count == members.count,
+              let baseline = before.freshLayouts,
+              Set(baseline.keys) == Set(screens), Set(expected.keys) == Set(screens)
+        else { return nil }
+        for layout in Array(baseline.values) + Array(expected.values) {
+            guard layout.orderedMembers.count == members.count,
+                  Set(layout.orderedMembers) == memberSet,
+                  Set(layout.visibilityByMember.keys) == memberSet,
+                  layout.visibilityByMember.values.allSatisfy({ $0 != .unknown && $0 != .configuredVisible })
+            else { return nil }
+            if case .contiguousRange = before.domain.granularity,
+               layout.orderedMembers != members { return nil }
+        }
+        self.action = action
+        self.before = before
+        self.expected = expected
     }
 }
 
@@ -169,22 +227,26 @@ public enum MutationStatus: Sendable { case owned, relinquished, unresolved, res
 public struct MutationRecord: Sendable {
     public let owner: OperationTicket
     public let domain: AffectedDomain
-    public let before: LayoutFingerprint
-    public let applied: LayoutFingerprint
-    public let status: MutationStatus
+    public let before: DisplayLayouts
+    public let applied: DisplayLayouts
+    public private(set) var status: MutationStatus
 
-    public init(
-        owner: OperationTicket,
-        domain: AffectedDomain,
-        before: LayoutFingerprint,
-        applied: LayoutFingerprint,
-        status: MutationStatus
-    ) {
+    public mutating func relinquish() { status = .relinquished }
+    public mutating func markUnresolved() { status = .unresolved }
+    public mutating func markRestored() { status = .restored }
+
+    /// Call at the response boundary with the coordinator's current ticket.
+    public init?(owner: OperationTicket, active: OperationTicket?, step: VisibilityStep,
+                 result: VisibilityResult) {
+        guard owner.isCurrent(active: active), case let .observed(sample) = result,
+              sample.domain == step.before.domain, sample.revision > step.before.revision,
+              let applied = sample.freshLayouts, applied == step.expected,
+              let before = step.before.freshLayouts, before != applied else { return nil }
         self.owner = owner
-        self.domain = domain
+        self.domain = sample.domain
         self.before = before
         self.applied = applied
-        self.status = status
+        self.status = .owned
     }
 }
 
@@ -199,7 +261,7 @@ public enum AccessResult: Sendable {
     case outcomeUnknown(OperationTicket, reason: String)
 }
 public enum VisibilityResult: Sendable {
-    case observed(Observation<Visibility>)
+    case observed(LayoutSample)
     case submitted, blocked(reason: String), unsupported(reason: String), unknown(reason: String)
 }
 public enum StepResult: Sendable { case visibility(VisibilityResult), access(AccessResult) }

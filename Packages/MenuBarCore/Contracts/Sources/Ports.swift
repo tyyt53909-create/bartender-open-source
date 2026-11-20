@@ -3,8 +3,7 @@ public protocol InventoryProvider: Sendable {
 }
 
 public protocol VisibilityBackend: Sendable {
-    func apply(action: VisibilityAction, to previewedDomain: AffectedDomain,
-               ticket: OperationTicket) async -> VisibilityResult
+    func apply(_ step: VisibilityStep, ticket: OperationTicket) async -> VisibilityResult
 }
 
 public protocol AccessBackend: Sendable {
