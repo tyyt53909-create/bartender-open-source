@@ -59,6 +59,19 @@
         "reviewer"
       ],
       "source": "https://docs.x.ai/developers/models/grok-4.7"
+    },
+    {
+      "alias": "gpt6luna",
+      "label": "GPT-6 Luna",
+      "documented_candidate_model_id": "gpt-6-luna",
+      "preferred_runner": "codex",
+      "effective_provider": null,
+      "effective_model_id": null,
+      "availability": "unresolved",
+      "recommended_roles": [
+        "integrator"
+      ],
+      "source": "OPS-04-LUNA"
     }
   ]
 }

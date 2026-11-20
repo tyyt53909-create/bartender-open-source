@@ -88,6 +88,41 @@
       "owner_task": "OPS-03"
     },
     {
+      "path": "tools/agent-control/workspaces/",
+      "mode": "source",
+      "owner_task": "OPS-03"
+    },
+    {
+      "path": "coordination/environments/",
+      "mode": "source",
+      "owner_task": "OPS-03"
+    },
+    {
+      "path": "Package.swift",
+      "mode": "source",
+      "owner_task": "OPS-03"
+    },
+    {
+      "path": "Package.resolved",
+      "mode": "source",
+      "owner_task": "OPS-03"
+    },
+    {
+      "path": "Apps/MenuBarApp/project.yml",
+      "mode": "source",
+      "owner_task": "OPS-03"
+    },
+    {
+      "path": "Config/",
+      "mode": "source",
+      "owner_task": "OPS-03"
+    },
+    {
+      "path": "tools/build/",
+      "mode": "source",
+      "owner_task": "OPS-03"
+    },
+    {
       "path": "coordination/tasks.json",
       "mode": "source",
       "owner_task": "OPS-04"
@@ -207,6 +242,16 @@
       "mode": "generated",
       "owner_task": "OPS-08",
       "generator": "tools/package_starter.py"
+    },
+    {
+      "path": "Packages/MenuBarCore/Contracts/",
+      "mode": "source",
+      "owner_task": "APP-01"
+    },
+    {
+      "path": "docs/adr/product-contracts.md",
+      "mode": "source",
+      "owner_task": "APP-01"
     },
     {
       "path": "docs/baselines/",

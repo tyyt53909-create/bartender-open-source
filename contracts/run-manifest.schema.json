@@ -201,7 +201,8 @@
             "gpt6.2astra",
             "gpt6.2sol",
             "gpt6.1terra",
-            "grok4.7"
+            "grok4.7",
+            "gpt6luna"
           ]
         },
         "effective_provider": {
